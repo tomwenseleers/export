@@ -4,14 +4,7 @@
 #' a function to bitmap format
 #' 
 #' 
-
-graph2bitmap = function(file = "Rplot", obj = NULL, fun = NULL, type = "PNG", 
-                        aspectr = NULL, width = NULL, height = NULL, dpi = 600, 
-                        scaling = 100, font = "sans", bg = "white", 
-                        pngtype = "cairo-png", tifftype = "cairo", 
-                        tiffcompression = "lzw", jpegquality = 99, ...) {
-  
-#' @aliases graph2bitmap graph2png graph2tiff graph2tif graph2jpeg graph2jpg
+#' @aliases graph2bitmap graph2png graph2tif graph2jpg
 #' @param file name of output file. Any extension is ignored and added
 #' according to the requested output type.
 #' @param obj given ggplot2 plot or lattice plot object to export to Office; if
@@ -49,66 +42,8 @@ graph2bitmap = function(file = "Rplot", obj = NULL, fun = NULL, type = "PNG",
 #' @seealso %% ~~objects to See Also as \code{\link{help}}, ~~~
 #' @references %% ~put references to the literature/web site here ~
 #' @examples
-#' 
-#' \donttest{
-#' 
-#' ## export of ggplot2 plot
-#' library(ggplot2)
-#' qplot(Sepal.Length, Petal.Length, data = iris, color = Species, 
-#'       size = Petal.Width, alpha = I(0.7))
-#' graph2ppt(file="ggplot2 plot.pptx", aspectr=1.7)
-#' 
-#' # add 2nd slide with same graph in different aspect ratio
-#' graph2ppt(file="ggplot2 plot.pptx", aspectr=1.3, append=T) 
-#' # add 3d slide with same graph with fixed width & height
-#' graph2ppt(file="ggplot2 plot.pptx", width=6, height=5, append=T) 
-#' 
-#' graph2doc(file="ggplot2 plot.docx", aspectr=1.7) 
-#' 
-#' graph2html(file="ggplot2 plot.html", aspectr=1.7) 
-#' # pass plot as a ggplot2 object
-#' p=qplot(Sepal.Length, Petal.Length, data = iris, color = Species, 
-#'       size = Petal.Width, alpha = I(0.7))
-#' graph2ppt(obj=p,file="ggplot2 plot.pptx", aspectr=1.7) # works OK
-#' 
-#' 
-#' ## export of lattice plot
-#' library(lattice)
-#' library(effects)
-#' fit=lm(prestige ~ type + income*education, data=Prestige)
-#' plot(Effect(c("income", "education"), fit, partial.residuals=TRUE),multiline=T, 
-#'      span=1, show.fitted=TRUE, ci.style="bands")
-#' graph2ppt(file="effect plot.pptx")
-#' # pass as object
-#' p=plot(Effect(c("income", "education"), fit, partial.residuals=TRUE),multiline=T, 
-#'      span=1, show.fitted=TRUE, ci.style="bands")
-#' graph2ppt(obj=p,file="boxplot.pptx") # works OK
-#' 
-#' 
-#' ## example export of base R plot
-#' boxplot(mpg~cyl,data=mtcars, main="Car Milage Data",xlab="Number of Cylinders", 
-#' ylab="Miles Per Gallon",col="cyan2")
-#' graph2ppt(file="boxplot.pptx")
-#' # passing it as an object does not work
-#' p=boxplot(mpg~cyl,data=mtcars, main="Car Milage Data",xlab="Number of Cylinders", 
-#' ylab="Miles Per Gallon",col="cyan2")
-#' graph2ppt(obj=p,file="boxplot.pptx") # this does not work
-#' # passing it as a function also works
-#' f=function() boxplot(mpg~cyl,data=mtcars, main="Car Milage Data",col="cyan2")
-#' graph2ppt(fun=f, file="boxplot.pptx", aspectr=1.3) # this does work
-#' 
-#' 
-#' 
-#' ## heatmap example
-#' heatmap(as.matrix(eurodist))
-#' graph2ppt(file="heatmap.pptx")
-#' }
+#' @example examples/graph2bitmap.R
 #' @export graph2bitmap
-#' @export graph2png
-#' @export graph2tiff
-#' @export graph2tif
-#' @export graph2jpeg
-#' @export graph2jpg
 graph2bitmap = function(file = "Rplot", obj = NULL, fun = NULL, type = "PNG", 
                         aspectr = NULL, width = NULL, height = NULL, dpi = 600, 
                         scaling = 100, font = "sans", bg = "white", 
@@ -183,8 +118,14 @@ graph2bitmap = function(file = "Rplot", obj = NULL, fun = NULL, type = "PNG",
   
 }
 
+#' @param \dots options passed on to graph2bitmap
+#' @export graph2png
 graph2png = function(...) graph2bitmap(type = "PNG", ...)
+
+#' @param \dots options passed on to graph2bitmap
+#' @export graph2tif
 graph2tif = function(...) graph2bitmap(type = "TIF", ...)
-graph2tiff = function(...) graph2bitmap(type = "TIF", ...)
-graph2jpeg = function(...) graph2bitmap(type = "JPEG", ...)  
+
+#' @param \dots options passed on to graph2bitmap
+#' @export graph2jpg
 graph2jpg = function(...) graph2bitmap(type = "JPEG", ...) 
