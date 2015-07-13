@@ -1,8 +1,10 @@
 Package: export
 Type: Package
-Title: Easy export of R graphs and statistical output to Microsoft Office, HTML and Latex
+Title: Export of R Graphs and Statistical Output to Microsoft Office / LibreOffice, HTML and Latex
 Version: 0.2
 Date: 2015-07-10
+Authors@R: c(person("Tom", "Wenseleers", role = c("aut", "cre"),
+  	     email = "tom.wenseleers@bio.kuleuven.be"))
 Author: Tom Wenseleers [aut, cre]
 Maintainer: Tom Wenseleers <tom.wenseleers@bio.kuleuven.be>
 Depends:
@@ -12,7 +14,8 @@ Depends:
     rtable (>= 0.1),
     xtable (>= 1.7),
     taRifx (>= 1.0),
-    tikzDevice (>= 0.8)
+    tikzDevice (>= 0.8),
+    stargazer (>= 5.1)
 Suggests:
     lattice,
     latticeExtra,
@@ -26,19 +29,21 @@ Suggests:
     lmerTest,
     survival,
     zoo  
-Description: Package to export R graphs and R stats objects to Microsoft Word, 
-    Microsoft Powerpoint and HTML Documents. Export uses packages ReporteRs, 
-    xtable and rtable as a backbone. All export is in native Microsoft Office format 
-    -- editable DrawingML vector format for graphs and tables for R stats objects (e.g.
-    anova, linear regression, GLM or lme4 mixed model output tables), and can use corporate
-    template documents for styling. The two main functions enable the currently
-    showing R graph or the currently showing R stats object to be exported in MS Office
-    format using a single command. The package does not require any installation of Microsoft 
-    product to be able to write Microsoft files (docx and pptx) and output files are also 
-    fully compatible with LibreOffice. The two main application areas of this package
-    are producing standardized reports and being able to manually edit the layout of
-    R graphs in vector format using Powerpoint. Base R, ggplot2, lattice and grid plots
-    are supported, as well as all the most common R stats objects, including aov, lm,
-    glm, lme, lmer, glmer, coxph, ftable, xtabs, ts, zoo and prcomp output as well
-    as tables, matrices and data frames.
+Description: Package to easily export 'R' graphs and statistical output to 'Microsoft 
+    Office' / 'LibreOffice', 'Latex' and 'HTML' Documents. Export uses packages 'ReporteRs',
+    'grDevices', 'stargazer', 'xtable' and 'rtable' as a backbone and uses defaults that
+    result in publication-quality output using simple, straightforward commands. 
+    Output to 'Microsoft Office' is in editable 'DrawingML' vector format for graphs,
+    and can use corporate template documents for styling. This enables the production
+    of standardized reports and also allows for manual tidy-up of the layout of 'R' graphs 
+    in 'Powerpoint' before final publication. Export of graphs is flexible, and 
+    functions enable the currently showing R graph or the currently showing 'R' stats 
+    object to be exported, but also allow the graphs or stats output to be passed as 
+    objects. The package does not require any installation of 'Microsoft' 
+    product to be able to write 'Microsoft' files ('docx' and 'pptx') and output files are 
+    also fully compatible with 'LibreOffice'. Base 'R', 'ggplot2' and 'lattice' plots
+    are supported, as well as all the most common 'R' stats objects, including 'aov', 'lm',
+    'glm', 'lme', 'lmer', 'glmer', 'coxph', 'ftable', 'xtabs', 'ts', 'zoo' and 'prcomp' 
+    output as well as tables, matrices and data frames.
 License: GPL-2
+BugReports: https://github.com/tomwenseleers/export/issues 
