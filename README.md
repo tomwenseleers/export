@@ -3,7 +3,7 @@ export
 export is an R package to easily export active R graphs and statistical output 
 in publication quality to Microsoft Office, HTML and Latex.
 
-Usefull links: 
+Useful links: 
 
 * Report a bug: 
 [**Bug report**]
