@@ -2,49 +2,58 @@
 library(ggplot2)
 qplot(Sepal.Length, Petal.Length, data = iris, color = Species, 
       size = Petal.Width, alpha = I(0.7))
-graph2ppt(file="ggplot2 plot.pptx", aspectr=1.7)
-# add 2nd slide with same graph in different aspect ratio
-graph2ppt(file="ggplot2 plot.pptx", aspectr=1.3, append=T) 
-# add 3d slide with same graph with fixed width & height
-graph2ppt(file="ggplot2 plot.pptx", width=6, height=5, append=T) 
 
-graph2doc(file="ggplot2 plot.docx", aspectr=1.7) 
+graph2ppt() # export graph with current graphics window width & height
+graph2ppt(width=9,aspectr=sqrt(2)) # export graph with A4 aspect ratio
+graph2ppt(vector.graphic=FALSE,width=9,aspectr=sqrt(2)) # export as 300 dpi PNG bitmap
 
-graph2html(file="ggplot2 plot.html", aspectr=1.7) 
+graph2ppt(file="ggplot2_plot.pptx", aspectr=1.7)
+# add 2nd slide with same graph in A4 aspect ratio
+graph2ppt(file="ggplot2_plot.pptx", aspectr=sqrt(2), append=TRUE) 
+# add 3d slide with same graph in A4 aspect ratio with a width of 9 inches
+graph2ppt(file="ggplot2_plot.pptx", width=10, aspectr=sqrt(2), append=TRUE) 
+# add 4th slide with same graph with fixed width & height
+graph2ppt(file="ggplot2_plot.pptx", width=6, height=5, append=TRUE)
+# add 5th slide with page-filled version of same graph
+graph2ppt(file="ggplot2_plot.pptx", margins=0, upscale=TRUE, append=TRUE) 
 
 # pass plot as a ggplot2 object
 p=qplot(Sepal.Length, Petal.Length, data = iris, color = Species, 
-      size = Petal.Width, alpha = I(0.7))
-graph2ppt(obj=p,file="ggplot2 plot.pptx", aspectr=1.7) # works OK
+        size = Petal.Width, alpha = I(0.7))
+graph2ppt(obj=p,file="ggplot2_plot.pptx", aspectr=1.7)
 
+\dontrun{
+# export to Word
+graph2doc(aspectr=1.7) 
+graph2doc(paper="A3", orient="portrait", aspectr=1.7) 
+}
 
 # export of lattice plot
 library(lattice)
 library(effects)
 fit=lm(prestige ~ type + income*education, data=Prestige)
-plot(Effect(c("income", "education"), fit, partial.residuals=TRUE),multiline=T, 
+plot(Effect(c("income", "education"), fit, partial.residuals=TRUE),multiline=TRUE, 
      span=1, show.fitted=TRUE, ci.style="bands")
-graph2ppt(file="effect plot.pptx")
+graph2ppt(file="effect_plot.pptx")
 
 # pass plot as object
-p=plot(Effect(c("income", "education"), fit, partial.residuals=TRUE),multiline=T, 
+p=plot(Effect(c("income", "education"), fit, partial.residuals=TRUE),multiline=TRUE, 
      span=1, show.fitted=TRUE, ci.style="bands")
-graph2ppt(obj=p,file="boxplot.pptx") # works OK
+graph2ppt(obj=p,file="boxplot.pptx")
 
 
 # example export of base R plot
-boxplot(mpg~cyl,data=mtcars, main="Car Milage Data",xlab="Number of Cylinders", 
-ylab="Miles Per Gallon",col="cyan2")
+boxplot(mpg~cyl,data=mtcars,col="cyan2")
 graph2ppt(file="boxplot.pptx")
 
 # passing it as an object does not work
-p=boxplot(mpg~cyl,data=mtcars, main="Car Milage Data",xlab="Number of Cylinders", 
-ylab="Miles Per Gallon",col="cyan2")
-graph2ppt(obj=p,file="boxplot.pptx") # this does not work
+# p=boxplot(mpg~cyl,data=mtcars,col="cyan2")
+# ylab="Miles Per Gallon",col="cyan2")
+# graph2ppt(obj=p,file="boxplot.pptx") # this does not work
 
 # passing it as a function does work
-f=function() boxplot(mpg~cyl,data=mtcars, main="Car Milage Data",col="cyan2")
-graph2ppt(fun=f, file="boxplot.pptx", aspectr=1.3) # this does work
+f=function() boxplot(mpg~cyl,data=mtcars,col="cyan2")
+graph2ppt(fun=f, file="boxplot.pptx", aspectr=1.3)
 
 
 # heatmap example

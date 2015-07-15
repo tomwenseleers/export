@@ -1,0 +1,7 @@
+export 0.2
+==================================================================
+
+NEW FEATURES
+------------------------------------------------------------------
+* Automatic selection of paper size based on graph size in MS Office export
+* Added Latex export of graphs

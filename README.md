@@ -18,7 +18,7 @@ Features
   quality to Microsoft Word, Powerpoint, HTML, Latex or various other bitmap or 
   vector formats using a single command.
 * Fully editable Powerpoint vector format output, enabling manual tidy-up of plot layout.
-* Save the output of statistical analysis in R as tables in Word, PowerPoint or HTML documents.
+* Save the output of statistical analysis in R as tables in Word, PowerPoint, Latex or HTML documents.
 * Customize formatting of R outputs.
 
 Installation
@@ -69,18 +69,18 @@ Getting Started
     graph2ppt(file="ggplot2 plot.pptx", aspectr=1.7)
 
     # add 2nd slide with same graph in different aspect ratio
-    graph2ppt(file="ggplot2 plot.pptx", aspectr=1.3, append=T) 
+    graph2ppt(file="ggplot2 plot.pptx", aspectr=1.3, append=TRUE) 
     # add 3d slide with same graph with fixed width & height
-    graph2ppt(file="ggplot2 plot.pptx", width=6, height=5, append=T) 
+    graph2ppt(file="ggplot2 plot.pptx", width=6, height=5, append=TRUE) 
 
     # export of aov Anova output
     fit=aov(yield ~ block + N * P + K, npk)
     summary(fit)
     table2doc(file="table_aov.docx")
     summary(fit)
-    table2doc(file="table_aov.docx",append=T,digits=4)
+    table2doc(file="table_aov.docx",append=TRUE,digits=4)
     summary(fit)
-    table2doc(file="table_aov.docx",append=T,digits=4,digitspvals=1)
+    table2doc(file="table_aov.docx",append=TRUE,digits=4,digitspvals=1)
     summary(fit)
     table2html(file="table_aov.html")
   

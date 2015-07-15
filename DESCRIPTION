@@ -10,10 +10,8 @@ Maintainer: Tom Wenseleers <tom.wenseleers@bio.kuleuven.be>
 Depends:
     R (>= 3.0),
     ReporteRs (>= 0.7),
-    ReporteRsjars (>= 0.0.2),
-    rtable (>= 0.1),
-    xtable (>= 1.7),
-    taRifx (>= 1.0),
+    rtable (>= 0.1)
+Imports:    
     tikzDevice (>= 0.8),
     stargazer (>= 5.1)
 Suggests:
@@ -29,8 +27,8 @@ Suggests:
     lmerTest,
     survival,
     zoo  
-Description: Package to easily export 'R' graphs and statistical output to 'Microsoft 
-    Office' / 'LibreOffice', 'Latex' and 'HTML' Documents. Export uses packages 'ReporteRs',
+Description: Easily export 'R' graphs and statistical output to 'Microsoft Office' 
+    / 'LibreOffice', 'Latex' and 'HTML' Documents. Export uses packages 'ReporteRs',
     'grDevices', 'stargazer', 'xtable' and 'rtable' as a backbone and uses defaults that
     result in publication-quality output using simple, straightforward commands. 
     Output to 'Microsoft Office' is in editable 'DrawingML' vector format for graphs,
@@ -45,5 +43,5 @@ Description: Package to easily export 'R' graphs and statistical output to 'Micr
     are supported, as well as all the most common 'R' stats objects, including 'aov', 'lm',
     'glm', 'lme', 'lmer', 'glmer', 'coxph', 'ftable', 'xtabs', 'ts', 'zoo' and 'prcomp' 
     output as well as tables, matrices and data frames.
-License: GPL-2
+License: file LICENSE
 BugReports: https://github.com/tomwenseleers/export/issues 
