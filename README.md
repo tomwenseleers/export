@@ -73,6 +73,7 @@ Getting Started
     graph2ppt(file="ggplot2_plot.pptx", width=6, height=5, append=TRUE) 
 
     # export of aov Anova output
+    # output to Powerpoint
     fit=aov(yield ~ block + N * P + K, npk)
     summary(fit)
     table2ppt()
@@ -83,6 +84,16 @@ Getting Started
     summary(fit)
     table2ppt(file="table_aov.docx",digits=4,digitspvals=1,
               font="Times New Roman",pointsize=16,append=TRUE)
+    # export to Latex
+    summary(fit)
+    table2tex()
+    # export to Word
+    summary(fit)
+    table2doc()
+    # export to HTML
+    summary(fit)
+    table2html()
+
   
 License
 -------

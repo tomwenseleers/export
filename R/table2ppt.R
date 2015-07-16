@@ -4,9 +4,9 @@
 #' Powerpoint / LibreOffice table
 #' 
 #' @aliases table2ppt
+#' @param file name of output file. The .pptx extension is added automatically.
 #' @param obj given R stats object to export; if set to NULL the output of the 
 #' previous R command will be exported.
-#' @param file name of output file. The .pptx extension is added automatically.
 #' @param append logical value - if TRUE and type="PPT"" or "DOC"" it will
 #' append the graph to the given file, where file can also be a given corporate
 #' template in case type="PPT".  If append=FALSE any existing file will be
@@ -25,15 +25,19 @@
 #' @param \dots extra options are passed on to xtable.
 #' @return FlexTable object
 #' @note Columns corresponding to degrees of freedom (with header "Df" or "df")
-#' are always given as integers.
+#' are always given as integers. Objects that can be exported with table2ppt are 
+#' all those supported by xtable, namely anova (stats), aov (stats), aovlist 
+#' (stats), coxph (survival), data.frame, glm (stats), glmer (lme4), lm (stats),
+#' matrix, prcomp (stats), table, ts (ts) and zoo (zoo) as well as
+#' ftable and xtab cross-tabulations. table2doc, table2tex and table2html
+#' supports a number of additional models via the stargazer package.
 #' @author Tom Wenseleers
 #' @seealso %% ~~objects to See Also as \code{\link{help}}, ~~~
 #' @references %% ~put references to the literature/web site here ~
 #' @example examples/table2ppt.R
-#' @rdname table2ppt
 #' @export
 #' 
-table2ppt = function(obj = NULL, file = "Rtable", append = FALSE, digits = 2, 
+table2ppt = function(file = "Rtable", obj = NULL, append = FALSE, digits = 2, 
                      digitspvals = 2, width = NULL, height = NULL, offx = 1, offy = 1, 
                      font = "Calibri", pointsize = 12, 
                      add.rownames = FALSE, ...) {
@@ -45,7 +49,7 @@ table2ppt = function(obj = NULL, file = "Rtable", append = FALSE, digits = 2,
     if (is.null(outp)) 
         stop("no R stats object available to export")
     supobjects = c(as.character(gsub("xtable.", "", methods(xtable))), "xtabs", "ftable")  
-    # suppported objects
+    # objects supported by xtable
     # 'anova' 'aov' 'aovlist' 'coxph' 'data.frame' 'glm' 'lm' 
     # 'matrix' 'prcomp' 'summary.aov' 'summary.aovlist' 'summary.glm'
     # 'summary.lm' 'summary.prcomp' 'table' 'ts' 'zoo'
@@ -132,5 +136,8 @@ table2ppt = function(obj = NULL, file = "Rtable", append = FALSE, digits = 2,
     doc = ReporteRs::addFlexTable(doc, flextab, offx = offx, offy = offy, width = w, height = h)
     
   ReporteRs::writeDoc(doc, file)
-    flextab
+  
+  message(paste0("Exported table as ",file))
+  
+  flextab
 }

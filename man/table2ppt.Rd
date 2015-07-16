@@ -4,15 +4,15 @@
 \alias{table2ppt}
 \title{Export statistical output to a table in Microsoft Powerpoint / LibreOffice format}
 \usage{
-table2ppt(obj = NULL, file = "Rtable", append = FALSE, digits = 2,
+table2ppt(file = "Rtable", obj = NULL, append = FALSE, digits = 2,
   digitspvals = 2, width = NULL, height = NULL, offx = 1, offy = 1,
   font = "Calibri", pointsize = 12, add.rownames = FALSE, ...)
 }
 \arguments{
+\item{file}{name of output file. The .pptx extension is added automatically.}
+
 \item{obj}{given R stats object to export; if set to NULL the output of the
 previous R command will be exported.}
-
-\item{file}{name of output file. The .pptx extension is added automatically.}
 
 \item{append}{logical value - if TRUE and type="PPT"" or "DOC"" it will
 append the graph to the given file, where file can also be a given corporate
@@ -50,7 +50,12 @@ Powerpoint / LibreOffice table
 }
 \note{
 Columns corresponding to degrees of freedom (with header "Df" or "df")
-are always given as integers.
+are always given as integers. Objects that can be exported with table2ppt are
+all those supported by xtable, namely anova (stats), aov (stats), aovlist
+(stats), coxph (survival), data.frame, glm (stats), glmer (lme4), lm (stats),
+matrix, prcomp (stats), table, ts (ts) and zoo (zoo) as well as
+ftable and xtab cross-tabulations. table2doc, table2tex and table2html
+supports a number of additional models via the stargazer package.
 }
 \examples{
 # export of aov Anova output
