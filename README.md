@@ -1,5 +1,5 @@
-export version 0.2 Beta
-=======================
+export version 0.2.0 Beta
+=========================
 export is an R package to easily export active R graphs and statistical output 
 in publication quality to Microsoft Office, HTML and Latex.
 
