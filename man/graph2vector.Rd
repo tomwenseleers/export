@@ -9,7 +9,8 @@
 \usage{
 graph2vector(file = "Rplot", obj = NULL, fun = NULL, type = "SVG",
   aspectr = NULL, width = NULL, height = NULL, scaling = 100,
-  font = "sans", bg = "white", colormodel = "rgb", cairo = TRUE, ...)
+  font = ifelse(Sys.info()["sysname"] == "Windows", "Arial",
+  "Helvetica")[[1]], bg = "white", colormodel = "rgb", cairo = TRUE, ...)
 
 graph2svg(...)
 
@@ -21,19 +22,20 @@ graph2eps(...)
 \item{file}{name of output file. Any extension is ignored and added
 according to the requested output type. If file already exists it is overwritten.}
 
-\item{obj}{given ggplot2 plot or lattice plot object to export; if
-set to NULL the currently active R graph will be exported; not
+\item{obj}{given \code{ggplot2} plot or \code{lattice} plot object to export; if
+set to \code{NULL} the currently active R graph will be exported; not
 supported for base R plots.}
 
 \item{fun}{plot passed on as a function used to create it; useful especially
 for base R plots.}
 
-\item{type}{desired output type - SVG, PDF or EPS are currently supported.
-SVG is the preferred format, and good for editing in Inkscape; PDF is good
-for printing; EPS is sometimes requested by journals, though lower quality,
-especially when semi-transparency is used, as this is rasterized to bitmap.}
+\item{type}{desired output type - \code{SVG}, \code{PDF} or \code{EPS} are currently supported.
+\code{SVG} is the preferred format, and good for editing in Inkscape; \code{PDF} is good
+for printing; \code{EPS} is sometimes requested by journals, though lower quality,
+especially when semi-transparency is used, as this is rasterized to bitmap.
+\code{\link{graph2office}} is recommended for vector output to Microsoft Office.}
 
-\item{aspectr}{desired width to height aspect ratio. If set to NULL, the
+\item{aspectr}{desired width to height aspect ratio. If set to \code{NULL}, the
 aspect ratio of the graphics device is used. Can also be combined with one
 value for either the desired width or height of the graph.}
 
@@ -45,21 +47,21 @@ aspect ratio aspectr.}
 
 \item{scaling}{scale width & height by a certain percentage.}
 
-\item{font}{desired font to use for labels; defaults to "sans", which corresponds
-to "ArialMT" on Windows systems. Fonts are embedded by default in EPS output.}
+\item{font}{desired font to use for labels; defaults to \code{"Arial"} on Windows
+systems and to \code{"Helvetica"} on other systems. Fonts are embedded by default in \code{EPS} output.}
 
-\item{bg}{desired background colour, e.g. "white" or "transparent".}
+\item{bg}{desired background colour, e.g. \code{"white"} or \code{"transparent"}.}
 
-\item{colormodel}{desired colormodel in pdf or eps output when cairo=FALSE;
-currently allowed values are "rgb" (default), "cmyk", "srgb", "srgb+gray", "rgb-nogray",
-and "gray" (or "grey").}
+\item{colormodel}{desired colormodel in \code{pdf} or \code{eps} output when \code{cairo=FALSE};
+currently allowed values are \code{"rgb"} (default), \code{"cmyk"}, \code{"srgb"}, \code{"srgb+gray"}, \code{"rgb-nogray"},
+and \code{"gray"} (or \code{"grey"}).}
 
-\item{cairo}{logical indicating whether or not to use the cairo graphics
-device for output to PDF or EPS, defaults to TRUE, thereby allowing for
-simulated semi-transparency in EPS output, by rasterizing semi-transparent
+\item{cairo}{logical indicating whether or not to use the \code{cairo} graphics
+device for output to \code{PDF} or \code{EPS}, defaults to \code{TRUE}, thereby allowing for
+simulated semi-transparency in \code{EPS} output, by rasterizing semi-transparent
 sections, and automated font embedding.}
 
-\item{\dots}{any other options are passed on to svg, cairo_pdf, cairo_ps, pdf or
+\item{\dots}{any other options are passed on to \code{\link[grDevices]{svg}}, \code{\link[grDevices]{cairo_pdf}}, \code{\link[grDevices]{cairo_ps}}, \code{\link[grDevices]{pdf}} or
 postscript.}
 }
 \description{
@@ -74,23 +76,17 @@ to vector format with sensible defaults
 
 \item \code{graph2eps}: 
 }}
-\note{
-%% ~~further notes~~
-}
 \examples{
 library(ggplot2)
 qplot(Sepal.Length, Petal.Length, data = iris, color = Species, size = Petal.Width, alpha = I(0.7))
-graph2svg("ggplot2_plot.svg")
-graph2pdf("ggplot2_plot.pdf")
-graph2eps("ggplot2_plot.eps")
+graph2svg(file="ggplot2_plot.svg")
+graph2pdf(file="ggplot2_plot.pdf")
+graph2eps(file="ggplot2_plot.eps")
 }
 \author{
 Tom Wenseleers
 }
-\references{
-%% ~put references to the literature/web site here ~
-}
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+\code{\link{graph2tex}}, \code{\link{graph2office}}, \code{\link{graph2bitmap}}, \code{\link{graph2png}}, \code{\link{graph2tif}}, \code{\link{graph2jpg}}
 }
 

@@ -5,18 +5,19 @@
 #' 
 #' 
 #' @aliases graph2vector graph2svg graph2pdf graph2eps
+#' @param obj given \code{ggplot2} plot or \code{lattice} plot object to export; if
+#' set to \code{NULL} the currently active R graph will be exported; not
+#' supported for base R plots.
 #' @param file name of output file. Any extension is ignored and added
 #' according to the requested output type. If file already exists it is overwritten.
-#' @param obj given ggplot2 plot or lattice plot object to export; if
-#' set to NULL the currently active R graph will be exported; not
-#' supported for base R plots.
 #' @param fun plot passed on as a function used to create it; useful especially
 #' for base R plots.
-#' @param type desired output type - SVG, PDF or EPS are currently supported.
-#' SVG is the preferred format, and good for editing in Inkscape; PDF is good
-#' for printing; EPS is sometimes requested by journals, though lower quality,
-#' especially when semi-transparency is used, as this is rasterized to bitmap.
-#' @param aspectr desired width to height aspect ratio. If set to NULL, the
+#' @param type desired output type - \code{SVG}, \code{PDF} or \code{EPS} are currently supported.
+#' \code{SVG} is the preferred format, and good for editing in Inkscape; \code{PDF} is good
+#' for printing; \code{EPS} is sometimes requested by journals, though lower quality,
+#' especially when semi-transparency is used, as this is rasterized to bitmap. 
+#' \code{\link{graph2office}} is recommended for vector output to Microsoft Office.
+#' @param aspectr desired width to height aspect ratio. If set to \code{NULL}, the
 #' aspect ratio of the graphics device is used. Can also be combined with one
 #' value for either the desired width or height of the graph.
 #' @param width desired width in inches; can be combined with a desired
@@ -24,30 +25,29 @@
 #' @param height desired height in inches; can be combined with a desired
 #' aspect ratio aspectr.
 #' @param scaling scale width & height by a certain percentage.
-#' @param font desired font to use for labels; defaults to "sans", which corresponds
-#' to "ArialMT" on Windows systems. Fonts are embedded by default in EPS output.
-#' @param bg desired background colour, e.g. "white" or "transparent".
-#' @param cairo logical indicating whether or not to use the cairo graphics
-#' device for output to PDF or EPS, defaults to TRUE, thereby allowing for
-#' simulated semi-transparency in EPS output, by rasterizing semi-transparent
+#' @param font desired font to use for labels; defaults to \code{"Arial"} on Windows
+#' systems and to \code{"Helvetica"} on other systems. Fonts are embedded by default in \code{EPS} output.
+#' @param bg desired background colour, e.g. \code{"white"} or \code{"transparent"}.
+#' @param cairo logical indicating whether or not to use the \code{cairo} graphics
+#' device for output to \code{PDF} or \code{EPS}, defaults to \code{TRUE}, thereby allowing for
+#' simulated semi-transparency in \code{EPS} output, by rasterizing semi-transparent
 #' sections, and automated font embedding.
-#' @param colormodel desired colormodel in pdf or eps output when cairo=FALSE;
-#' currently allowed values are "rgb" (default), "cmyk", "srgb", "srgb+gray", "rgb-nogray", 
-#' and "gray" (or "grey"). 
-#' @param \dots any other options are passed on to svg, cairo_pdf, cairo_ps, pdf or
+#' @param colormodel desired colormodel in \code{pdf} or \code{eps} output when \code{cairo=FALSE};
+#' currently allowed values are \code{"rgb"} (default), \code{"cmyk"}, \code{"srgb"}, \code{"srgb+gray"}, \code{"rgb-nogray"}, 
+#' and \code{"gray"} (or \code{"grey"}). 
+#' @param \dots any other options are passed on to \code{\link[grDevices]{svg}}, \code{\link[grDevices]{cairo_pdf}}, \code{\link[grDevices]{cairo_ps}}, \code{\link[grDevices]{pdf}} or
 #' postscript.
 #' @return NULL
-#' @note %% ~~further notes~~
 #' @author Tom Wenseleers
-#' @seealso %% ~~objects to See Also as \code{\link{help}}, ~~~
-#' @references %% ~put references to the literature/web site here ~
 #' @example examples/graph2vector.R
+#' @seealso \code{\link{graph2tex}}, \code{\link{graph2office}}, \code{\link{graph2bitmap}}, \code{\link{graph2png}}, \code{\link{graph2tif}}, \code{\link{graph2jpg}} 
 #' @export
 #' 
 graph2vector = function(file = "Rplot", obj = NULL, fun = NULL, type = "SVG", 
                         aspectr = NULL, width = NULL, height = NULL, scaling = 100, 
-                        font = "sans", bg = "white", 
-                        colormodel="rgb", cairo = TRUE, ...) {
+                        font = ifelse(Sys.info()["sysname"]=="Windows","Arial",
+                        "Helvetica")[[1]], bg = "white", colormodel="rgb", 
+                        cairo = TRUE, ...) {
   type = toupper(type)
   type = match.arg(type,c("SVG","PDF","EPS"))
   ext = paste0(".", tolower(type))

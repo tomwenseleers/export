@@ -6,36 +6,37 @@
 \alias{graph2ppt}
 \title{Save currently active R graph to Microsoft Office / LibreOffice format}
 \usage{
-graph2office(file = "Rplot", obj = NULL, fun = NULL, type = c("PPT",
+graph2office(obj = NULL, file = "Rplot", fun = NULL, type = c("PPT",
   "DOC"), append = FALSE, aspectr = NULL, width = NULL, height = NULL,
   scaling = 100, paper = "auto", orient = ifelse(type[1] == "PPT",
   "landscape", "auto"), margins = c(top = 0.5, right = 0.5, bottom = 0.5, left
   = 0.5), center = TRUE, offx = 1, offy = 1, upscale = FALSE,
-  vector.graphic = TRUE, font = "Arial", ...)
+  vector.graphic = TRUE, font = ifelse(Sys.info()["sysname"] == "Windows",
+  "Arial", "Helvetica")[[1]], ...)
 
 graph2ppt(...)
 
 graph2doc(...)
 }
 \arguments{
+\item{obj}{given \code{ggplot2} plot or \code{lattice} plot object to export; if
+set to \code{NULL} the currently active R graph will be exported; not
+supported for base R plots.}
+
 \item{file}{name of output file. Any extension is ignored and added
 according to the requested output type.}
-
-\item{obj}{given ggplot2 plot or lattice plot object to export to Office; if
-set to NULL the currently active R graph will be exported; not
-supported for base R plots.}
 
 \item{fun}{plot passed on as a function used to create it; useful especially
 for base R plots.}
 
-\item{type}{desired output type - DOC for Word document, PPT for Powerpoint.}
+\item{type}{desired output type - \code{DOC} for Word document, \code{PPT} for Powerpoint.}
 
-\item{append}{logical value - if TRUE and type=PPT it will append the graph
+\item{append}{logical value - if \code{TRUE} and \code{type=PPT} it will append the graph
 to the given file, where file can also be a given corporate template. If
-append=FALSE any existing file will be overwritten. Currently ignored in
+\code{append=FALSE} any existing file will be overwritten. Currently ignored in
 Word export.}
 
-\item{aspectr}{desired width to height aspect ratio. If set to NULL, the
+\item{aspectr}{desired width to height aspect ratio. If set to \code{NULL}, the
 aspect ratio of the active graphics device is used.}
 
 \item{width}{desired width in inches; can be combined with a desired
@@ -59,10 +60,10 @@ default to "auto" for Word output and to "landscape" for Powerpoint.}
 \item{center}{logical specifying whether or not to center the graph
 in the exported Powerpoint.}
 
-\item{offx}{if center is set to FALSE, the desired x offset at which to
+\item{offx}{if center is set to \code{FALSE}, the desired x offset at which to
 place one's graph in Powerpoint output.}
 
-\item{offy}{if center is set to FALSE, the desired y offset at which to
+\item{offy}{if center is set to \code{FALSE}, the desired y offset at which to
 place one's graph in Powerpoint output.}
 
 \item{upscale}{logical specifying whether or not to upscale one's graph to
@@ -71,14 +72,18 @@ in a different look of one's graph relative to how it looks on the screen
 due to the change in size.}
 
 \item{vector.graphic}{logical specifying whether or not to output in
-editable, vector DrawingML format. Defaults to TRUE, in which case editing
+editable, vector \code{DrawingML} format. Defaults to \code{TRUE}, in which case editing
 the plot in Powerpoint or Word is then possible after first ungrouping the
-plot elements. If set to FALSE, the plot is rasterized to PNG bitmap
+plot elements. If set to \code{FALSE}, the plot is rasterized to \code{PNG} bitmap
 format at a resolution of 300 dpi.}
 
-\item{font}{desired font to use for labels.}
+\item{font}{desired font to use; defaults to \code{"Arial"} on Windows
+systems and to \code{"Helvetica"} on other systems.}
 
-\item{\dots}{any other options are passed on to ReporteR's addPlot function.}
+\item{\dots}{any other options are passed on to \code{ReporteR}'s \code{\link[ReporteRs]{addPlot}} function.}
+}
+\value{
+\code{NULL}
 }
 \description{
 Save the currently active R graph or a graph passed as an object or function
@@ -90,9 +95,6 @@ to Microsoft Office / LibreOffice format with sensible defaults
 
 \item \code{graph2doc}: 
 }}
-\note{
-%% ~~further notes~~
-}
 \examples{
 # export of ggplot2 plot
 library(ggplot2)
@@ -122,7 +124,6 @@ graph2ppt(obj=p,file="ggplot2_plot.pptx", aspectr=1.7)
 # export to Word
 graph2doc(aspectr=1.7) 
 graph2doc(paper="A3", orient="portrait", aspectr=1.7) 
-}
 
 # export of lattice plot
 library(lattice)
@@ -135,7 +136,7 @@ graph2ppt(file="effect_plot.pptx")
 # pass plot as object
 p=plot(Effect(c("income", "education"), fit, partial.residuals=TRUE),multiline=TRUE, 
      span=1, show.fitted=TRUE, ci.style="bands")
-graph2ppt(obj=p,file="boxplot.pptx")
+graph2ppt(obj=p,file="effect_plot.pptx")
 
 
 # example export of base R plot
@@ -156,13 +157,12 @@ graph2ppt(fun=f, file="boxplot.pptx", aspectr=1.3)
 heatmap(as.matrix(eurodist))
 graph2ppt(file="heatmap.pptx")
 }
+}
 \author{
 Tom Wenseleers
 }
-\references{
-%% ~put references to the literature/web site here ~
-}
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+\code{\link{graph2tex}}, \code{\link{graph2vector}}, \code{\link{graph2svg}}, \code{\link{graph2pdf}}, \code{\link{graph2eps}},
+\code{\link{graph2bitmap}}, \code{\link{graph2png}}, \code{\link{graph2tif}}, \code{\link{graph2jpg}}
 }
 

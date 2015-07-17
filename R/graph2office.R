@@ -3,21 +3,22 @@
 #' Save the currently active R graph or a graph passed as an object or function 
 #' to Microsoft Office / LibreOffice format with sensible defaults
 #' 
-#' 
+#' @import ReporteRs
+#' @import ReporteRsjars
 #' @aliases graph2office graph2doc graph2ppt
+#' @param obj given \code{ggplot2} plot or \code{lattice} plot object to export; if
+#' set to \code{NULL} the currently active R graph will be exported; not
+#' supported for base R plots.
 #' @param file name of output file. Any extension is ignored and added
 #' according to the requested output type.
-#' @param obj given ggplot2 plot or lattice plot object to export to Office; if
-#' set to NULL the currently active R graph will be exported; not
-#' supported for base R plots.
 #' @param fun plot passed on as a function used to create it; useful especially
 #' for base R plots.
-#' @param type desired output type - DOC for Word document, PPT for Powerpoint.
-#' @param append logical value - if TRUE and type=PPT it will append the graph
+#' @param type desired output type - \code{DOC} for Word document, \code{PPT} for Powerpoint.
+#' @param append logical value - if \code{TRUE} and \code{type=PPT} it will append the graph
 #' to the given file, where file can also be a given corporate template. If
-#' append=FALSE any existing file will be overwritten. Currently ignored in
+#' \code{append=FALSE} any existing file will be overwritten. Currently ignored in
 #' Word export.
-#' @param aspectr desired width to height aspect ratio. If set to NULL, the
+#' @param aspectr desired width to height aspect ratio. If set to \code{NULL}, the
 #' aspect ratio of the active graphics device is used.
 #' @param width desired width in inches; can be combined with a desired
 #' aspect ratio aspectr.
@@ -33,39 +34,41 @@
 #' @param margins vector with the desired margins that should be left blank in
 #' @param center logical specifying whether or not to center the graph
 #' in the exported Powerpoint.
-#' @param offx if center is set to FALSE, the desired x offset at which to
+#' @param offx if center is set to \code{FALSE}, the desired x offset at which to
 #' place one's graph in Powerpoint output.
-#' @param offy if center is set to FALSE, the desired y offset at which to
+#' @param offy if center is set to \code{FALSE}, the desired y offset at which to
 #' place one's graph in Powerpoint output.
 #' @param upscale logical specifying whether or not to upscale one's graph to
 #' make it page-filling (excluding the margins). Note that scaling may result
 #' in a different look of one's graph relative to how it looks on the screen
 #' due to the change in size.
 #' @param vector.graphic logical specifying whether or not to output in
-#' editable, vector DrawingML format. Defaults to TRUE, in which case editing
+#' editable, vector \code{DrawingML} format. Defaults to \code{TRUE}, in which case editing
 #' the plot in Powerpoint or Word is then possible after first ungrouping the
-#' plot elements. If set to FALSE, the plot is rasterized to PNG bitmap
+#' plot elements. If set to \code{FALSE}, the plot is rasterized to \code{PNG} bitmap
 #' format at a resolution of 300 dpi.
-#' @param font desired font to use for labels.
-#' @param \dots any other options are passed on to ReporteR's addPlot function.
-#' @return NULL
-#' @note %% ~~further notes~~
+#' @param font desired font to use; defaults to \code{"Arial"} on Windows
+#' systems and to \code{"Helvetica"} on other systems.
+#' @param \dots any other options are passed on to \code{ReporteR}'s \code{\link[ReporteRs]{addPlot}} function.
+#' @return \code{NULL}
 #' @author Tom Wenseleers
-#' @seealso %% ~~objects to See Also as \code{\link{help}}, ~~~
-#' @references %% ~put references to the literature/web site here ~
 #' @example examples/graph2office.R
+#' @seealso \code{\link{graph2tex}}, \code{\link{graph2vector}}, \code{\link{graph2svg}}, \code{\link{graph2pdf}}, \code{\link{graph2eps}},
+#' \code{\link{graph2bitmap}}, \code{\link{graph2png}}, \code{\link{graph2tif}}, \code{\link{graph2jpg}}
 #' @export
 #' 
-graph2office = function(file = "Rplot", obj = NULL, fun = NULL, type = c("PPT","DOC"), 
+graph2office = function(obj = NULL, file = "Rplot", fun = NULL, type = c("PPT","DOC"), 
                         append = FALSE,  aspectr = NULL, width = NULL, height = NULL, scaling=100, 
                         paper = "auto", orient = ifelse(type[1]=="PPT","landscape","auto"),
                         margins = c(top=0.5,right=0.5,bottom=0.5,left=0.5), 
                         center = TRUE, offx = 1, offy = 1, upscale = FALSE, 
-                        vector.graphic = TRUE, font = "Arial", ...) {
+                        vector.graphic = TRUE, font = 
+                        ifelse(Sys.info()["sysname"]=="Windows","Arial",
+                        "Helvetica")[[1]], ...) {
     margins=rep_len(margins,4)
     names(margins)=c("top","right","bottom","left")
     type = toupper(type)
-    type = match.arg(type)
+    type = match.arg(type,c("PPT","DOC"))
     if (type == "PPT" | type == "PPTX") {
         ext = ".pptx"
         type = "PPT"
@@ -73,10 +76,6 @@ graph2office = function(file = "Rplot", obj = NULL, fun = NULL, type = c("PPT","
     if (type == "DOC" | type == "DOCX") {
         ext = ".docx"
         type = "DOC"
-    }
-    if (type == "HTML") {
-        ext = ".html"
-        type = "HTML"
     }
     file = sub("^(.*)[.].*", "\\1", file)  # remove extension if given
     file = paste0(file, ext)  # add extension
@@ -111,8 +110,8 @@ graph2office = function(file = "Rplot", obj = NULL, fun = NULL, type = c("PPT","
             
     pagesize = c(width = 6, height = 6)
     if (type == "PPT") {
-        if (append & file.exists(file)) doc = ReporteRs::pptx(template = file) else doc = ReporteRs::pptx(template = templ)
-        doc = ReporteRs::addSlide(doc, slide.layout = "Blank")
+        if (append & file.exists(file)) doc = pptx(template = file) else doc = pptx(template = templ)
+        doc = addSlide(doc, slide.layout = "Blank")
         pagesize = dim(doc)$slide.dim
         pagesize["width"]=pagesize["width"]-(margins["left"]+margins["right"])
         pagesize["height"]=pagesize["height"]-(margins["top"]+margins["bottom"])
@@ -121,7 +120,7 @@ graph2office = function(file = "Rplot", obj = NULL, fun = NULL, type = c("PPT","
 #       if (append & file.exists(file)) 
 #         doc = docx(template = file) else doc = docx(template = templ)
 #       due to bug in ReporteRs append is current disabled
-        doc = ReporteRs::docx(template = templ)
+        doc = docx(template = templ)
         pagesize = dim(doc)$page - dim(doc)$margins[c(4, 3)]
     }
     
@@ -153,7 +152,7 @@ graph2office = function(file = "Rplot", obj = NULL, fun = NULL, type = c("PPT","
         if (center) { offx = (pagesize["width"] + margins["left"]+margins["right"] - w)/2
                       offy = (pagesize["height"] + margins["top"]+margins["bottom"] - h)/2
         }
-        doc = ReporteRs::addPlot(doc, fun = myplot, vector.graphic = vector.graphic, fontname = font, 
+        doc = addPlot(doc, fun = myplot, vector.graphic = vector.graphic, fontname = font, 
                       offx = offx, offy = offy, width = w, height = h, ...)
     }
     if (type == "DOC") {
@@ -165,14 +164,14 @@ graph2office = function(file = "Rplot", obj = NULL, fun = NULL, type = c("PPT","
 #         doc = addPlot(doc, fun = myplot, vector.graphic = vector.graphic, 
 #                       fontname = font, width = w, height = h, bookmark="PLOT", ...)
 #                       }        
-      doc = ReporteRs::addPlot(doc, fun = myplot, vector.graphic = vector.graphic, 
+      doc = addPlot(doc, fun = myplot, vector.graphic = vector.graphic, 
                     fontname = font, width = w, height = h, bookmark="PLOT", ...)  
     }
 #     if (type == "HTML") {
 #         doc = addPlot(doc, fun = myplot, vector.graphic = vector.graphic, fontname = font, width = w, height = h, 
 #             ...)
 #     }
-ReporteRs::writeDoc(doc, file)
+writeDoc(doc, file)
     message(paste0("Exported graph as ",file))
 }
 

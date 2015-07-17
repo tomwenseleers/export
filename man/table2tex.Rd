@@ -7,7 +7,7 @@
 \alias{table2tex2}
 \title{Export statistical output to a Microsoft Word / LibreOffice, HTML or Latex table}
 \usage{
-table2tex(file = "Rtable", obj = NULL, type = "TEX", digits = 2,
+table2tex(obj = NULL, file = "Rtable", type = "TEX", digits = 2,
   summary = FALSE, standAlone = TRUE, ...)
 
 table2tex2(...)
@@ -17,21 +17,46 @@ table2doc(...)
 table2html(...)
 }
 \arguments{
+\item{obj}{given R stats object or list of stats objects to export; if set to \code{NULL}
+the output of the previous R command will be exported.}
+
 \item{file}{name of output file. The appropriate extension is added automatically.}
 
-\item{obj}{given R stats object or list of stats objects to export; if set to NULL
-the output of the previous R command will be exported.}
+\item{type}{desired output type - \code{"TEX"} for Latex, \code{"DOC"} for Word and \code{"HTML"} for HTML.}
 
 \item{digits}{number of significant digits to show. A value of NA indicates that
 no rounding should be done.}
 
 \item{summary}{logical indicating whether or not to summarize data files.}
 
+\item{standAlone}{logical indicating whether exported Latex code should be
+standalone compilable, or whether it will be pasted into another document.}
+
 \item{\dots}{extra options are passed on to stargazer.}
+}
+\value{
+\code{NULL}
 }
 \description{
 Export currently showing R stats object or stats object obj to a
 Microsoft Word / LibreOffice, HTML or Latex table
+}
+\details{
+Objects that can be exported are all those supported by \code{\link[stargazer]{stargazer}},
+namely \code{aftreg} (\code{eha}), \code{anova} (\code{stats}), \code{aov} (\code{stats}), \code{aovlist} (\code{stats}), \code{arima} (\code{stats}),
+\code{betareg} (\code{betareg}), \code{binaryChoice} (\code{sampleSelection}), \code{bj} (\code{rms}), \code{brglm} (\code{brglm}),
+\code{censReg} (\code{censReg}), \code{coeftest} (\code{lmtest}), \code{coxph} (\code{survival}), \code{coxreg} (\code{eha}),
+\code{clm} (\code{ordinal}), \code{clogit} (\code{survival}), \code{cph} (\code{rms}), \code{dynlm} (\code{dynlm}), \code{ergm} (\code{ergm}),
+\code{errorsarlm} (\code{spdev}), \code{felm} (\code{lfe}), \code{gam} (\code{mgcv}), \code{garchFit} (\code{fGarch}), \code{gee} (\code{gee}),
+\code{glm} (\code{stats}), \code{Glm} (\code{rms}), \code{glmer} (\code{lme4}), \code{glmrob} (\code{robustbase}), \code{gls} (\code{nlme}),
+\code{Gls} (\code{rms}), \code{gmm} (\code{gmm}), \code{heckit} (\code{sampleSelection}), \code{hetglm} (\code{glmx}), \code{hurdle} (\code{pscl}),
+\code{ivreg} (\code{AER}), \code{lagarlm} (\code{spdep}), \code{lm} (\code{stats}), \code{lme} (\code{nlme}), \code{lmer} (\code{lme4}), \code{lmrob} (\code{robustbase}),
+\code{lrm} (\code{rms}), \code{maBina} (\code{erer}), \code{mclogit} (\code{mclogit}), \code{mlogit} (\code{mlogit}), \code{mnlogit} (\code{mnlogit}),
+\code{mlreg} (\code{eha}), \code{multinom} (\code{nnet}), \code{nlme} (\code{nlme}), \code{nlmer} (\code{lme4}), \code{ols} (\code{rms}), \code{pgmm} (\code{plm}),
+\code{phreg} (\code{eha}), \code{plm} (\code{plm}), \code{pmg} (\code{plm}), \code{polr} (\code{MASS}), \code{psm} (\code{rms}), \code{rem.dyad} (\code{relevent}),
+\code{rlm} (\code{MASS}), \code{rq} (\code{quantreg}), \code{Rq} (\code{rms}), \code{selection} (\code{sampleSelection}), \code{svyglm} (\code{survey}),
+\code{survreg} (\code{survival}), \code{tobit} (\code{AER}), \code{weibreg} (\code{eha}), \code{zeroin} (\code{pscl}), \code{relogit} (\code{zelig}),
+\code{cloglog.net} (\code{zelig}), \code{gamma.net} (\code{zelig}), \code{probit.net} (\code{zelig}) and \code{logit.net} (\code{zelig}).
 }
 \section{Functions}{
 \itemize{
@@ -41,10 +66,6 @@ Microsoft Word / LibreOffice, HTML or Latex table
 
 \item \code{table2html}: 
 }}
-\note{
-Objects that can be exported are all those supported by stargazer,
-namely aftreg (eha), anova (stats), aov (stats), aovlist (stats), arima (stats),
-}
 \examples{
 # export of aov Anova output
 fit=aov(yield ~ block + N * P + K, npk)
@@ -55,16 +76,14 @@ table2tex2(file="table_aov.tex") # export to Latex to paste in document
 summary(fit)
 table2doc(file="table_aov.doc") # export to Word
 table2doc(file="table_aov.doc",obj=fit) # export to Word, but pass as object
-summary(fit)
-table2html(file="table_aov.html") # export to HTML
+# pass as object
+s=summary(fit)
+table2html(obj=s,file="table_aov.html") # export to HTML
 }
 \author{
 Tom Wenseleers
 }
-\references{
-%% ~put references to the literature/web site here ~
-}
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+\code{\link{table2ppt}}
 }
 

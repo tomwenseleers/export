@@ -5,24 +5,24 @@
 \alias{graph2tex2}
 \title{Save currently active R graph to Latex format}
 \usage{
-graph2tex(file = "Rplot", obj = NULL, fun = NULL, aspectr = NULL,
+graph2tex(obj = NULL, file = "Rplot", fun = NULL, aspectr = NULL,
   width = NULL, height = NULL, scaling = 100, font = "sans",
   bg = "transparent", standAlone = TRUE, ...)
 
 graph2tex2(...)
 }
 \arguments{
-\item{file}{name of output file; extension ".tex" is added automatically.
-If file already exists it is overwritten.}
-
-\item{obj}{given ggplot2 plot or lattice plot object to export; if
-set to NULL the currently active R graph will be exported; not
+\item{obj}{given \code{ggplot2} plot or \code{lattice} plot object to export; if
+set to \code{NULL} the currently active R graph will be exported; not
 supported for base R plots.}
+
+\item{file}{name of output file; extension \code{".tex"} is added automatically.
+If file already exists it is overwritten.}
 
 \item{fun}{plot passed on as a function used to create it; useful especially
 for base R plots.}
 
-\item{aspectr}{desired width to height aspect ratio. If set to NULL, the
+\item{aspectr}{desired width to height aspect ratio. If set to \code{NULL}, the
 aspect ratio of the graphics device is used. Can also be combined with one
 value for either the desired width or height of the graph.}
 
@@ -34,17 +34,20 @@ aspect ratio aspectr.}
 
 \item{scaling}{scale width & height by a certain percentage.}
 
-\item{font}{default "sans" uses sansmath font for output; any other value
+\item{font}{default \code{"sans"} uses \code{sansmath} font for output; any other value
 will result in the font of the Latex document being used.}
 
-\item{bg}{desired background colour, e.g. "white" or "transparent".}
+\item{bg}{desired background colour, e.g. \code{"white"} or \code{"transparent"}.}
 
 \item{standAlone}{logical indicating whether output should be a full compilable
 Latex document or whether only the graph output should be produced, for pasting
-into another document. graph2tex default is standAlone=TRUE, whereas graph2tex2
-has default standAlone=FALSE.}
+into another document. \code{\link{graph2tex}} default is \code{standAlone=TRUE}, whereas \code{\link{graph2tex2}}
+has default \code{standAlone=FALSE}.}
 
-\item{\dots}{any other options are passed on to tikzDevice's tikz function.}
+\item{\dots}{any other options are passed on to \code{tikzDevice}'s \code{\link[tikzDevice]{tikz}} function.}
+}
+\value{
+\code{NULL}
 }
 \description{
 Save the currently active R graph or a graph passed as an object or function
@@ -54,29 +57,24 @@ to Latex format with sensible defaults
 \itemize{
 \item \code{graph2tex2}: 
 }}
-\note{
-%% ~~further notes~~
-}
 \examples{
 \dontrun{
 library(ggplot2)
 qplot(Sepal.Length, Petal.Length, data = iris, color = Species, 
       size = Petal.Width, alpha = I(0.7))
 # this results in a compilable Latex file with sans font
-graph2tex("ggplot2_plot1.tex")
+graph2tex(file="ggplot2_plot1.tex")
 # this results in a compilable Latex file with default document font
-graph2tex("ggplot2_plot2.tex",font=NA)
+graph2tex(file="ggplot2_plot2.tex",font=NA)
 # this results in Latex output that has to be pasted into another document
-graph2tex2("ggplot2_plot3.tex",font=NA)
+graph2tex2(file="ggplot2_plot3.tex",font=NA)
 }
 }
 \author{
 Tom Wenseleers
 }
-\references{
-%% ~put references to the literature/web site here ~
-}
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+\code{\link{graph2office}}, \code{\link{graph2vector}}, \code{\link{graph2svg}}, \code{\link{graph2pdf}}, \code{\link{graph2eps}},
+\code{\link{graph2bitmap}}, \code{\link{graph2png}}, \code{\link{graph2tif}}, \code{\link{graph2jpg}}
 }
 

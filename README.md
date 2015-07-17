@@ -1,5 +1,5 @@
-export
-======
+export version 0.2 Beta
+=======================
 export is an R package to easily export active R graphs and statistical output 
 in publication quality to Microsoft Office, HTML and Latex.
 
@@ -16,10 +16,12 @@ Features
 --------
 * Save active R graphs or ggplot2, lattice or base R plots in publication 
   quality to Microsoft Word, Powerpoint, HTML, Latex or various other bitmap or 
-  vector formats using a single command.
+  vector formats using a single command with sensible defaults.
 * Fully editable Powerpoint vector format output, enabling manual tidy-up of plot layout.
 * Save the output of statistical analysis in R as tables in Word, PowerPoint, Latex or HTML documents.
 * Customize formatting of R outputs.
+* This is the first beta release, and some functionality may still change in
+  the final release.
 
 Installation
 ------------

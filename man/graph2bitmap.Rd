@@ -7,12 +7,12 @@
 \alias{graph2tif}
 \title{Save currently active R graph to bitmap format}
 \usage{
-graph2bitmap(file = "Rplot", obj = NULL, fun = NULL, type = c("PNG",
+graph2bitmap(obj = NULL, file = "Rplot", fun = NULL, type = c("PNG",
   "JPG", "TIF"), aspectr = NULL, width = NULL, height = NULL, dpi = 600,
-  scaling = 100, font = "sans", bg = "white", pngtype = c("cairo-png",
-  "windows", "cairo"), tifftype = c("cairo", "windows"),
-  tiffcompression = c("lzw", "rle", "jpeg", "zip", "lzw+p", "zip+p"),
-  jpegquality = 99, ...)
+  scaling = 100, font = ifelse(Sys.info()["sysname"] == "Windows", "Arial",
+  "Helvetica")[[1]], bg = "white", pngtype = c("cairo-png", "windows",
+  "cairo"), tifftype = c("cairo", "windows"), tiffcompression = c("lzw",
+  "rle", "jpeg", "zip", "lzw+p", "zip+p"), jpegquality = 99, ...)
 
 graph2png(...)
 
@@ -21,21 +21,21 @@ graph2tif(...)
 graph2jpg(...)
 }
 \arguments{
+\item{obj}{given \code{ggplot2} plot or \code{lattice} plot object to export; if
+set to \code{NULL} the currently active R graph will be exported; not
+supported for base R plots.}
+
 \item{file}{name of output file. Any extension is ignored and added
 according to the requested output type. If file already exists it is overwritten.}
-
-\item{obj}{given ggplot2 plot or lattice plot object to export; if
-set to NULL the currently active R graph will be exported; not
-supported for base R plots.}
 
 \item{fun}{plot passed on as a function used to create it; useful especially
 for base R plots.}
 
-\item{type}{desired output type - PNG, TIF or JPG are currently supported.
-PNG is the preferred format, as it is a lossless format, and compresses better
-than TIF.}
+\item{type}{desired output type - \code{PNG}, \code{TIF} or \code{JPG} are currently supported.
+\code{PNG} is the preferred format, as it is a lossless format, and compresses better
+than \code{TIF}.}
 
-\item{aspectr}{desired width to height aspect ratio. If set to NULL, the
+\item{aspectr}{desired width to height aspect ratio. If set to \code{NULL}, the
 aspect ratio of the graphics device is used. Can also be combined with one
 value for either the desired width or height of the graph.}
 
@@ -49,19 +49,23 @@ aspect ratio aspectr.}
 
 \item{scaling}{scale width & height by a certain percentage.}
 
-\item{font}{desired font to use for labels; defaults to "sans".}
+\item{font}{desired font to use for labels; defaults to \code{"Arial"} on Windows
+systems and to \code{"Helvetica"} on other systems.}
 
-\item{bg}{desired background colour, e.g. "white" or "transparent".}
+\item{bg}{desired background colour, e.g. \code{"white"} or \code{"transparent"}.}
 
-\item{pngtype}{use Cairographics for export or Windows GDI?}
+\item{pngtype}{use \code{Cairographics} for export or Windows GDI?}
 
-\item{tifftype}{use Cairographics for export or Windows GDI?}
+\item{tifftype}{use \code{Cairographics} for export or Windows GDI?}
 
-\item{tiffcompression}{compression to use for TIF files.}
+\item{tiffcompression}{compression to use for \code{TIF} files.}
 
-\item{jpegquality}{quality of JPEG compression.}
+\item{jpegquality}{quality of \code{JPEG} compression.}
 
-\item{\dots}{any other options are passed on to ReporteR's addPlot function.}
+\item{\dots}{any other options are passed on to \code{ReporteRs}'s \code{\link[ReporteRs]{addPlot}} function.}
+}
+\value{
+\code{NULL}
 }
 \description{
 Save the currently active R graph or a graph passed as an object or function
@@ -75,9 +79,6 @@ to bitmap format with sensible defaults
 
 \item \code{graph2jpg}: 
 }}
-\note{
-%% ~~further notes~~
-}
 \examples{
 library(ggplot2)
 qplot(Sepal.Length, Petal.Length, data = iris, color = Species, size = Petal.Width, alpha = I(0.7))
@@ -88,10 +89,8 @@ graph2jpg()
 \author{
 Tom Wenseleers
 }
-\references{
-%% ~put references to the literature/web site here ~
-}
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+\code{\link{graph2office}}, \code{\link{graph2vector}}, \code{\link{graph2svg}}, \code{\link{graph2pdf}},
+\code{\link{graph2eps}}, \code{\link{graph2tex}}
 }
 

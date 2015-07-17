@@ -1,7 +1,7 @@
 Package: export
 Type: Package
 Title: Export of R Graphs and Statistical Output to Microsoft Office / LibreOffice, HTML and Latex
-Version: 0.2
+Version: 0.2.0
 Date: 2015-07-10
 Authors@R: c(person("Tom", "Wenseleers", role = c("aut", "cre"),
   	     email = "tom.wenseleers@bio.kuleuven.be"))
@@ -10,8 +10,16 @@ Maintainer: Tom Wenseleers <tom.wenseleers@bio.kuleuven.be>
 Depends:
     R (>= 3.0),
     ReporteRs (>= 0.7),
-    rtable (>= 0.1)
+    ReporteRsjars (>= 0.0.2),
+    stats,
+    graphics,
+    grDevices,
+    utils,
+    datasets,
+    methods
 Imports:    
+    rtable (>= 0.1),
+    xtable (>= 1.7),
     tikzDevice (>= 0.8),
     stargazer (>= 5.1)
 Suggests:
@@ -41,5 +49,5 @@ Description: Easily export 'R' graphs and statistical output to 'Microsoft Offic
     are supported, as well as all as a wide variety of 'R' stats objects, via wrappers
     to 'xtable' and 'stargazer', including 'aov', 'lm', 'glm', 'lme', 'lmer', 'glmer' and 
     'coxph' as well as 'ftable' and 'xtabs' cross-tabulations, matrices and data frames.
-License: file LICENSE
+License: GPL-2
 BugReports: https://github.com/tomwenseleers/export/issues 

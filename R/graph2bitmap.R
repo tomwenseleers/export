@@ -5,17 +5,17 @@
 #' 
 #' 
 #' @aliases graph2bitmap graph2png graph2tif graph2jpg
+#' @param obj given \code{ggplot2} plot or \code{lattice} plot object to export; if
+#' set to \code{NULL} the currently active R graph will be exported; not
+#' supported for base R plots.
 #' @param file name of output file. Any extension is ignored and added
 #' according to the requested output type. If file already exists it is overwritten.
-#' @param obj given ggplot2 plot or lattice plot object to export; if
-#' set to NULL the currently active R graph will be exported; not
-#' supported for base R plots.
 #' @param fun plot passed on as a function used to create it; useful especially
 #' for base R plots.
-#' @param type desired output type - PNG, TIF or JPG are currently supported.
-#' PNG is the preferred format, as it is a lossless format, and compresses better
-#' than TIF.
-#' @param aspectr desired width to height aspect ratio. If set to NULL, the
+#' @param type desired output type - \code{PNG}, \code{TIF} or \code{JPG} are currently supported.
+#' \code{PNG} is the preferred format, as it is a lossless format, and compresses better
+#' than \code{TIF}.
+#' @param aspectr desired width to height aspect ratio. If set to \code{NULL}, the
 #' aspect ratio of the graphics device is used. Can also be combined with one
 #' value for either the desired width or height of the graph.
 #' @param width desired width in inches; can be combined with a desired
@@ -24,25 +24,26 @@
 #' aspect ratio aspectr.
 #' @param dpi desired output in dpi; defaults to 600 dpi.
 #' @param scaling scale width & height by a certain percentage.
-#' @param font desired font to use for labels; defaults to "sans".
-#' @param bg desired background colour, e.g. "white" or "transparent".
-#' @param pngtype use Cairographics for export or Windows GDI?
-#' @param tifftype use Cairographics for export or Windows GDI?
-#' @param tiffcompression compression to use for TIF files.
-#' @param jpegquality quality of JPEG compression.
-#' @param \dots any other options are passed on to ReporteR's addPlot function.
-#' @return NULL
-#' @note %% ~~further notes~~
+#' @param font desired font to use for labels; defaults to \code{"Arial"} on Windows
+#' systems and to \code{"Helvetica"} on other systems.
+#' @param bg desired background colour, e.g. \code{"white"} or \code{"transparent"}.
+#' @param pngtype use \code{Cairographics} for export or Windows GDI?
+#' @param tifftype use \code{Cairographics} for export or Windows GDI?
+#' @param tiffcompression compression to use for \code{TIF} files.
+#' @param jpegquality quality of \code{JPEG} compression.
+#' @param \dots any other options are passed on to \code{ReporteRs}'s \code{\link[ReporteRs]{addPlot}} function.
+#' @return \code{NULL}
 #' @author Tom Wenseleers
-#' @seealso %% ~~objects to See Also as \code{\link{help}}, ~~~
-#' @references %% ~put references to the literature/web site here ~
 #' @example examples/graph2bitmap.R
+#' @seealso \code{\link{graph2office}}, \code{\link{graph2vector}}, \code{\link{graph2svg}}, \code{\link{graph2pdf}},
+#' \code{\link{graph2eps}}, \code{\link{graph2tex}} 
 #' @export
 #' 
-graph2bitmap = function(file = "Rplot", obj = NULL, fun = NULL, type = c("PNG","JPG","TIF"), 
+graph2bitmap = function(obj = NULL, file = "Rplot", fun = NULL, type = c("PNG","JPG","TIF"), 
                         aspectr = NULL, width = NULL, height = NULL, dpi = 600, 
-                        scaling = 100, font = "sans", bg = "white", 
-                        pngtype = c("cairo-png","windows","cairo"), tifftype = c("cairo","windows"), 
+                        scaling = 100, font = ifelse(Sys.info()["sysname"]=="Windows",
+                        "Arial","Helvetica")[[1]], bg = "white", pngtype = 
+                        c("cairo-png","windows","cairo"), tifftype = c("cairo","windows"), 
                         tiffcompression = c("lzw","rle","jpeg","zip","lzw+p","zip+p"), jpegquality = 99, ...) {
   type = toupper(type)
   type = match.arg(type)

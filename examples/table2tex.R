@@ -7,5 +7,6 @@ table2tex2(file="table_aov.tex") # export to Latex to paste in document
 summary(fit)
 table2doc(file="table_aov.doc") # export to Word
 table2doc(file="table_aov.doc",obj=fit) # export to Word, but pass as object
-summary(fit)
-table2html(file="table_aov.html") # export to HTML
+# pass as object
+s=summary(fit)
+table2html(obj=s,file="table_aov.html") # export to HTML

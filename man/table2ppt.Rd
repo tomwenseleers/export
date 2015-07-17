@@ -4,19 +4,20 @@
 \alias{table2ppt}
 \title{Export statistical output to a table in Microsoft Powerpoint / LibreOffice format}
 \usage{
-table2ppt(file = "Rtable", obj = NULL, append = FALSE, digits = 2,
+table2ppt(obj = NULL, file = "Rtable", append = FALSE, digits = 2,
   digitspvals = 2, width = NULL, height = NULL, offx = 1, offy = 1,
-  font = "Calibri", pointsize = 12, add.rownames = FALSE, ...)
+  font = ifelse(Sys.info()["sysname"] == "Windows", "Arial",
+  "Helvetica")[[1]], pointsize = 12, add.rownames = FALSE, ...)
 }
 \arguments{
-\item{file}{name of output file. The .pptx extension is added automatically.}
-
-\item{obj}{given R stats object to export; if set to NULL the output of the
+\item{obj}{given R stats object to export; if set to \code{NULL} the output of the
 previous R command will be exported.}
 
-\item{append}{logical value - if TRUE and type="PPT"" or "DOC"" it will
+\item{file}{name of output file. The .pptx extension is added automatically.}
+
+\item{append}{logical value - if \code{TRUE} and \code{type="PPT"} or \code{"DOC"} it will
 append the graph to the given file, where file can also be a given corporate
-template in case type="PPT".  If append=FALSE any existing file will be
+template in case \code{type="PPT"}.  If \code{append=FALSE} any existing file will be
 overwritten.}
 
 \item{digits}{number of significant digits to show for all columns except
@@ -33,29 +34,30 @@ values.}
 
 \item{offy}{y offset in inches to specify vertical location of table.}
 
-\item{font}{desired font to use for output table.}
+\item{font}{desired font to use for output table; defaults to \code{"Arial"} on Windows
+systems and to \code{"Helvetica"} on other systems.}
 
 \item{pointsize}{desired font point size.}
 
 \item{add.rownames}{logical specifying whether or not to add row names.}
 
-\item{\dots}{extra options are passed on to xtable.}
+\item{\dots}{extra options are passed on to \code{\link[xtable]{xtable}}}
 }
 \value{
-FlexTable object
+\code{\link[ReporteRs]{FlexTable}} object
 }
 \description{
 Export currently showing R stats object or stats object obj to a Microsoft
 Powerpoint / LibreOffice table
 }
-\note{
+\details{
 Columns corresponding to degrees of freedom (with header "Df" or "df")
-are always given as integers. Objects that can be exported with table2ppt are
-all those supported by xtable, namely anova (stats), aov (stats), aovlist
-(stats), coxph (survival), data.frame, glm (stats), glmer (lme4), lm (stats),
-matrix, prcomp (stats), table, ts (ts) and zoo (zoo) as well as
-ftable and xtab cross-tabulations. table2doc, table2tex and table2html
-supports a number of additional models via the stargazer package.
+are always given as integers. Objects that can be exported with \code{\link{table2ppt}} are
+all those supported by \code{\link[xtable]{xtable}}, namely \code{anova} (\code{stats}), \code{aov} (\code{stats}), \code{aovlist}
+(\code{stats}), \code{coxph} (\code{survival}), \code{data.frame}, \code{glm} (\code{stats}), \code{glmer} (\code{lme4}), \code{lm} (\code{stats}),
+\code{matrix}, \code{prcomp} (\code{stats}), \code{table}, \code{ts} (\code{ts}) and \code{zoo} (\code{zoo}) as well as
+\code{ftable} and \code{xtabs} cross-tabulations. \code{\link{table2doc}}, \code{\link{table2tex}} and \code{\link{table2html}}
+supports a number of additional models via the \code{\link[stargazer]{stargazer}} package.
 }
 \examples{
 # export of aov Anova output
@@ -64,17 +66,15 @@ summary(fit)
 table2ppt(file="table_aov.pptx")  
 summary(fit)
 table2ppt(file="table_aov.pptx", width=9, append=TRUE) # append table to previous slide
-summary(fit)
-table2ppt(file="table_aov.docx", font="Times New Roman", pointsize=14, 
+# pass object
+s=summary(fit)
+table2ppt(obj=s,file="table_aov.docx", font="Times New Roman", pointsize=14, 
           digits=4, digitspvals=1, append=TRUE)
 }
 \author{
 Tom Wenseleers
 }
-\references{
-%% ~put references to the literature/web site here ~
-}
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+\code{\link{table2tex}}, \code{\link{table2doc}}, \code{\link{table2html}}
 }
 

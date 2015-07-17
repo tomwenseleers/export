@@ -26,7 +26,6 @@ graph2ppt(obj=p,file="ggplot2_plot.pptx", aspectr=1.7)
 # export to Word
 graph2doc(aspectr=1.7) 
 graph2doc(paper="A3", orient="portrait", aspectr=1.7) 
-}
 
 # export of lattice plot
 library(lattice)
@@ -39,7 +38,7 @@ graph2ppt(file="effect_plot.pptx")
 # pass plot as object
 p=plot(Effect(c("income", "education"), fit, partial.residuals=TRUE),multiline=TRUE, 
      span=1, show.fitted=TRUE, ci.style="bands")
-graph2ppt(obj=p,file="boxplot.pptx")
+graph2ppt(obj=p,file="effect_plot.pptx")
 
 
 # example export of base R plot
@@ -59,3 +58,4 @@ graph2ppt(fun=f, file="boxplot.pptx", aspectr=1.3)
 # heatmap example
 heatmap(as.matrix(eurodist))
 graph2ppt(file="heatmap.pptx")
+}

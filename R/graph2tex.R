@@ -5,14 +5,14 @@
 #' 
 #' 
 #' @aliases graph2tex graph2tex2
-#' @param file name of output file; extension ".tex" is added automatically.
-#' If file already exists it is overwritten.
-#' @param obj given ggplot2 plot or lattice plot object to export; if
-#' set to NULL the currently active R graph will be exported; not
+#' @param obj given \code{ggplot2} plot or \code{lattice} plot object to export; if
+#' set to \code{NULL} the currently active R graph will be exported; not
 #' supported for base R plots.
+#' @param file name of output file; extension \code{".tex"} is added automatically.
+#' If file already exists it is overwritten.
 #' @param fun plot passed on as a function used to create it; useful especially
 #' for base R plots.
-#' @param aspectr desired width to height aspect ratio. If set to NULL, the
+#' @param aspectr desired width to height aspect ratio. If set to \code{NULL}, the
 #' aspect ratio of the graphics device is used. Can also be combined with one
 #' value for either the desired width or height of the graph.
 #' @param width desired width in inches; can be combined with a desired
@@ -20,23 +20,22 @@
 #' @param height desired height in inches; can be combined with a desired
 #' aspect ratio aspectr.
 #' @param scaling scale width & height by a certain percentage.
-#' @param font default "sans" uses sansmath font for output; any other value
+#' @param font default \code{"sans"} uses \code{sansmath} font for output; any other value
 #' will result in the font of the Latex document being used.
-#' @param bg desired background colour, e.g. "white" or "transparent".
+#' @param bg desired background colour, e.g. \code{"white"} or \code{"transparent"}.
 #' @param standAlone logical indicating whether output should be a full compilable
 #' Latex document or whether only the graph output should be produced, for pasting
-#' into another document. graph2tex default is standAlone=TRUE, whereas graph2tex2
-#' has default standAlone=FALSE.
-#' @param \dots any other options are passed on to tikzDevice's tikz function.
-#' @return NULL
-#' @note %% ~~further notes~~
+#' into another document. \code{\link{graph2tex}} default is \code{standAlone=TRUE}, whereas \code{\link{graph2tex2}}
+#' has default \code{standAlone=FALSE}.
+#' @param \dots any other options are passed on to \code{tikzDevice}'s \code{\link[tikzDevice]{tikz}} function.
+#' @return \code{NULL}
 #' @author Tom Wenseleers
-#' @seealso %% ~~objects to See Also as \code{\link{help}}, ~~~
-#' @references %% ~put references to the literature/web site here ~
 #' @example examples/graph2tex.R
+#' @seealso \code{\link{graph2office}}, \code{\link{graph2vector}}, \code{\link{graph2svg}}, \code{\link{graph2pdf}}, \code{\link{graph2eps}},
+#' \code{\link{graph2bitmap}}, \code{\link{graph2png}}, \code{\link{graph2tif}}, \code{\link{graph2jpg}} 
 #' @export
 #' 
-graph2tex = function(file = "Rplot", obj = NULL, fun = NULL,   
+graph2tex = function(obj = NULL, file = "Rplot", fun = NULL,   
                         aspectr = NULL, width = NULL, height = NULL, 
                         scaling = 100, font = "sans", bg = "transparent", 
                         standAlone = TRUE, ...) {
@@ -48,6 +47,7 @@ graph2tex = function(file = "Rplot", obj = NULL, fun = NULL,
     stop("base R plots cannot be passed as objects, use ggplot2 or lattice plots instead")
   myplot = if (is.null(fun)) function(pl = p) print(pl) else fun
   
+  if (!is.na(font)) {if (font=="sans-serif"|font=="Helvetica"|font=="Arial"|font=="Verdana"|font=="Tahoma") font="sans"}
   plotsize = dev.size()  # also works if no graphics device is open
   w = plotsize[[1]]
   h = plotsize[[2]]
