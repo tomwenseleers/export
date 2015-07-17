@@ -1,7 +1,7 @@
-export 0.2
-==================================================================
+export 0.2.0 Beta
+=================
 
 NEW FEATURES
-------------------------------------------------------------------
+------------
 * Automatic selection of paper size based on graph size in MS Office export
-* Added Latex export of graphs
+* Added Latex export of graphs & tables
