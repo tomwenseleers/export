@@ -5,6 +5,8 @@
 #' 
 #' @import ReporteRs
 #' @import ReporteRsjars
+#' @import grDevices
+#' @import utils
 #' @aliases graph2office graph2doc graph2ppt
 #' @param obj given \code{ggplot2} plot or \code{lattice} plot object to export; if
 #' set to \code{NULL} the currently active R graph will be exported; not

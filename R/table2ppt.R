@@ -6,7 +6,10 @@
 #' @import ReporteRs
 #' @import xtable
 #' @import rtable
-#' @import methods    
+#' @import methods 
+#' @import stats  
+#' @import grDevices
+#' @import utils
 #' @aliases table2ppt
 #' @param obj given R stats object to export; if set to \code{NULL} the output of the 
 #' previous R command will be exported.

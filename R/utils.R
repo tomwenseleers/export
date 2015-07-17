@@ -1,3 +1,6 @@
+#' @import grDevices
+#' @import utils
+
 # function to preview HTML in RStudio viewer or web browser
 
 preview = function(x){

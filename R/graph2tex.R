@@ -4,6 +4,7 @@
 #' to Latex format with sensible defaults
 #' 
 #' 
+#' @import grDevices
 #' @aliases graph2tex graph2tex2
 #' @param obj given \code{ggplot2} plot or \code{lattice} plot object to export; if
 #' set to \code{NULL} the currently active R graph will be exported; not

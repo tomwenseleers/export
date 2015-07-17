@@ -2,7 +2,9 @@
 #' 
 #' Export currently showing R stats object or stats object obj to a
 #' Microsoft Word / LibreOffice, HTML or Latex table
-#' 
+#' @import stats
+#' @import utils
+#' @import grDevices
 #' @aliases table2tex table2tex2 table2html table2doc
 #' @param obj given R stats object or list of stats objects to export; if set to \code{NULL} 
 #' the output of the previous R command will be exported.

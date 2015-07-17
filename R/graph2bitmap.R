@@ -4,6 +4,7 @@
 #' to bitmap format with sensible defaults
 #' 
 #' 
+#' @import grDevices
 #' @aliases graph2bitmap graph2png graph2tif graph2jpg
 #' @param obj given \code{ggplot2} plot or \code{lattice} plot object to export; if
 #' set to \code{NULL} the currently active R graph will be exported; not

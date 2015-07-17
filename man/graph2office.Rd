@@ -96,6 +96,7 @@ to Microsoft Office / LibreOffice format with sensible defaults
 \item \code{graph2doc}: 
 }}
 \examples{
+\dontrun{
 # export of ggplot2 plot
 library(ggplot2)
 qplot(Sepal.Length, Petal.Length, data = iris, color = Species, 
@@ -120,7 +121,6 @@ p=qplot(Sepal.Length, Petal.Length, data = iris, color = Species,
         size = Petal.Width, alpha = I(0.7))
 graph2ppt(obj=p,file="ggplot2_plot.pptx", aspectr=1.7)
 
-\dontrun{
 # export to Word
 graph2doc(aspectr=1.7) 
 graph2doc(paper="A3", orient="portrait", aspectr=1.7) 

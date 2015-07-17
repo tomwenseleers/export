@@ -1,6 +1,6 @@
 Package: export
 Type: Package
-Title: Export of R Graphs and Statistical Output to Microsoft Office / LibreOffice, HTML and Latex
+Title: Convert R Graphs and Statistical Output to Microsoft Office / LibreOffice, HTML and Latex
 Version: 0.2.0
 Date: 2015-07-10
 Authors@R: c(person("Tom", "Wenseleers", role = c("aut", "cre"),

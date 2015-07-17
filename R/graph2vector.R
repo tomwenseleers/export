@@ -4,6 +4,7 @@
 #' to vector format with sensible defaults
 #' 
 #' 
+#' @import grDevices
 #' @aliases graph2vector graph2svg graph2pdf graph2eps
 #' @param obj given \code{ggplot2} plot or \code{lattice} plot object to export; if
 #' set to \code{NULL} the currently active R graph will be exported; not
