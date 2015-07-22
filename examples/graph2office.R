@@ -1,4 +1,3 @@
-\dontrun{
 # export of ggplot2 plot
 library(ggplot2)
 qplot(Sepal.Length, Petal.Length, data = iris, color = Species, 
@@ -8,6 +7,7 @@ graph2ppt() # export graph with current graphics window width & height
 graph2ppt(width=9,aspectr=sqrt(2)) # export graph with A4 aspect ratio
 graph2ppt(vector.graphic=FALSE,width=9,aspectr=sqrt(2)) # export as 300 dpi PNG bitmap
 
+\dontrun{
 graph2ppt(file="ggplot2_plot.pptx", aspectr=1.7)
 # add 2nd slide with same graph in A4 aspect ratio
 graph2ppt(file="ggplot2_plot.pptx", aspectr=sqrt(2), append=TRUE) 

@@ -1,4 +1,3 @@
-\dontrun{
 # export of aov Anova output
 fit=aov(yield ~ block + N * P + K, npk)
 summary(fit)
@@ -11,4 +10,3 @@ table2doc(file="table_aov.doc",obj=fit) # export to Word, but pass as object
 # pass as object
 s=summary(fit)
 table2html(obj=s,file="table_aov.html") # export to HTML
-}
