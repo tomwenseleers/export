@@ -6,7 +6,7 @@
 \alias{graph2ppt}
 \title{Save currently active R graph to Microsoft Office / LibreOffice format}
 \usage{
-graph2office(obj = NULL, file = "Rplot", fun = NULL, type = c("PPT",
+graph2office(x = NULL, file = "Rplot", fun = NULL, type = c("PPT",
   "DOC"), append = FALSE, aspectr = NULL, width = NULL, height = NULL,
   scaling = 100, paper = "auto", orient = ifelse(type[1] == "PPT",
   "landscape", "auto"), margins = c(top = 0.5, right = 0.5, bottom = 0.5, left
@@ -19,7 +19,7 @@ graph2ppt(...)
 graph2doc(...)
 }
 \arguments{
-\item{obj}{given \code{ggplot2} plot or \code{lattice} plot object to export; if
+\item{x}{given \code{ggplot2} plot or \code{lattice} plot object to export; if
 set to \code{NULL} the currently active R graph will be exported; not
 supported for base R plots.}
 
@@ -96,7 +96,6 @@ to Microsoft Office / LibreOffice format with sensible defaults
 \item \code{graph2doc}: 
 }}
 \examples{
-\dontrun{
 # export of ggplot2 plot
 library(ggplot2)
 qplot(Sepal.Length, Petal.Length, data = iris, color = Species, 
@@ -106,6 +105,7 @@ graph2ppt() # export graph with current graphics window width & height
 graph2ppt(width=9,aspectr=sqrt(2)) # export graph with A4 aspect ratio
 graph2ppt(vector.graphic=FALSE,width=9,aspectr=sqrt(2)) # export as 300 dpi PNG bitmap
 
+\dontrun{
 graph2ppt(file="ggplot2_plot.pptx", aspectr=1.7)
 # add 2nd slide with same graph in A4 aspect ratio
 graph2ppt(file="ggplot2_plot.pptx", aspectr=sqrt(2), append=TRUE) 
@@ -117,9 +117,9 @@ graph2ppt(file="ggplot2_plot.pptx", width=6, height=5, append=TRUE)
 graph2ppt(file="ggplot2_plot.pptx", margins=0, upscale=TRUE, append=TRUE) 
 
 # pass plot as a ggplot2 object
-p=qplot(Sepal.Length, Petal.Length, data = iris, color = Species, 
+x=qplot(Sepal.Length, Petal.Length, data = iris, color = Species, 
         size = Petal.Width, alpha = I(0.7))
-graph2ppt(obj=p,file="ggplot2_plot.pptx", aspectr=1.7)
+graph2ppt(x=x,file="ggplot2_plot.pptx", aspectr=1.7)
 
 # export to Word
 graph2doc(aspectr=1.7) 
@@ -134,9 +134,9 @@ plot(Effect(c("income", "education"), fit, partial.residuals=TRUE),multiline=TRU
 graph2ppt(file="effect_plot.pptx")
 
 # pass plot as object
-p=plot(Effect(c("income", "education"), fit, partial.residuals=TRUE),multiline=TRUE, 
+x=plot(Effect(c("income", "education"), fit, partial.residuals=TRUE),multiline=TRUE, 
      span=1, show.fitted=TRUE, ci.style="bands")
-graph2ppt(obj=p,file="effect_plot.pptx")
+graph2ppt(x=x,file="effect_plot.pptx")
 
 
 # example export of base R plot

@@ -6,7 +6,7 @@
 #' 
 #' @import grDevices
 #' @aliases graph2tex graph2tex2
-#' @param obj given \code{ggplot2} plot or \code{lattice} plot object to export; if
+#' @param x given \code{ggplot2} plot or \code{lattice} plot object to export; if
 #' set to \code{NULL} the currently active R graph will be exported; not
 #' supported for base R plots.
 #' @param file name of output file; extension \code{".tex"} is added automatically.
@@ -36,13 +36,14 @@
 #' \code{\link{graph2bitmap}}, \code{\link{graph2png}}, \code{\link{graph2tif}}, \code{\link{graph2jpg}} 
 #' @export
 #' 
-graph2tex = function(obj = NULL, file = "Rplot", fun = NULL,   
+graph2tex = function(x = NULL, file = "Rplot", fun = NULL,   
                         aspectr = NULL, width = NULL, height = NULL, 
                         scaling = 100, font = "sans", bg = "transparent", 
                         standAlone = TRUE, ...) {
   ext = ".tex"
   file = sub("^(.*)[.].*", "\\1", file)  # remove extension if given
   file = paste0(file, ext)  # add extension
+  obj=x
   if (is.null(obj) & is.null(fun)) p = captureplot() else p = obj
   if (inherits(p,"list")) 
     stop("base R plots cannot be passed as objects, use ggplot2 or lattice plots instead")

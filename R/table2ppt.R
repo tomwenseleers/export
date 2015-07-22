@@ -11,7 +11,7 @@
 #' @import grDevices
 #' @import utils
 #' @aliases table2ppt
-#' @param obj given R stats object to export; if set to \code{NULL} the output of the 
+#' @param x given R stats object to export; if set to \code{NULL} the output of the 
 #' previous R command will be exported.
 #' @param file name of output file. The .pptx extension is added automatically.
 #' @param append logical value - if \code{TRUE} and \code{type="PPT"} or \code{"DOC"} it will
@@ -44,14 +44,15 @@
 #' @seealso \code{\link{table2tex}}, \code{\link{table2doc}}, \code{\link{table2html}}
 #' @export
 #' 
-table2ppt = function(obj = NULL, file = "Rtable", append = FALSE, digits = 2, 
+table2ppt = function(x = NULL, file = "Rtable", append = FALSE, digits = 2, 
                      digitspvals = 2, width = NULL, height = NULL, offx = 1, offy = 1, 
                      font = ifelse(Sys.info()["sysname"]=="Windows","Arial","Helvetica")[[1]], pointsize = 12, 
                      add.rownames = FALSE, ...) {
   #zebra = FALSE, odd = "#D2DEEF", even = "#EAEFF7", header = "#5B9BD5",
   #headertext = ifelse(zebra,"white","black"),
   
-  if (is.null(obj)) 
+    obj=x
+    if (is.null(obj)) 
         outp = .Last.value else outp = obj  # capture previously shown output or use passed object
     if (is.null(outp)) 
         stop("no R stats object available to export")

@@ -4,13 +4,13 @@
 \alias{table2ppt}
 \title{Export statistical output to a table in Microsoft Powerpoint / LibreOffice format}
 \usage{
-table2ppt(obj = NULL, file = "Rtable", append = FALSE, digits = 2,
+table2ppt(x = NULL, file = "Rtable", append = FALSE, digits = 2,
   digitspvals = 2, width = NULL, height = NULL, offx = 1, offy = 1,
   font = ifelse(Sys.info()["sysname"] == "Windows", "Arial",
   "Helvetica")[[1]], pointsize = 12, add.rownames = FALSE, ...)
 }
 \arguments{
-\item{obj}{given R stats object to export; if set to \code{NULL} the output of the
+\item{x}{given R stats object to export; if set to \code{NULL} the output of the
 previous R command will be exported.}
 
 \item{file}{name of output file. The .pptx extension is added automatically.}
@@ -60,16 +60,16 @@ all those supported by \code{\link[xtable]{xtable}}, namely \code{anova} (\code{
 supports a number of additional models via the \code{\link[stargazer]{stargazer}} package.
 }
 \examples{
-\dontrun{
 # export of aov Anova output
 fit=aov(yield ~ block + N * P + K, npk)
 summary(fit)
 table2ppt(file="table_aov.pptx")  
 summary(fit)
 table2ppt(file="table_aov.pptx", width=9, append=TRUE) # append table to previous slide
-# pass object
-s=summary(fit)
-table2ppt(obj=s,file="table_aov.docx", font="Times New Roman", pointsize=14, 
+\dontrun{
+# pass table as object
+x=summary(fit)
+table2ppt(x=x,file="table_aov.docx", font="Times New Roman", pointsize=14, 
           digits=4, digitspvals=1, append=TRUE)
 }
 }

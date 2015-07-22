@@ -6,7 +6,7 @@
 #' 
 #' @import grDevices
 #' @aliases graph2bitmap graph2png graph2tif graph2jpg
-#' @param obj given \code{ggplot2} plot or \code{lattice} plot object to export; if
+#' @param x given \code{ggplot2} plot or \code{lattice} plot object to export; if
 #' set to \code{NULL} the currently active R graph will be exported; not
 #' supported for base R plots.
 #' @param file name of output file. Any extension is ignored and added
@@ -25,11 +25,10 @@
 #' aspect ratio aspectr.
 #' @param dpi desired output in dpi; defaults to 600 dpi.
 #' @param scaling scale width & height by a certain percentage.
-#' @param font desired font to use for labels; defaults to \code{"Arial"} on Windows
-#' systems and to \code{"Helvetica"} on other systems.
+#' @param font desired font to use for labels in PNG and TIFF output; defaults to 
+#' \code{"Arial"} on Windows systems and to \code{"Helvetica"} on other systems.
 #' @param bg desired background colour, e.g. \code{"white"} or \code{"transparent"}.
-#' @param pngtype use \code{Cairographics} for export or Windows GDI?
-#' @param tifftype use \code{Cairographics} for export or Windows GDI?
+#' @param cairo logical, specifying whether or not to use \code{Cairographics} for export.
 #' @param tiffcompression compression to use for \code{TIF} files.
 #' @param jpegquality quality of \code{JPEG} compression.
 #' @param \dots any other options are passed on to \code{ReporteRs}'s \code{\link[ReporteRs]{addPlot}} function.
@@ -40,22 +39,20 @@
 #' \code{\link{graph2eps}}, \code{\link{graph2tex}} 
 #' @export
 #' 
-graph2bitmap = function(obj = NULL, file = "Rplot", fun = NULL, type = c("PNG","JPG","TIF"), 
+graph2bitmap = function(x = NULL, file = "Rplot", fun = NULL, type = c("PNG","JPG","TIF"), 
                         aspectr = NULL, width = NULL, height = NULL, dpi = 600, 
                         scaling = 100, font = ifelse(Sys.info()["sysname"]=="Windows",
-                        "Arial","Helvetica")[[1]], bg = "white", pngtype = 
-                        c("cairo-png","windows","cairo"), tifftype = c("cairo","windows"), 
+                        "Arial","Helvetica")[[1]], bg = "white", cairo = TRUE, 
                         tiffcompression = c("lzw","rle","jpeg","zip","lzw+p","zip+p"), jpegquality = 99, ...) {
   type = toupper(type)
   type = match.arg(type)
   if (type=="JPG") type="JPEG"
   if (type=="TIFF") type="TIF"
-  pngtype = match.arg(pngtype)
-  tifftype = match.arg(tifftype)
   tiffcompression = match.arg(tiffcompression)
   ext = paste0(".", tolower(type))
   file = sub("^(.*)[.].*", "\\1", file)  # remove extension if given
   file = paste0(file, ext)  # add extension
+  obj=x
   if (is.null(obj) & is.null(fun)) p = captureplot() else p = obj
   if (inherits(p,"list")) 
     stop("base R plots cannot be passed as objects, use ggplot2 or lattice plots instead")
@@ -76,7 +73,7 @@ graph2bitmap = function(obj = NULL, file = "Rplot", fun = NULL, type = c("PNG","
  
   if (type == "PNG") {
       png( filename = file, 
-        type = pngtype,
+        type = ifelse(cairo,"cairo-png","windows"),
         units = "in", 
         width = w, 
         height = h, 
@@ -89,7 +86,7 @@ graph2bitmap = function(obj = NULL, file = "Rplot", fun = NULL, type = c("PNG","
   
   if (type == "TIF") {
       tiff( filename = file, 
-         type = tifftype,
+         type = ifelse(cairo,"cairo","windows"),
          compression = tiffcompression,
          units = "in", 
          width = w, 
@@ -103,11 +100,12 @@ graph2bitmap = function(obj = NULL, file = "Rplot", fun = NULL, type = c("PNG","
   
   if (type == "JPEG") { 
       jpeg( filename = file, 
+          #type = ifelse(cairo,"cairo","windows"),
           quality = jpegquality,
           units = "in", 
           width = w, 
           height = h, 
-          family = font,
+          #family = font,
           res = dpi,
           bg = bg, ... )
     myplot()

@@ -62,6 +62,7 @@ Getting Started
     ?graph2svg
     ?graph2png
     ?table2ppt
+    ?table2tex
 
     ## export of ggplot2 plot
     library(ggplot2)
@@ -74,7 +75,7 @@ Getting Started
     # add 3d slide with same graph with fixed width & height
     graph2ppt(file="ggplot2_plot.pptx", width=6, height=5, append=TRUE) 
 
-    # export of aov Anova output
+    ## export of aov Anova output
     # output to Powerpoint
     fit=aov(yield ~ block + N * P + K, npk)
     summary(fit)

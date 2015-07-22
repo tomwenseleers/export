@@ -7,7 +7,7 @@
 \alias{table2tex2}
 \title{Export statistical output to a Microsoft Word / LibreOffice, HTML or Latex table}
 \usage{
-table2tex(obj = NULL, file = "Rtable", type = "TEX", digits = 2,
+table2tex(x = NULL, file = "Rtable", type = "TEX", digits = 2,
   summary = FALSE, standAlone = TRUE, ...)
 
 table2tex2(...)
@@ -17,7 +17,7 @@ table2doc(...)
 table2html(...)
 }
 \arguments{
-\item{obj}{given R stats object or list of stats objects to export; if set to \code{NULL}
+\item{x}{given R stats object or list of stats objects to export; if set to \code{NULL}
 the output of the previous R command will be exported.}
 
 \item{file}{name of output file. The appropriate extension is added automatically.}
@@ -67,7 +67,6 @@ namely \code{aftreg} (\code{eha}), \code{anova} (\code{stats}), \code{aov} (\cod
 \item \code{table2html}: 
 }}
 \examples{
-\dontrun{
 # export of aov Anova output
 fit=aov(yield ~ block + N * P + K, npk)
 summary(fit)
@@ -76,11 +75,11 @@ summary(fit)
 table2tex2(file="table_aov.tex") # export to Latex to paste in document
 summary(fit)
 table2doc(file="table_aov.doc") # export to Word
-table2doc(file="table_aov.doc",obj=fit) # export to Word, but pass as object
-# pass as object
-s=summary(fit)
-table2html(obj=s,file="table_aov.html") # export to HTML
-}
+x=summary(fit)
+table2doc(x=x,file="table_aov.doc") # export to Word, but pass as object
+# pass table as object
+x=summary(fit)
+table2html(x=x,file="table_aov.html") # export to HTML
 }
 \author{
 Tom Wenseleers

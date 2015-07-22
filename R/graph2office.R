@@ -8,7 +8,7 @@
 #' @import grDevices
 #' @import utils
 #' @aliases graph2office graph2doc graph2ppt
-#' @param obj given \code{ggplot2} plot or \code{lattice} plot object to export; if
+#' @param x given \code{ggplot2} plot or \code{lattice} plot object to export; if
 #' set to \code{NULL} the currently active R graph will be exported; not
 #' supported for base R plots.
 #' @param file name of output file. Any extension is ignored and added
@@ -59,7 +59,7 @@
 #' \code{\link{graph2bitmap}}, \code{\link{graph2png}}, \code{\link{graph2tif}}, \code{\link{graph2jpg}}
 #' @export
 #' 
-graph2office = function(obj = NULL, file = "Rplot", fun = NULL, type = c("PPT","DOC"), 
+graph2office = function(x = NULL, file = "Rplot", fun = NULL, type = c("PPT","DOC"), 
                         append = FALSE,  aspectr = NULL, width = NULL, height = NULL, scaling=100, 
                         paper = "auto", orient = ifelse(type[1]=="PPT","landscape","auto"),
                         margins = c(top=0.5,right=0.5,bottom=0.5,left=0.5), 
@@ -81,6 +81,7 @@ graph2office = function(obj = NULL, file = "Rplot", fun = NULL, type = c("PPT","
     }
     file = sub("^(.*)[.].*", "\\1", file)  # remove extension if given
     file = paste0(file, ext)  # add extension
+    obj=x
     if (is.null(obj) & is.null(fun)) { p = captureplot() } else { p = obj }
     if (inherits(p,"list")) { stop("base R plots cannot be passed as objects, use ggplot2 or lattice plots instead") }
 

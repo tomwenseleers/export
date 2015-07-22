@@ -19,9 +19,9 @@ graph2ppt(file="ggplot2_plot.pptx", width=6, height=5, append=TRUE)
 graph2ppt(file="ggplot2_plot.pptx", margins=0, upscale=TRUE, append=TRUE) 
 
 # pass plot as a ggplot2 object
-p=qplot(Sepal.Length, Petal.Length, data = iris, color = Species, 
+x=qplot(Sepal.Length, Petal.Length, data = iris, color = Species, 
         size = Petal.Width, alpha = I(0.7))
-graph2ppt(obj=p,file="ggplot2_plot.pptx", aspectr=1.7)
+graph2ppt(x=x,file="ggplot2_plot.pptx", aspectr=1.7)
 
 # export to Word
 graph2doc(aspectr=1.7) 
@@ -36,9 +36,9 @@ plot(Effect(c("income", "education"), fit, partial.residuals=TRUE),multiline=TRU
 graph2ppt(file="effect_plot.pptx")
 
 # pass plot as object
-p=plot(Effect(c("income", "education"), fit, partial.residuals=TRUE),multiline=TRUE, 
+x=plot(Effect(c("income", "education"), fit, partial.residuals=TRUE),multiline=TRUE, 
      span=1, show.fitted=TRUE, ci.style="bands")
-graph2ppt(obj=p,file="effect_plot.pptx")
+graph2ppt(x=x,file="effect_plot.pptx")
 
 
 # example export of base R plot

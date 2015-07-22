@@ -26,15 +26,7 @@ Suggests:
     lattice,
     latticeExtra,
     ggplot2,
-    afex,
-    effects,
-    gmodels,
-    MASS,
-    car,
-    nlme,
-    lmerTest,
-    survival,
-    zoo  
+    effects
 Description: Easily export 'R' graphs and statistical output to 'Microsoft Office' 
     / 'LibreOffice', 'Latex' and 'HTML' Documents, using sensible defaults that 
     result in publication-quality output with simple, straightforward commands. 

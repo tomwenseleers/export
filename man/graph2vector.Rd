@@ -7,7 +7,7 @@
 \alias{graph2vector}
 \title{Save currently active R graph to vector format}
 \usage{
-graph2vector(file = "Rplot", obj = NULL, fun = NULL, type = "SVG",
+graph2vector(x = NULL, file = "Rplot", fun = NULL, type = "SVG",
   aspectr = NULL, width = NULL, height = NULL, scaling = 100,
   font = ifelse(Sys.info()["sysname"] == "Windows", "Arial",
   "Helvetica")[[1]], bg = "white", colormodel = "rgb", cairo = TRUE, ...)
@@ -19,12 +19,12 @@ graph2pdf(...)
 graph2eps(...)
 }
 \arguments{
-\item{file}{name of output file. Any extension is ignored and added
-according to the requested output type. If file already exists it is overwritten.}
-
-\item{obj}{given \code{ggplot2} plot or \code{lattice} plot object to export; if
+\item{x}{given \code{ggplot2} plot or \code{lattice} plot object to export; if
 set to \code{NULL} the currently active R graph will be exported; not
 supported for base R plots.}
+
+\item{file}{name of output file. Any extension is ignored and added
+according to the requested output type. If file already exists it is overwritten.}
 
 \item{fun}{plot passed on as a function used to create it; useful especially
 for base R plots.}
@@ -77,13 +77,17 @@ to vector format with sensible defaults
 \item \code{graph2eps}: 
 }}
 \examples{
-\dontrun{
 library(ggplot2)
-qplot(Sepal.Length, Petal.Length, data = iris, color = Species, size = Petal.Width, alpha = I(0.7))
+qplot(Sepal.Length, Petal.Length, data = iris, color = Species, 
+      size = Petal.Width, alpha = I(0.7))
 graph2svg(file="ggplot2_plot.svg")
 graph2pdf(file="ggplot2_plot.pdf")
 graph2eps(file="ggplot2_plot.eps")
-}
+# pass plot as object
+x=qplot(Sepal.Length, Petal.Length, data = iris, color = Species, 
+        size = Petal.Width, alpha = I(0.7))
+graph2pdf(x=x, file="ggplot2_plot.pdf")
+
 }
 \author{
 Tom Wenseleers

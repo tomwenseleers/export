@@ -7,12 +7,12 @@
 \alias{graph2tif}
 \title{Save currently active R graph to bitmap format}
 \usage{
-graph2bitmap(obj = NULL, file = "Rplot", fun = NULL, type = c("PNG",
+graph2bitmap(x = NULL, file = "Rplot", fun = NULL, type = c("PNG",
   "JPG", "TIF"), aspectr = NULL, width = NULL, height = NULL, dpi = 600,
   scaling = 100, font = ifelse(Sys.info()["sysname"] == "Windows", "Arial",
-  "Helvetica")[[1]], bg = "white", pngtype = c("cairo-png", "windows",
-  "cairo"), tifftype = c("cairo", "windows"), tiffcompression = c("lzw",
-  "rle", "jpeg", "zip", "lzw+p", "zip+p"), jpegquality = 99, ...)
+  "Helvetica")[[1]], bg = "white", cairo = TRUE,
+  tiffcompression = c("lzw", "rle", "jpeg", "zip", "lzw+p", "zip+p"),
+  jpegquality = 99, ...)
 
 graph2png(...)
 
@@ -21,7 +21,7 @@ graph2tif(...)
 graph2jpg(...)
 }
 \arguments{
-\item{obj}{given \code{ggplot2} plot or \code{lattice} plot object to export; if
+\item{x}{given \code{ggplot2} plot or \code{lattice} plot object to export; if
 set to \code{NULL} the currently active R graph will be exported; not
 supported for base R plots.}
 
@@ -49,14 +49,12 @@ aspect ratio aspectr.}
 
 \item{scaling}{scale width & height by a certain percentage.}
 
-\item{font}{desired font to use for labels; defaults to \code{"Arial"} on Windows
-systems and to \code{"Helvetica"} on other systems.}
+\item{font}{desired font to use for labels in PNG and TIFF output; defaults to
+\code{"Arial"} on Windows systems and to \code{"Helvetica"} on other systems.}
 
 \item{bg}{desired background colour, e.g. \code{"white"} or \code{"transparent"}.}
 
-\item{pngtype}{use \code{Cairographics} for export or Windows GDI?}
-
-\item{tifftype}{use \code{Cairographics} for export or Windows GDI?}
+\item{cairo}{logical, specifying whether or not to use \code{Cairographics} for export.}
 
 \item{tiffcompression}{compression to use for \code{TIF} files.}
 
@@ -80,13 +78,11 @@ to bitmap format with sensible defaults
 \item \code{graph2jpg}: 
 }}
 \examples{
-\dontrun{
 library(ggplot2)
 qplot(Sepal.Length, Petal.Length, data = iris, color = Species, size = Petal.Width, alpha = I(0.7))
-graph2png(dpi=1200)
+graph2png(dpi=300)
 graph2tif()
 graph2jpg()
-}
 }
 \author{
 Tom Wenseleers

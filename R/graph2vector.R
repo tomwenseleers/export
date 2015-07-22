@@ -6,7 +6,7 @@
 #' 
 #' @import grDevices
 #' @aliases graph2vector graph2svg graph2pdf graph2eps
-#' @param obj given \code{ggplot2} plot or \code{lattice} plot object to export; if
+#' @param x given \code{ggplot2} plot or \code{lattice} plot object to export; if
 #' set to \code{NULL} the currently active R graph will be exported; not
 #' supported for base R plots.
 #' @param file name of output file. Any extension is ignored and added
@@ -44,7 +44,7 @@
 #' @seealso \code{\link{graph2tex}}, \code{\link{graph2office}}, \code{\link{graph2bitmap}}, \code{\link{graph2png}}, \code{\link{graph2tif}}, \code{\link{graph2jpg}} 
 #' @export
 #' 
-graph2vector = function(file = "Rplot", obj = NULL, fun = NULL, type = "SVG", 
+graph2vector = function(x = NULL, file = "Rplot", fun = NULL, type = "SVG", 
                         aspectr = NULL, width = NULL, height = NULL, scaling = 100, 
                         font = ifelse(Sys.info()["sysname"]=="Windows","Arial",
                         "Helvetica")[[1]], bg = "white", colormodel="rgb", 
@@ -54,6 +54,7 @@ graph2vector = function(file = "Rplot", obj = NULL, fun = NULL, type = "SVG",
   ext = paste0(".", tolower(type))
   file = sub("^(.*)[.].*", "\\1", file)  # remove extension if given
   file = paste0(file, ext)  # add extension
+  obj=x
   if (is.null(obj) & is.null(fun)) p = captureplot() else p = obj
   if (inherits(p,"list")) 
     stop("base R plots cannot be passed as objects, use ggplot2 or lattice plots instead")

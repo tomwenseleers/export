@@ -6,7 +6,7 @@
 #' @import utils
 #' @import grDevices
 #' @aliases table2tex table2tex2 table2html table2doc
-#' @param obj given R stats object or list of stats objects to export; if set to \code{NULL} 
+#' @param x given R stats object or list of stats objects to export; if set to \code{NULL} 
 #' the output of the previous R command will be exported.
 #' @param file name of output file. The appropriate extension is added automatically.
 #' @param type desired output type - \code{"TEX"} for Latex, \code{"DOC"} for Word and \code{"HTML"} for HTML.
@@ -38,8 +38,8 @@
 #' @export
 #' 
 
-table2tex = function(obj = NULL, file = "Rtable", type="TEX", digits = 2, summary=FALSE, standAlone=TRUE, ...) {
-  
+table2tex = function(x = NULL, file = "Rtable", type="TEX", digits = 2, summary=FALSE, standAlone=TRUE, ...) {
+  obj=x
   if (is.null(obj)) 
     outp = .Last.value else outp = obj  # capture previously shown output or use passed object
   if (is.null(outp)) 

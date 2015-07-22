@@ -5,14 +5,14 @@
 \alias{graph2tex2}
 \title{Save currently active R graph to Latex format}
 \usage{
-graph2tex(obj = NULL, file = "Rplot", fun = NULL, aspectr = NULL,
+graph2tex(x = NULL, file = "Rplot", fun = NULL, aspectr = NULL,
   width = NULL, height = NULL, scaling = 100, font = "sans",
   bg = "transparent", standAlone = TRUE, ...)
 
 graph2tex2(...)
 }
 \arguments{
-\item{obj}{given \code{ggplot2} plot or \code{lattice} plot object to export; if
+\item{x}{given \code{ggplot2} plot or \code{lattice} plot object to export; if
 set to \code{NULL} the currently active R graph will be exported; not
 supported for base R plots.}
 
@@ -68,6 +68,10 @@ graph2tex(file="ggplot2_plot1.tex")
 graph2tex(file="ggplot2_plot2.tex",font=NA)
 # this results in Latex output that has to be pasted into another document
 graph2tex2(file="ggplot2_plot3.tex",font=NA)
+# pass plot as object
+x=qplot(Sepal.Length, Petal.Length, data = iris, color = Species, 
+      size = Petal.Width, alpha = I(0.7))
+graph2tex(x=x,file="ggplot2_plot1.tex")
 }
 }
 \author{
