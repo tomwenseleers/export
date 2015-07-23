@@ -98,14 +98,15 @@ to Microsoft Office / LibreOffice format with sensible defaults
 \examples{
 # export of ggplot2 plot
 library(ggplot2)
-qplot(Sepal.Length, Petal.Length, data = iris, color = Species, 
+x=qplot(Sepal.Length, Petal.Length, data = iris, color = Species, 
       size = Petal.Width, alpha = I(0.7))
-
-graph2ppt() # export graph with current graphics window width & height
-graph2ppt(width=9,aspectr=sqrt(2)) # export graph with A4 aspect ratio
-graph2ppt(vector.graphic=FALSE,width=9,aspectr=sqrt(2)) # export as 300 dpi PNG bitmap
+x
+graph2ppt(x=x) # export graph with current graphics window width & height
+graph2ppt(x=x,width=9,aspectr=sqrt(2)) # export graph with A4 aspect ratio
+graph2ppt(x=x,vector.graphic=FALSE,width=9,aspectr=sqrt(2)) # export as 300 dpi PNG bitmap
 
 \dontrun{
+# use active graph instead of passing plot as object
 graph2ppt(file="ggplot2_plot.pptx", aspectr=1.7)
 # add 2nd slide with same graph in A4 aspect ratio
 graph2ppt(file="ggplot2_plot.pptx", aspectr=sqrt(2), append=TRUE) 
@@ -115,11 +116,6 @@ graph2ppt(file="ggplot2_plot.pptx", width=10, aspectr=sqrt(2), append=TRUE)
 graph2ppt(file="ggplot2_plot.pptx", width=6, height=5, append=TRUE)
 # add 5th slide with page-filled version of same graph
 graph2ppt(file="ggplot2_plot.pptx", margins=0, upscale=TRUE, append=TRUE) 
-
-# pass plot as a ggplot2 object
-x=qplot(Sepal.Length, Petal.Length, data = iris, color = Species, 
-        size = Petal.Width, alpha = I(0.7))
-graph2ppt(x=x,file="ggplot2_plot.pptx", aspectr=1.7)
 
 # export to Word
 graph2doc(aspectr=1.7) 

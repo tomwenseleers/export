@@ -60,7 +60,7 @@ graph2vector = function(x = NULL, file = "Rplot", fun = NULL, type = "SVG",
     stop("base R plots cannot be passed as objects, use ggplot2 or lattice plots instead")
   myplot = if (is.null(fun)) function(pl = p) print(pl) else fun
   
-  plotsize = dev.size()  # also works if no graphics device is open
+  plotsize = grDevices::dev.size()  # also works if no graphics device is open
   w = plotsize[[1]]
   h = plotsize[[2]]
   plotaspectr = plotsize[[1]]/plotsize[[2]]
@@ -75,7 +75,7 @@ graph2vector = function(x = NULL, file = "Rplot", fun = NULL, type = "SVG",
   w = w*scaling/100; h = h*scaling/100;
   
   if (type == "SVG") {
-    svg(filename = file, 
+    grDevices::svg(filename = file, 
              height = h, 
              width = w,
              family = font,
@@ -83,12 +83,12 @@ graph2vector = function(x = NULL, file = "Rplot", fun = NULL, type = "SVG",
              bg = bg,
              ... )
     myplot()
-    dev.off()
+    grDevices::dev.off()
   }
   
   if (type == "PDF") {
     #cairo_surface_set_fallback_resolution() # check cairoSurfaceSetFallbackResolution in library(RGtk2)
-    if (!cairo) { pdf(file = file,  # also check cairo_pdf
+    if (!cairo) { grDevices::pdf(file = file,  # also check cairo_pdf
         height = h, 
         width = w,
         family = font,
@@ -97,7 +97,7 @@ graph2vector = function(x = NULL, file = "Rplot", fun = NULL, type = "SVG",
         colormodel = colormodel, 
         useDingbats = FALSE,
         ... ) } else { 
-          cairo_pdf(filename = file,  # also check cairo_pdf
+          grDevices::cairo_pdf(filename = file,  # also check cairo_pdf
               height = h, 
               width = w,
               family = font, 
@@ -106,11 +106,11 @@ graph2vector = function(x = NULL, file = "Rplot", fun = NULL, type = "SVG",
               ... ) 
         }
     myplot()
-    dev.off()
+    grDevices::dev.off()
   }
   
   if (type == "EPS") { 
-    if (!cairo) { postscript(file = file, 
+    if (!cairo) { grDevices::postscript(file = file, 
                height = h, 
                width = w,
                family = font,
@@ -118,7 +118,7 @@ graph2vector = function(x = NULL, file = "Rplot", fun = NULL, type = "SVG",
                bg = bg,
                colormodel = colormodel, 
                ... ) } else { 
-                 cairo_ps(filename = file, 
+                 grDevices::cairo_ps(filename = file, 
                            height = h, 
                            width = w,
                            family = font,
@@ -127,7 +127,7 @@ graph2vector = function(x = NULL, file = "Rplot", fun = NULL, type = "SVG",
                            ... )
                }
     myplot()
-    dev.off()
+    grDevices::dev.off()
   }
   
   message(paste0("Exported graph as ",file))

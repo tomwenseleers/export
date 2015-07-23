@@ -58,7 +58,7 @@ graph2bitmap = function(x = NULL, file = "Rplot", fun = NULL, type = c("PNG","JP
     stop("base R plots cannot be passed as objects, use ggplot2 or lattice plots instead")
   myplot = if (is.null(fun)) function(pl = p) print(pl) else fun
   
-  plotsize = dev.size()  # also works if no graphics device is open
+  plotsize = grDevices::dev.size()  # also works if no graphics device is open
   w = plotsize[[1]]
   h = plotsize[[2]]
   plotaspectr = plotsize[[1]]/plotsize[[2]]
@@ -72,7 +72,7 @@ graph2bitmap = function(x = NULL, file = "Rplot", fun = NULL, type = c("PNG","JP
   w = w*scaling/100; h = h*scaling/100;
  
   if (type == "PNG") {
-      png( filename = file, 
+    grDevices::png( filename = file, 
         type = ifelse(cairo,"cairo-png","windows"),
         units = "in", 
         width = w, 
@@ -81,11 +81,11 @@ graph2bitmap = function(x = NULL, file = "Rplot", fun = NULL, type = c("PNG","JP
         res = dpi,
         bg = bg, ...)
     myplot()
-    invisible(dev.off())
+    invisible(grDevices::dev.off())
   }
   
   if (type == "TIF") {
-      tiff( filename = file, 
+    grDevices::tiff( filename = file, 
          type = ifelse(cairo,"cairo","windows"),
          compression = tiffcompression,
          units = "in", 
@@ -95,11 +95,11 @@ graph2bitmap = function(x = NULL, file = "Rplot", fun = NULL, type = c("PNG","JP
          res = dpi,
          bg = bg, ... )
     myplot()
-    invisible(dev.off())  
+    invisible(grDevices::dev.off())  
   }
   
   if (type == "JPEG") { 
-      jpeg( filename = file, 
+    grDevices::jpeg( filename = file, 
           #type = ifelse(cairo,"cairo","windows"),
           quality = jpegquality,
           units = "in", 
@@ -109,7 +109,7 @@ graph2bitmap = function(x = NULL, file = "Rplot", fun = NULL, type = c("PNG","JP
           res = dpi,
           bg = bg, ... )
     myplot()
-    invisible(dev.off())
+    invisible(grDevices::dev.off())
   }  
   
   message(paste0("Exported graph as ",file))

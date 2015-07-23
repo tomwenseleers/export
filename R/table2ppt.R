@@ -3,13 +3,13 @@
 #' Export currently showing R stats object or stats object obj to a Microsoft
 #' Powerpoint / LibreOffice table
 #' 
+#' @import rJava
 #' @import ReporteRs
 #' @import xtable
 #' @import rtable
 #' @import methods 
 #' @import stats  
 #' @import grDevices
-#' @import utils
 #' @aliases table2ppt
 #' @param x given R stats object to export; if set to \code{NULL} the output of the 
 #' previous R command will be exported.
@@ -56,7 +56,7 @@ table2ppt = function(x = NULL, file = "Rtable", append = FALSE, digits = 2,
         outp = .Last.value else outp = obj  # capture previously shown output or use passed object
     if (is.null(outp)) 
         stop("no R stats object available to export")
-    supobjects = c(as.character(gsub("xtable.", "", methods(xtable))), "xtabs", "ftable")  
+    supobjects = c(as.character(gsub("xtable.", "", utils::methods(xtable))), "xtabs", "ftable")  
     # objects supported by xtable
     # 'anova' 'aov' 'aovlist' 'coxph' 'data.frame' 'glm' 'lm' 
     # 'matrix' 'prcomp' 'summary.aov' 'summary.aovlist' 'summary.glm'
@@ -68,7 +68,7 @@ table2ppt = function(x = NULL, file = "Rtable", append = FALSE, digits = 2,
     # tempfile = tempfile(pattern='rhistory_', fileext='.txt') 
     # savehistory(tempfile)
     # myhistory = readLines(tempfile) 
-    # h = tail(h, 5) # last 5 commands eval(parse(text=h[length(h)-1])) 
+    # h = stats::tail(h, 5) # last 5 commands eval(parse(text=h[length(h)-1])) 
     # exec last command but 1 see
     # also http://stackoverflow.com/questions/20959561/accessing-r-history-from-r-code
     
@@ -94,12 +94,12 @@ table2ppt = function(x = NULL, file = "Rtable", append = FALSE, digits = 2,
     
     # deal with specific classes of objects not supported by xtable
     if ("summary.merMod" %in% class(outp)) 
-        outp = data.frame(coef(summary(outp)), check.names = F)
+        outp = data.frame(stats::coef(summary(outp)), check.names = F)
     if ("xtabs" %in% class(outp)) 
-        outp = ftable(outp)
-    supobjects = as.character(gsub("xtable.", "", methods(xtable)))
+        outp = stats::ftable(outp)
+    supobjects = as.character(gsub("xtable.", "", utils::methods(xtable)))
     if ("ftable" %in% class(outp)) 
-        tab = ftable(outp) else {
+        tab = stats::ftable(outp) else {
         if (length(intersect(class(outp), supobjects)) >= 1) 
             tab = xtable2(outp, ...) else outp = data.frame(outp, check.names = F)
     }
@@ -108,10 +108,10 @@ table2ppt = function(x = NULL, file = "Rtable", append = FALSE, digits = 2,
     # see https://davidgohel.github.io/ReporteRs/formatting_properties.html
     flextab = as.FlexTable(x = tab, add.rownames = add.rownames)
     #if (zebra) flextab=setZebraStyle( flextab, odd = odd, even = even)
-    flextab[] = ReporteRs::textProperties(font.size=pointsize, font.family=font) 
+    flextab[] = textProperties(font.size=pointsize, font.family=font) 
     # flextab[1,, to="header"] = textProperties(color=headertext, 
     # font.size=pointsize, font.weight = "bold", font.family=font)
-    flextab[1,, to="header"] = ReporteRs::textProperties(font.size=pointsize, 
+    flextab[1,, to="header"] = textProperties(font.size=pointsize, 
                                               font.weight = "bold", font.family=font)
     # flextab[1,, to="header"] = parProperties(shading.color=header) 
     # change to setFlexTableBackgroundColors
@@ -120,8 +120,8 @@ table2ppt = function(x = NULL, file = "Rtable", append = FALSE, digits = 2,
     file = sub("^(.*)[.].*", "\\1", file)  # remove extension if given
     file = paste0(file, ext)  # add extension
     
-    if (append & file.exists(file)) { doc = ReporteRs::pptx(template = file) } else { doc = ReporteRs::pptx() }
-    doc = ReporteRs::addSlide(doc, slide.layout = "Blank")
+    if (append & file.exists(file)) { doc = pptx(template = file) } else { doc = pptx() }
+    doc = addSlide(doc, slide.layout = "Blank")
     pagesize = dim(doc)$slide.dim
     
     tblaspectr = flextab$numcol * 0.7/flextab$numrow  # guess table aspect ratio
@@ -141,9 +141,9 @@ table2ppt = function(x = NULL, file = "Rtable", append = FALSE, digits = 2,
     if (!is.null(height)) 
         h = height
       
-    doc = ReporteRs::addFlexTable(doc, flextab, offx = offx, offy = offy, width = w, height = h)
+    doc = addFlexTable(doc, flextab, offx = offx, offy = offy, width = w, height = h)
     
-  ReporteRs::writeDoc(doc, file)
+  writeDoc(doc, file)
   
   message(paste0("Exported table as ",file))
   

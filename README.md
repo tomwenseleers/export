@@ -58,44 +58,52 @@ Getting Started
     library(export)
        
     ?graph2ppt
+    ?graph2doc
     ?graph2tex
     ?graph2svg
     ?graph2png
     ?table2ppt
     ?table2tex
+    ?table2doc
+    ?table2html
 
     ## export of ggplot2 plot
     library(ggplot2)
     qplot(Sepal.Length, Petal.Length, data = iris, color = Species, 
           size = Petal.Width, alpha = I(0.7))
+    # export to Powerpoint      
     graph2ppt()      
     graph2ppt(file="ggplot2_plot.pptx", aspectr=1.7)
     # add 2nd slide with same graph 9 inches wide and A4 aspect ratio
     graph2ppt(file="ggplot2_plot.pptx", width=9, aspectr=sqrt(2), append=TRUE) 
     # add 3d slide with same graph with fixed width & height
     graph2ppt(file="ggplot2_plot.pptx", width=6, height=5, append=TRUE) 
+    # export to Word
+    graph2doc()
+    # export to Latex
+    graph2tex()
+    # export to bitmap or vector formats
+    graph2svg()
+    graph2png()
+    graph2tif()
+    graph2jpg()
 
     ## export of aov Anova output
-    # output to Powerpoint
+    # export to Powerpoint
     fit=aov(yield ~ block + N * P + K, npk)
-    summary(fit)
-    table2ppt()
-    summary(fit)
-    table2ppt(file="table_aov.docx")
-    summary(fit)
-    table2ppt(file="table_aov.docx",digits=4,append=TRUE)
-    summary(fit)
-    table2ppt(file="table_aov.docx",digits=4,digitspvals=1,
+    x=summary(fit)
+    table2ppt(x=x)
+    table2ppt(x=x,file="table_aov.docx")
+    table2ppt(x=x,file="table_aov.docx",digits=4,append=TRUE)
+    table2ppt(x=x,file="table_aov.docx",digits=4,digitspvals=1,
               font="Times New Roman",pointsize=16,append=TRUE)
     # export to Latex
-    summary(fit)
-    table2tex()
+    x=summary(fit)
+    table2tex(x=x)
     # export to Word
-    summary(fit)
-    table2doc()
+    table2doc(x=x)
     # export to HTML
-    summary(fit)
-    table2html()
+    table2html(x=x)
 
   
 License

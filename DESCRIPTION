@@ -10,18 +10,19 @@ Maintainer: Tom Wenseleers <tom.wenseleers@bio.kuleuven.be>
 Depends:
     R (>= 3.0),
     ReporteRs (>= 0.7),
-    ReporteRsjars (>= 0.0.2),
+    ReporteRsjars (>= 0.0.2)
+Imports:   
     stats,
-    graphics,
-    grDevices,
     utils,
     datasets,
-    methods
-Imports:    
+    methods,
+    rJava,
     rtable (>= 0.1),
     xtable (>= 1.7),
     tikzDevice (>= 0.8),
-    stargazer (>= 5.1)
+    stargazer (>= 5.1),
+    graphics,
+    grDevices
 Suggests:
     lattice,
     latticeExtra,

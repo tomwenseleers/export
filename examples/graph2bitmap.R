@@ -1,5 +1,12 @@
 library(ggplot2)
-qplot(Sepal.Length, Petal.Length, data = iris, color = Species, size = Petal.Width, alpha = I(0.7))
-graph2png(dpi=300)
-graph2tif()
-graph2jpg()
+x=qplot(Sepal.Length, Petal.Length, data = iris, 
+        color = Species, size = Petal.Width, alpha = I(0.7))
+x
+graph2png(x=x,dpi=300)
+graph2tif(x=x)
+graph2jpg(x=x)
+
+\dontrun{
+# use active graph instead of passing plot as object
+graph2png(aspectr=1.7)
+}

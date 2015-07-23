@@ -5,6 +5,7 @@
 #' 
 #' 
 #' @import grDevices
+#' @import tikzDevice
 #' @aliases graph2tex graph2tex2
 #' @param x given \code{ggplot2} plot or \code{lattice} plot object to export; if
 #' set to \code{NULL} the currently active R graph will be exported; not
@@ -50,7 +51,7 @@ graph2tex = function(x = NULL, file = "Rplot", fun = NULL,
   myplot = if (is.null(fun)) function(pl = p) print(pl) else fun
   
   if (!is.na(font)) {if (font=="sans-serif"|font=="Helvetica"|font=="Arial"|font=="Verdana"|font=="Tahoma") font="sans"}
-  plotsize = dev.size()  # also works if no graphics device is open
+  plotsize = grDevices::dev.size()  # also works if no graphics device is open
   w = plotsize[[1]]
   h = plotsize[[2]]
   plotaspectr = plotsize[[1]]/plotsize[[2]]
@@ -64,14 +65,14 @@ graph2tex = function(x = NULL, file = "Rplot", fun = NULL,
   if ((!is.null(width))&(!is.null(height))) { w = width; h = height }  
   w = w*scaling/100; h = h*scaling/100;
   
-  tikzDevice::tikz(file = file, 
+  tikz(file = file, 
         height = h, 
         width = w,
         bg = bg,
        standAlone = standAlone,
         ... )
     myplot()
-  dev.off()
+    grDevices::dev.off()
   
   if (!is.null(font)) {   if ("sans" %in% font) {
                           out = readLines(file) 

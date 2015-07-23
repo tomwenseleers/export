@@ -3,8 +3,8 @@
 #' Export currently showing R stats object or stats object obj to a
 #' Microsoft Word / LibreOffice, HTML or Latex table
 #' @import stats
-#' @import utils
 #' @import grDevices
+#' @import stargazer
 #' @aliases table2tex table2tex2 table2html table2doc
 #' @param x given R stats object or list of stats objects to export; if set to \code{NULL} 
 #' the output of the previous R command will be exported.
@@ -65,15 +65,15 @@ table2tex = function(x = NULL, file = "Rtable", type="TEX", digits = 2, summary=
     }
   }
   
-  if ("aov" %in% class(obj)) {obj=as.data.frame(anova(obj));summary=FALSE}
+  if ("aov" %in% class(obj)) {obj=as.data.frame(stats::anova(obj));summary=FALSE}
   if ("summary.aov" %in% class(obj)) {obj=as.data.frame(obj);summary=FALSE}
   
   # CHECK support for xtabs, ftable and CrossTable - contacted original author on this
-  # if ("xtabs" %in% class(outp)) outp = ftable(outp)
+  # if ("xtabs" %in% class(outp)) outp = stats::ftable(outp)
   # if ("ftable" %in% class(outp)) XXX
   
   # object supported by stargazer?
-  supported=!grepl("Unrecognized object type",paste(capture.output(stargazer::stargazer(obj)),collapse=""))
+  supported=!grepl("Unrecognized object type",paste(utils::capture.output(stargazer(obj)),collapse=""))
   if (!supported) stop(paste0("Object of class ",class(obj)," is not supported by stargazer."))
   
   # objects supported by stargazer
@@ -95,8 +95,8 @@ table2tex = function(x = NULL, file = "Rtable", type="TEX", digits = 2, summary=
   # not ftable, xtab, CrossTable?
   
   # preview table in viewer or browser
-  htmlout = capture.output(stargazer::stargazer(obj, type="html", summary=summary, ...)) 
-  texout = capture.output(stargazer::stargazer(obj, type="latex", summary=summary, ...))
+  htmlout = utils::capture.output(stargazer(obj, type="html", summary=summary, ...)) 
+  texout = utils::capture.output(stargazer(obj, type="latex", summary=summary, ...))
   outp = preview(htmlout)
     
   # export to HTML/Word/Latex
