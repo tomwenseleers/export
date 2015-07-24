@@ -1,4 +1,6 @@
-#' @import grDevices
+#' @importFrom grDevices recordPlot
+#' @importFrom grDevices dev.cur
+#' @importFrom utils browseURL
 
 # function to preview HTML in RStudio viewer or web browser
 
@@ -9,18 +11,18 @@ preview = function(x){
     if ((!is.null(viewer)) && is.function(viewer))
       viewer(htmlFile)
     else
-      utils::browseURL(htmlFile)
+      browseURL(htmlFile)
 }
 
 
 # function to capture currently active plot
 
 captureplot = function() {
-  current.device = grDevices::dev.cur()
+  current.device = dev.cur()
   nm = names(current.device)[1L]
   if(nm == "null device") stop("no device to print from")
-  if (grDevices::dev.cur() == 1) 
+  if (dev.cur() == 1) 
     stop("no active graphics device found")
-  p = invisible(grDevices::recordPlot())
+  p = invisible(recordPlot())
   p
 }

@@ -4,7 +4,8 @@
 #' to Latex format with sensible defaults
 #' 
 #' 
-#' @import grDevices
+#' @importFrom grDevices dev.size
+#' @importFrom grDevices dev.off
 #' @import tikzDevice
 #' @aliases graph2tex graph2tex2
 #' @param x given \code{ggplot2} plot or \code{lattice} plot object to export; if
@@ -51,7 +52,7 @@ graph2tex = function(x = NULL, file = "Rplot", fun = NULL,
   myplot = if (is.null(fun)) function(pl = p) print(pl) else fun
   
   if (!is.na(font)) {if (font=="sans-serif"|font=="Helvetica"|font=="Arial"|font=="Verdana"|font=="Tahoma") font="sans"}
-  plotsize = grDevices::dev.size()  # also works if no graphics device is open
+  plotsize = dev.size()  # also works if no graphics device is open
   w = plotsize[[1]]
   h = plotsize[[2]]
   plotaspectr = plotsize[[1]]/plotsize[[2]]
@@ -72,7 +73,7 @@ graph2tex = function(x = NULL, file = "Rplot", fun = NULL,
        standAlone = standAlone,
         ... )
     myplot()
-    grDevices::dev.off()
+    dev.off()
   
   if (!is.null(font)) {   if ("sans" %in% font) {
                           out = readLines(file) 

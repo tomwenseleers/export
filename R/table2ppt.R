@@ -3,13 +3,11 @@
 #' Export currently showing R stats object or stats object obj to a Microsoft
 #' Powerpoint / LibreOffice table
 #' 
-#' @import rJava
-#' @import ReporteRs
+#' @importFrom utils methods 
+#' @import stats  
 #' @import xtable
 #' @import rtable
-#' @import methods 
-#' @import stats  
-#' @import grDevices
+#' @import ReporteRs
 #' @aliases table2ppt
 #' @param x given R stats object to export; if set to \code{NULL} the output of the 
 #' previous R command will be exported.
@@ -56,7 +54,7 @@ table2ppt = function(x = NULL, file = "Rtable", append = FALSE, digits = 2,
         outp = .Last.value else outp = obj  # capture previously shown output or use passed object
     if (is.null(outp)) 
         stop("no R stats object available to export")
-    supobjects = c(as.character(gsub("xtable.", "", utils::methods(xtable))), "xtabs", "ftable")  
+    supobjects = c(as.character(gsub("xtable.", "", methods(xtable))), "xtabs", "ftable")  
     # objects supported by xtable
     # 'anova' 'aov' 'aovlist' 'coxph' 'data.frame' 'glm' 'lm' 
     # 'matrix' 'prcomp' 'summary.aov' 'summary.aovlist' 'summary.glm'
@@ -68,7 +66,7 @@ table2ppt = function(x = NULL, file = "Rtable", append = FALSE, digits = 2,
     # tempfile = tempfile(pattern='rhistory_', fileext='.txt') 
     # savehistory(tempfile)
     # myhistory = readLines(tempfile) 
-    # h = stats::tail(h, 5) # last 5 commands eval(parse(text=h[length(h)-1])) 
+    # h = tail(h, 5) # last 5 commands eval(parse(text=h[length(h)-1])) 
     # exec last command but 1 see
     # also http://stackoverflow.com/questions/20959561/accessing-r-history-from-r-code
     
@@ -94,12 +92,12 @@ table2ppt = function(x = NULL, file = "Rtable", append = FALSE, digits = 2,
     
     # deal with specific classes of objects not supported by xtable
     if ("summary.merMod" %in% class(outp)) 
-        outp = data.frame(stats::coef(summary(outp)), check.names = F)
+        outp = data.frame(coef(summary(outp)), check.names = F)
     if ("xtabs" %in% class(outp)) 
-        outp = stats::ftable(outp)
-    supobjects = as.character(gsub("xtable.", "", utils::methods(xtable)))
+        outp = ftable(outp)
+    supobjects = as.character(gsub("xtable.", "", methods(xtable)))
     if ("ftable" %in% class(outp)) 
-        tab = stats::ftable(outp) else {
+        tab = ftable(outp) else {
         if (length(intersect(class(outp), supobjects)) >= 1) 
             tab = xtable2(outp, ...) else outp = data.frame(outp, check.names = F)
     }
@@ -143,7 +141,7 @@ table2ppt = function(x = NULL, file = "Rtable", append = FALSE, digits = 2,
       
     doc = addFlexTable(doc, flextab, offx = offx, offy = offy, width = w, height = h)
     
-  writeDoc(doc, file)
+    writeDoc(doc, file)
   
   message(paste0("Exported table as ",file))
   

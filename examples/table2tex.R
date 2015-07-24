@@ -8,5 +8,6 @@ table2html(x=x,file="table_aov.html") # export to HTML
 
 \dontrun{
 # export output of last evaluation
+summary(fit)
 table2doc(file="table_aov.doc") # export to Word
 }

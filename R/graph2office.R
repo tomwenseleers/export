@@ -4,11 +4,9 @@
 #' to Microsoft Office / LibreOffice format with sensible defaults
 #' 
 #' @import datasets
-#' @import graphics
-#' @import rJava
+#' @importFrom grDevices dev.size
+#' @importFrom utils head tail
 #' @import ReporteRs
-#' @import ReporteRsjars
-#' @import grDevices
 #' @aliases graph2office graph2doc graph2ppt
 #' @param x given \code{ggplot2} plot or \code{lattice} plot object to export; if
 #' set to \code{NULL} the currently active R graph will be exported; not
@@ -91,7 +89,7 @@ graph2office = function(x = NULL, file = "Rplot", fun = NULL, type = c("PPT","DO
       function(pl = p) print(pl) else fun
     #myplot()
     
-    plotsize = grDevices::dev.size()  # also works if no graphics device is open
+    plotsize = dev.size()  # also works if no graphics device is open
     w = plotsize[[1]]
     h = plotsize[[2]]
     plotaspectr = plotsize[[1]]/plotsize[[2]]
@@ -114,6 +112,7 @@ graph2office = function(x = NULL, file = "Rplot", fun = NULL, type = c("PPT","DO
       }}
             
     pagesize = c(width = 6, height = 6)
+    
     if (type == "PPT") {
         if (append & file.exists(file)) doc = pptx(template = file) else doc = pptx(template = templ)
         doc = addSlide(doc, slide.layout = "Blank")
@@ -121,6 +120,7 @@ graph2office = function(x = NULL, file = "Rplot", fun = NULL, type = c("PPT","DO
         pagesize["width"]=pagesize["width"]-(margins["left"]+margins["right"])
         pagesize["height"]=pagesize["height"]-(margins["top"]+margins["bottom"])
     }
+    
     if (type == "DOC") {
 #       if (append & file.exists(file)) 
 #         doc = docx(template = file) else doc = docx(template = templ)
@@ -176,7 +176,7 @@ graph2office = function(x = NULL, file = "Rplot", fun = NULL, type = c("PPT","DO
 #         doc = addPlot(doc, fun = myplot, vector.graphic = vector.graphic, fontname = font, width = w, height = h, 
 #             ...)
 #     }
-writeDoc(doc, file)
+    writeDoc(doc, file)
     message(paste0("Exported graph as ",file))
 }
 
@@ -203,10 +203,10 @@ sizes=(5:1)[1:length(landscA)]
 portrA=lapply(landscA,rev) # size of A5 to A1 landscape PPT/DOC templates
 #w=8.9;h=6.7;
 if (orient=="auto") orient=ifelse(w>=h,"landscape","portrait")
-bestpagesize=suppressWarnings(ifelse( orient=="landscape", sizes[max( min(which(w<=unlist(lapply(landscA,utils::head,n=1)))),
-                                                     min(which(h<=unlist(lapply(landscA,utils::tail,n=1)))) )],
-                                      sizes[max( min(which(w<=unlist(lapply(portrA,utils::head,n=1)))),
-                                                     min(which(h<=unlist(lapply(portrA,utils::tail,n=1)))) )] ))
+bestpagesize=suppressWarnings(ifelse( orient=="landscape", sizes[max( min(which(w<=unlist(lapply(landscA,head,n=1)))),
+                                                     min(which(h<=unlist(lapply(landscA,tail,n=1)))) )],
+                                      sizes[max( min(which(w<=unlist(lapply(portrA,head,n=1)))),
+                                                     min(which(h<=unlist(lapply(portrA,tail,n=1)))) )] ))
 if (is.na(bestpagesize)) bestpagesize=min(sizes)
 return(paste0("A",bestpagesize,"_",orient)) }
 
