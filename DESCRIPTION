@@ -16,7 +16,6 @@ Imports:
     datasets,
     rtable (>= 0.1),
     xtable (>= 1.7),
-    tikzDevice (>= 0.8),
     stargazer (>= 5.1),
     grDevices
 Suggests:
