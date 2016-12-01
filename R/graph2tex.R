@@ -6,7 +6,6 @@
 #' 
 #' @importFrom grDevices dev.size
 #' @importFrom grDevices dev.off
-#' @import tikzDevice
 #' @aliases graph2tex graph2tex2
 #' @param x given \code{ggplot2} plot or \code{lattice} plot object to export; if
 #' set to \code{NULL} the currently active R graph will be exported; not

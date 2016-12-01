@@ -49,8 +49,6 @@
 #' the plot in Powerpoint or Word is then possible after first ungrouping the
 #' plot elements. If set to \code{FALSE}, the plot is rasterized to \code{PNG} bitmap
 #' format at a resolution of 300 dpi.
-#' @param font desired font to use; defaults to \code{"Arial"} on Windows
-#' systems and to \code{"Helvetica"} on other systems.
 #' @param \dots any other options are passed on to \code{ReporteR}'s \code{\link[ReporteRs]{addPlot}} function.
 #' @return \code{NULL}
 #' @author Tom Wenseleers
@@ -64,9 +62,9 @@ graph2office = function(x = NULL, file = "Rplot", fun = NULL, type = c("PPT","DO
                         paper = "auto", orient = ifelse(type[1]=="PPT","landscape","auto"),
                         margins = c(top=0.5,right=0.5,bottom=0.5,left=0.5), 
                         center = TRUE, offx = 1, offy = 1, upscale = FALSE, 
-                        vector.graphic = TRUE, font = 
-                        ifelse(Sys.info()["sysname"]=="Windows","Arial",
-                        "Helvetica")[[1]], ...) {
+                        vector.graphic = TRUE, 
+                        # font = ifelse(Sys.info()["sysname"]=="Windows","Arial","Helvetica")[[1]], 
+                        ...) {
     margins=rep_len(margins,4)
     names(margins)=c("top","right","bottom","left")
     type = toupper(type)
@@ -157,7 +155,7 @@ graph2office = function(x = NULL, file = "Rplot", fun = NULL, type = c("PPT","DO
         if (center) { offx = (pagesize["width"] + margins["left"]+margins["right"] - w)/2
                       offy = (pagesize["height"] + margins["top"]+margins["bottom"] - h)/2
         }
-        doc = addPlot(doc, fun = myplot, vector.graphic = vector.graphic, fontname = font, 
+        doc = addPlot(doc, fun = myplot, vector.graphic = vector.graphic,  
                       offx = offx, offy = offy, width = w, height = h, ...)
     }
     if (type == "DOC") {
@@ -165,15 +163,15 @@ graph2office = function(x = NULL, file = "Rplot", fun = NULL, type = c("PPT","DO
 #     if (append & file.exists(file)) { 
 #         if (pagebreak) doc = addPageBreak( doc )
 #         doc = addPlot(doc, fun = myplot, vector.graphic = vector.graphic, 
-#                       fontname = font, width = w, height = h, ...)} else {
+#                       width = w, height = h, ...)} else {
 #         doc = addPlot(doc, fun = myplot, vector.graphic = vector.graphic, 
-#                       fontname = font, width = w, height = h, bookmark="PLOT", ...)
+#                       width = w, height = h, bookmark="PLOT", ...)
 #                       }        
       doc = addPlot(doc, fun = myplot, vector.graphic = vector.graphic, 
-                    fontname = font, width = w, height = h, bookmark="PLOT", ...)  
+                    width = w, height = h, bookmark="PLOT", ...)  
     }
 #     if (type == "HTML") {
-#         doc = addPlot(doc, fun = myplot, vector.graphic = vector.graphic, fontname = font, width = w, height = h, 
+#         doc = addPlot(doc, fun = myplot, vector.graphic = vector.graphic, width = w, height = h, 
 #             ...)
 #     }
     writeDoc(doc, file)

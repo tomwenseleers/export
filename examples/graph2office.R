@@ -27,12 +27,12 @@ graph2doc(paper="A3", orient="portrait", aspectr=1.7)
 library(lattice)
 library(effects)
 fit=lm(prestige ~ type + income*education, data=Prestige)
-plot(Effect(c("income", "education"), fit, partial.residuals=TRUE),multiline=TRUE, 
+plot(Effect(c("income", "education"), fit),multiline=TRUE, 
      span=1, show.fitted=TRUE, ci.style="bands")
 graph2ppt(file="effect_plot.pptx")
 
 # pass plot as object
-x=plot(Effect(c("income", "education"), fit, partial.residuals=TRUE),multiline=TRUE, 
+x=plot(Effect(c("income", "education"), fit),multiline=TRUE, 
      span=1, show.fitted=TRUE, ci.style="bands")
 graph2ppt(x=x,file="effect_plot.pptx")
 

@@ -2,7 +2,7 @@ library(ggplot2)
 x=qplot(Sepal.Length, Petal.Length, data = iris, 
         color = Species, size = Petal.Width, alpha = I(0.7))
 x
-graph2png(x=x,dpi=300)
+graph2png(x=x,dpi=400)
 graph2tif(x=x)
 graph2jpg(x=x)
 

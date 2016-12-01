@@ -39,6 +39,8 @@
 #' device for output to \code{PDF} or \code{EPS}, defaults to \code{TRUE}, thereby allowing for
 #' simulated semi-transparency in \code{EPS} output, by rasterizing semi-transparent
 #' sections, and automated font embedding.
+#' @param fallback_resolution resolution in dpi to use to rasterize non-supported
+#' vector graphics (e.g. semi-transparent vector elements in \code{EPS}) output).
 #' @param colormodel desired colormodel in \code{pdf} or \code{eps} output when \code{cairo=FALSE};
 #' currently allowed values are \code{"rgb"} (default), \code{"cmyk"}, \code{"srgb"}, \code{"srgb+gray"}, \code{"rgb-nogray"}, 
 #' and \code{"gray"} (or \code{"grey"}). 
@@ -54,7 +56,7 @@ graph2vector = function(x = NULL, file = "Rplot", fun = NULL, type = "SVG",
                         aspectr = NULL, width = NULL, height = NULL, scaling = 100, 
                         font = ifelse(Sys.info()["sysname"]=="Windows","Arial",
                         "Helvetica")[[1]], bg = "white", colormodel="rgb", 
-                        cairo = TRUE, ...) {
+                        cairo = TRUE, fallback_resolution = 600, ...) {
   type = toupper(type)
   type = match.arg(type,c("SVG","PDF","EPS"))
   ext = paste0(".", tolower(type))
@@ -103,13 +105,20 @@ graph2vector = function(x = NULL, file = "Rplot", fun = NULL, type = "SVG",
         colormodel = colormodel, 
         useDingbats = FALSE,
         ... ) } else { 
-          cairo_pdf(filename = file,  # also check cairo_pdf
+          if ("fallback_resolution" %in% names(formals(fun=cairo_ps))) cairo_pdf(filename = file,  
               height = h, 
               width = w,
               family = font, 
               onefile = FALSE,
               bg = bg,
-              ... ) 
+              fallback_resolution = fallback_resolution,
+              ... ) else cairo_pdf(filename = file,  # also check cairo_pdf
+                                   height = h, 
+                                   width = w,
+                                   family = font, 
+                                   onefile = FALSE,
+                                   bg = bg,
+                                   ... )
         }
     myplot()
     dev.off()
@@ -124,13 +133,20 @@ graph2vector = function(x = NULL, file = "Rplot", fun = NULL, type = "SVG",
                bg = bg,
                colormodel = colormodel, 
                ... ) } else { 
-                 cairo_ps(filename = file, 
+                 if ("fallback_resolution" %in% names(formals(fun=cairo_ps)))  cairo_ps(filename = file, 
                            height = h, 
                            width = w,
                            family = font,
                            onefile = FALSE,
                            bg = bg,
-                           ... )
+                           fallback_resolution = fallback_resolution,
+                           ... ) else cairo_ps(filename = file, 
+                                               height = h, 
+                                               width = w,
+                                               family = font,
+                                               onefile = FALSE,
+                                               bg = bg,
+                                               ... )
                }
     myplot()
     dev.off()
