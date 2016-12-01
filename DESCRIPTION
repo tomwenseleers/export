@@ -15,6 +15,7 @@ Imports:
     stats,
     utils,
     datasets,
+<<<<<<< HEAD
     rtable,
     xtable,
     grDevices,
@@ -24,6 +25,12 @@ Imports:
     scales,
     grid,
     ggthemes
+=======
+    rtable (>= 0.1),
+    xtable (>= 1.7),
+    stargazer (>= 5.1),
+    grDevices
+>>>>>>> origin/master
 Suggests:
     lattice,
     latticeExtra,
