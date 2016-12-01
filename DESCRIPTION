@@ -1,42 +1,17 @@
 Package: export
 Type: Package
 Title: Convert R Graphs and Statistical Output to Microsoft Office /
-    LibreOffice, HTML and Latex
+        LibreOffice, HTML and Latex
 Version: 0.2.1
 Date: 2016-12-01
 Authors@R: c(person("Tom", "Wenseleers", role = c("aut", "cre"),
   	     email = "tom.wenseleers@bio.kuleuven.be"))
 Author: Tom Wenseleers [aut, cre]
 Maintainer: Tom Wenseleers <tom.wenseleers@bio.kuleuven.be>
-Depends:
-    R (>= 3.0)
-Imports:
-    ReporteRs,
-    stats,
-    utils,
-    datasets,
-<<<<<<< HEAD
-    rtable,
-    xtable,
-    grDevices,
-    rgl,
-    ggplot2 (>= 1.0),
-    plyr,
-    scales,
-    grid,
-    ggthemes
-=======
-    rtable (>= 0.1),
-    xtable (>= 1.7),
-    stargazer (>= 5.1),
-    grDevices
->>>>>>> origin/master
-Suggests:
-    lattice,
-    latticeExtra,
-    effects,
-    tikzDevice,
-    stargazer
+Depends: R (>= 3.0)
+Imports: ReporteRs, stats, utils, datasets, rtable, xtable, grDevices,
+        rgl, ggplot2 (>= 1.0), plyr, scales, grid, ggthemes
+Suggests: lattice, latticeExtra, effects, tikzDevice, stargazer
 Description: Easily export 'R' graphs and statistical output to 'Microsoft
     Office' / 'LibreOffice', 'Latex' and 'HTML' Documents, using sensible defaults
     that result in publication-quality output with simple, straightforward commands.
@@ -55,3 +30,5 @@ Description: Easily export 'R' graphs and statistical output to 'Microsoft
 License: GPL-2
 BugReports: https://github.com/tomwenseleers/export/issues
 RoxygenNote: 5.0.1
+NeedsCompilation: no
+Packaged: 2016-11-30 23:32:55 UTC; User
