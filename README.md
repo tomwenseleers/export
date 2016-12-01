@@ -1,4 +1,4 @@
-export version 0.2.0 Beta
+export version 0.2.1 Beta
 =========================
 export is an R package to easily export active R graphs and statistical output 
 in publication quality to Microsoft Office, HTML and Latex.
@@ -49,7 +49,7 @@ export needs some R packages ; run the following script to install them if neede
 
     install.packages("devtools")
     library(devtools)
-    devtools::install_github('tomwenseleers/export',local=F)
+    devtools::install_github("tomwenseleers/export")
 
   
 Getting Started
