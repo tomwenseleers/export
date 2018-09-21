@@ -3,9 +3,9 @@ Type: Package
 Title: Streamlined Export of Graphs and Data Tables
 Version: 0.2.2
 Date: 2018-09-18
-Authors@R: c(person("Tom", "Wenseleers", role = c("aut", "cre"),
+Authors@R: c(person("Tom", "Wenseleers", role = c("aut"),
     	     email = "tom.wenseleers@kuleuven.be"),
-  	       person("Christophe", "Vanderaa", role = c("aut"),
+  	       person("Christophe", "Vanderaa", role = c("aut", "cre"),
   	       email = "christophe.vanderaa@kuleuven.be"))
 Depends: R (>= 3.0)
 Imports:  officer (>= 0.2.2), 
