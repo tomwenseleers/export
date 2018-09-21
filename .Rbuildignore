@@ -1,3 +1,5 @@
 ^.*\.Rproj$
 examples
 ^\.Rproj\.user$
+cran-comments.md
+revdep
