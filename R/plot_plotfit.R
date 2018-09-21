@@ -109,14 +109,12 @@ plotfit3d=function(model=NULL,plotx1=NULL,plotx2=NULL,residuals=TRUE,
   require(colorRamps)
   require(colorspace)
   require(MASS)
-  require(effects)
   require(pbkrtest)
     
   # raw data
   mf=model.frame(model);
   emf=rockchalk::model.data(model)
-  #mf=Effect(c(plotx1,plotx2),model,confidence.level=level,xlevels=2,partial.residuals=FALSE,type="response")$data
-
+  
   if (!is.null(selection)) selected=selrows(emf,selection) else selected=1:nrow(emf)
   
   x1=mf[,which(plotx1==names(emf))] 
@@ -143,16 +141,6 @@ plotfit3d=function(model=NULL,plotx1=NULL,plotx2=NULL,residuals=TRUE,
   y=y[selected]
   #resid=resid[selected]
   
-    
-#    if (interval=="prediction") { preds=predictOMatic(model,predVals=xlvls,n=npp,divider="seq",interval=interval,level=level,type="response") } 
-#    
-#    eff=Effect(c(plotx1,plotx2),model,confidence.level=level,xlevels=xlvls,
-#              partial.residuals=TRUE)
-#        
-#    if (interval!="prediction") { preds=data.frame(eff)[selected,]
-#        names(preds)[names(preds)=="lower"]="lwr" 
-#        names(preds)[names(preds)=="upper"]="upr" }
-      
   resid=resid(model)[selected] # eff$partial.residuals.raw[selected]
 
   ylim=c(min(c(preds$fit,y)),max(c(preds$fit,y)))
