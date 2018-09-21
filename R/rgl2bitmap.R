@@ -9,11 +9,10 @@
 #' @param file name of output file. Any extension is ignored and added
 #' according to the requested output type. If file already exists it is overwritten.
 #' @param type desired output type - currently only \code{PNG} is supported.
+#' @param \dots passing the \code{rgl2png} arguments to \code{rgl2bitmap}
 #' @return \code{NULL}
 #' @author Tom Wenseleers
 #' @example examples/rgl2bitmap.R
-#' @seealso \code{\link{rgl2vector}},\code{\link{rgl2svg}}, \code{\link{rgl2pdf}},
-#' \code{\link{rgl2eps}}, \code{\link{rgl2tex}} 
 #' @export
 #' 
 rgl2bitmap = function(file = "Rplot", type = c("PNG")) {
@@ -31,6 +30,7 @@ rgl2bitmap = function(file = "Rplot", type = c("PNG")) {
 }
 
 #' @describeIn rgl2bitmap
+#' Save currently active rgl 3D graph to PNG format
 #' @export
 rgl2png = function(...) rgl2bitmap(type = "PNG", ...)
 

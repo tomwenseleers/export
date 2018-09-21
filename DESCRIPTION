@@ -1,17 +1,33 @@
 Package: export
 Type: Package
-Title: Convert R Graphs and Statistical Output to Microsoft Office /
-        LibreOffice, HTML and Latex
-Version: 0.2.1
-Date: 2016-12-01
+Title: Streamlined export of graphs and data tables.
+Version: 0.2.2
+Date: 2018-09-18
 Authors@R: c(person("Tom", "Wenseleers", role = c("aut", "cre"),
-  	     email = "tom.wenseleers@bio.kuleuven.be"))
-Author: Tom Wenseleers [aut, cre]
-Maintainer: Tom Wenseleers <tom.wenseleers@bio.kuleuven.be>
+    	     email = "tom.wenseleers@kuleuven.be"),
+  	       person("Christophe", "Vanderaa", role = c("aut", "ctb"),
+  	       email = "christophe.vanderaa@kuleuven.be"))
+Author: Tom Wenseleers [aut, cre], 
+        Christophe Vanderaa [aut, ctb]
+Maintainer: Christophe Vanderaa <christophe.vanderaa@kuleuven.be>
 Depends: R (>= 3.0)
-Imports: ReporteRs, stats, utils, datasets, rtable, xtable, grDevices,
-        rgl, ggplot2 (>= 1.0), plyr, scales, grid, ggthemes
-Suggests: lattice, latticeExtra, effects, tikzDevice, stargazer
+Imports:  officer (>= 0.2.2), 
+          rvg (>= 0.1.8), 
+          stats, 
+          utils, 
+          datasets, 
+          xtable (>= 1.8-2), 
+          grDevices,
+          flextable (>= 0.4.3), 
+          rgl (>= 0.99.16), 
+          xml2 (>= 1.2.0), 
+          stargazer, 
+          openxlsx (>= 4.0.17), 
+          broom (>= 0.4.4)
+Suggests: lattice, 
+          ggplot2 (>= 1.0), 
+          latticeExtra (>= 0.6-28), 
+          tikzDevice
 Description: Easily export 'R' graphs and statistical output to 'Microsoft
     Office' / 'LibreOffice', 'Latex' and 'HTML' Documents, using sensible defaults
     that result in publication-quality output with simple, straightforward commands.
@@ -22,13 +38,13 @@ Description: Easily export 'R' graphs and statistical output to 'Microsoft
     of graphs is flexible, and functions enable the currently showing R graph
     or the currently showing 'R' stats object to be exported, but also allow the
     graphs or stats output to be passed as objects. The package relies on package
-    'ReporteRs' for export to 'Office',and output files are also fully compatible
+    'officer' for export to 'Office',and output files are also fully compatible
     with 'LibreOffice'. Base 'R', 'ggplot2' and 'lattice' plots are supported, as
-    well as all as a wide variety of 'R' stats objects, via wrappers to 'xtable' and
-    'stargazer', including 'aov', 'lm', 'glm', 'lme', 'lmer', 'glmer' and 'coxph' as
-    well as 'ftable' and 'xtabs' cross-tabulations, matrices and data frames.
+    well as a wide variety of 'R' stats objects, via wrappers to 'xtable', 'broom::tidy' 
+    and 'stargazer', including 'aov', 'lm', 'glm', 'lme', 'lmer', 'glmer' and 'coxph' as
+    well as matrices and data frames and many more...
 License: GPL-2
 BugReports: https://github.com/tomwenseleers/export/issues
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1
 NeedsCompilation: no
-Packaged: 2016-11-30 23:32:55 UTC; User
+Packaged: 2018-09-17 15:51:05 UTC; Ento

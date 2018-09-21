@@ -1,17 +1,71 @@
 #' @importFrom grDevices recordPlot
-#' @importFrom grDevices dev.cur
+#' @importFrom grDevices dev.cur hcl
 #' @importFrom utils browseURL
+#' @import xml2
 
 # function to preview HTML in RStudio viewer or web browser
-
 preview = function(x){
-    htmlFile = tempfile(fileext=".html")
-    cat(x, file=htmlFile)
-    viewer = getOption("viewer")
-    if ((!is.null(viewer)) && is.function(viewer))
-      viewer(htmlFile)
-    else
-      browseURL(htmlFile)
+  htmlFile = tempfile(fileext=".html")
+  cat(x, file=htmlFile)
+  viewer = getOption("viewer")
+  if ((!is.null(viewer)) && is.function(viewer))
+    viewer(htmlFile)
+  else
+    browseURL(htmlFile)
+}
+
+# helper function to show p values right aligned with digitspvals sign digits and 
+# degrees of freedom columns as right aligned integers
+xtable2 = function(x, ndigits = 2, ndigitspvals = 2, ...) {
+  sm = xtable(x)
+  ncol = ncol(sm)
+  digs = rep(ndigits, ncol + 1)
+  disp = rep("f", ncol + 1)
+  whch = grep("\\QPr(\\E|\\Qp-value\\E|\\Qp value\\E|\\Qpadj\\E|^p$|^padj$", colnames(sm))
+  if (length(whch) != 0) {
+    digs[whch + 1] = ndigitspvals
+    disp[whch + 1] = "g"
+  }
+  whch = grep("^Df$|^df$", colnames(sm))
+  if (length(whch) != 0){
+    digs[whch + 1] = 0
+    disp[whch + 1] = "d"
+  }
+  digs[c(1,which(!sapply(x,is.numeric))+1)] <- 0
+  disp[c(1,which(!sapply(x,is.numeric))+1)] <- "s"
+  for(i in 2:length(digs)){
+    if(!is.na(digs[i])) sm[,i-1] <- round(sm[,i-1], digits = digs[i])
+  }
+  xtable(sm, digits = digs, display = disp,...)
+}
+
+tidy2 <- function(x, ndigits = 2, ndigitspvals = 2,...) {
+  x <- tidy(x)
+  ncol = ncol(x)
+  digs = rep(ndigits, ncol)
+  whch = grep("\\QPr(\\E|\\Qp-value\\E|\\Qp value\\E|\\Qpadj\\E|^p$|^padj$", colnames(x))
+  if (length(whch) != 0) { digs[whch] = ndigitspvals }
+  whch = grep("^Df$|^df$", colnames(x))
+  if (length(whch) != 0){ digs[whch] = 0 }
+  digs[!sapply(x,is.numeric)] <- NA
+  for(i in 1:length(digs)){
+    if(!is.na(digs[i])) x[,i] <- round(x[,i], digits = digs[i])
+  }
+  return(x)
+}
+
+data.frame2<- function(x, ndigits = 2, ndigitspvals = 2) {
+  x <- data.frame(x, check.names = F)
+  ncol = ncol(x)
+  digs = rep(ndigits, ncol)
+  whch = grep("\\QPr(\\E|\\Qp-value\\E|\\Qp value\\E|\\Qpadj\\E|^p$|^padj$", colnames(x))
+  if (length(whch) != 0) { digs[whch] = ndigitspvals }
+  whch = grep("^Df$|^df$", colnames(x))
+  if (length(whch) != 0){ digs[whch] = 0 }
+  for(i in 1:length(digs)){
+    if(!is.na(digs[i])) x[,i-1] <- round(x[,i-1], digits = digs[i])
+  }
+  return(x)
 }
 
 
@@ -56,3 +110,41 @@ selrows=function(mydata,selection) {
 }
 
 
+# Function to extract the slide size of a presentation from an XML (for PPT)
+# This is needed when using officer package
+get.slide.size <- function(doc, units="in"){
+  doc.xml <- doc$presentation$get()
+  nodes.xml<- xml_children(doc.xml)
+  ind <- which(grepl(sapply(nodes.xml, as.character), pattern = "sldSz"))
+  slide.size <- as.numeric(xml_attrs(nodes.xml[[ind]])[1:2])
+  fac <- ifelse(units == "cm", 360000, 360000 * 2.54 ) # fac = number of pixels per inch or cm
+  slide.size <- slide.size/fac
+  names(slide.size) <- c("width", "height")
+  return(slide.size)
+}
+
+
+# for a given graph width, height, page orientation and type
+# returns the best suited template
+# TO DO: maybe still add additional parameter "pageaspectr" to support A4, 16:9 or 4:3
+besttemplate = function(w,h,margins = c(top=1,right=1,bottom=1,left=1),orient="auto",type="PPT") {
+  # size of A5 to A1 landscape PPT/DOC templates
+  landscA=list(c(8.27,5.83),c(11.7,8.27),c(16.5,11.7),c(23.4,16.5),c(33.1,23.4))
+  if (type=="PPT" ) { 
+    landscA = lapply(landscA,function(x){
+      return(x-c(margins["left"]+margins["right"],margins["top"]+margins["bottom"]))
+    }) 
+  }
+  if (type=="DOC") landscA=lapply(landscA,function(x) x-1)[1:3] # allow for 1 inch margins+DOC only supports A5, A4 and A3
+  sizes=(5:1)[1:length(landscA)]
+  portrA=lapply(landscA,rev) # size of A5 to A1 landscape PPT/DOC templates
+  #w=8.9;h=6.7;
+  if (orient=="auto") orient=ifelse(w>=h,"landscape","portrait")
+  bestpagesize=suppressWarnings(ifelse( orient=="landscape", 
+                                        sizes[max( min(which(w<=unlist(lapply(landscA,head,n=1)))), 
+                                                                        min(which(h<=unlist(lapply(landscA,tail,n=1)))) )],
+                                        sizes[max( min(which(w<=unlist(lapply(portrA,head,n=1)))),
+                                                   min(which(h<=unlist(lapply(portrA,tail,n=1)))) )] ))
+  if (is.na(bestpagesize)) bestpagesize=min(sizes)
+  return(paste0("A",bestpagesize,"_",orient)) 
+}

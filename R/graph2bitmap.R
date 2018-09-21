@@ -35,12 +35,13 @@
 #' @param cairo logical, specifying whether or not to use \code{Cairographics} for export.
 #' @param tiffcompression compression to use for \code{TIF} files.
 #' @param jpegquality quality of \code{JPEG} compression.
-#' @param \dots any other options are passed on to \code{ReporteRs}'s \code{\link[ReporteRs]{addPlot}} function.
+#' @param \dots any other options are passed on to \code{grDevices}' \code{\link[grDevices]{png}}, 
+#' \code{\link[grDevices]{tiff}}, or \code{\link[grDevices]{jpeg}} function (according to the supplied \code{type}).
 #' @return \code{NULL}
 #' @author Tom Wenseleers
 #' @example examples/graph2bitmap.R
 #' @seealso \code{\link{graph2office}}, \code{\link{graph2vector}}, \code{\link{graph2svg}}, \code{\link{graph2pdf}},
-#' \code{\link{graph2eps}}, \code{\link{graph2tex}} 
+#' \code{\link{graph2eps}}
 #' @export
 #' 
 graph2bitmap = function(x = NULL, file = "Rplot", fun = NULL, type = c("PNG","JPG","TIF"), 
@@ -115,19 +116,21 @@ graph2bitmap = function(x = NULL, file = "Rplot", fun = NULL, type = c("PNG","JP
     myplot()
     invisible(dev.off())
   }  
-  
   message(paste0("Exported graph as ",file))
   
 }
 
-#' @describeIn graph2bitmap
+#' @describeIn graph2bitmap 
+#' Save currently active R graph to png file
 #' @export
 graph2png = function(...) graph2bitmap(type = "PNG", ...)
 
-#' @describeIn graph2bitmap
+#' @describeIn graph2bitmap 
+#' Save currently active R graph to TIF file
 #' @export
 graph2tif = function(...) graph2bitmap(type = "TIF", ...)
 
-#' @describeIn graph2bitmap
+#' @describeIn graph2bitmap 
+#' Save currently active R graph to JPEG file
 #' @export
 graph2jpg = function(...) graph2bitmap(type = "JPG", ...) 
