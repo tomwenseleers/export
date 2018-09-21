@@ -3,15 +3,20 @@
 \name{rgl2bitmap}
 \alias{rgl2bitmap}
 \alias{rgl2png}
+\alias{rgl2png}
 \title{Save currently active rgl 3D graph to bitmap format}
 \usage{
 rgl2bitmap(file = "Rplot", type = c("PNG"))
+
+rgl2png(...)
 }
 \arguments{
 \item{file}{name of output file. Any extension is ignored and added
 according to the requested output type. If file already exists it is overwritten.}
 
 \item{type}{desired output type - currently only \code{PNG} is supported.}
+
+\item{\dots}{passing the \code{rgl2png} arguments to \code{rgl2bitmap}}
 }
 \value{
 \code{NULL}
@@ -19,17 +24,17 @@ according to the requested output type. If file already exists it is overwritten
 \description{
 Save currently active rgl 3D graph to bitmap format in current orientation
 }
+\section{Functions}{
+\itemize{
+\item \code{rgl2png}: Save currently active rgl 3D graph to PNG format
+}}
+
 \examples{
 x = y = seq(-10, 10, length = 20)
 z = outer(x, y, function(x, y) x^2 + y^2)
-persp3d(x, y, z, col = 'lightblue')
+rgl::persp3d(x, y, z, col = 'lightblue')
 rgl2png()
 }
 \author{
 Tom Wenseleers
 }
-\seealso{
-\code{\link{rgl2vector}},\code{\link{rgl2svg}}, \code{\link{rgl2pdf}},
-\code{\link{rgl2eps}}, \code{\link{rgl2tex}}
-}
-

@@ -2,9 +2,12 @@
 % Please edit documentation in R/graph2bitmap.R
 \name{graph2bitmap}
 \alias{graph2bitmap}
+\alias{graph2png}
+\alias{graph2tif}
 \alias{graph2jpg}
 \alias{graph2png}
 \alias{graph2tif}
+\alias{graph2jpg}
 \title{Save currently active R graph to bitmap format}
 \usage{
 graph2bitmap(x = NULL, file = "Rplot", fun = NULL, type = c("PNG",
@@ -13,6 +16,12 @@ graph2bitmap(x = NULL, file = "Rplot", fun = NULL, type = c("PNG",
   "Helvetica")[[1]], bg = "white", cairo = TRUE,
   tiffcompression = c("lzw", "rle", "jpeg", "zip", "lzw+p", "zip+p"),
   jpegquality = 99, ...)
+
+graph2png(...)
+
+graph2tif(...)
+
+graph2jpg(...)
 }
 \arguments{
 \item{x}{given \code{ggplot2} plot or \code{lattice} plot object to export; if
@@ -54,7 +63,8 @@ aspect ratio aspectr.}
 
 \item{jpegquality}{quality of \code{JPEG} compression.}
 
-\item{\dots}{any other options are passed on to \code{ReporteRs}'s \code{\link[ReporteRs]{addPlot}} function.}
+\item{\dots}{any other options are passed on to \code{grDevices}' \code{\link[grDevices]{png}}, 
+\code{\link[grDevices]{tiff}}, or \code{\link[grDevices]{jpeg}} function (according to the supplied \code{type}).}
 }
 \value{
 \code{NULL}
@@ -63,6 +73,15 @@ aspect ratio aspectr.}
 Save the currently active R graph or a graph passed as an object or function 
 to bitmap format with sensible defaults
 }
+\section{Functions}{
+\itemize{
+\item \code{graph2png}: Save currently active R graph to png file
+
+\item \code{graph2tif}: Save currently active R graph to TIF file
+
+\item \code{graph2jpg}: Save currently active R graph to JPEG file
+}}
+
 \examples{
 library(ggplot2)
 x=qplot(Sepal.Length, Petal.Length, data = iris, 
@@ -77,11 +96,10 @@ graph2jpg(x=x)
 graph2png(aspectr=1.7)
 }
 }
+\seealso{
+\code{\link{graph2office}}, \code{\link{graph2vector}}, \code{\link{graph2svg}}, \code{\link{graph2pdf}},
+\code{\link{graph2eps}}
+}
 \author{
 Tom Wenseleers
 }
-\seealso{
-\code{\link{graph2office}}, \code{\link{graph2vector}}, \code{\link{graph2svg}}, \code{\link{graph2pdf}},
-\code{\link{graph2eps}}, \code{\link{graph2tex}}
-}
-

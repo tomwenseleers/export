@@ -49,13 +49,13 @@
 #' @return NULL
 #' @author Tom Wenseleers
 #' @example examples/graph2vector.R
-#' @seealso \code{\link{graph2tex}}, \code{\link{graph2office}}, \code{\link{graph2bitmap}}, \code{\link{graph2png}}, \code{\link{graph2tif}}, \code{\link{graph2jpg}} 
+#' @seealso \code{\link{graph2office}}, \code{\link{graph2bitmap}}, \code{\link{graph2png}}, \code{\link{graph2tif}}, \code{\link{graph2jpg}} 
 #' @export
 #' 
 graph2vector = function(x = NULL, file = "Rplot", fun = NULL, type = "SVG", 
                         aspectr = NULL, width = NULL, height = NULL, scaling = 100, 
                         font = ifelse(Sys.info()["sysname"]=="Windows","Arial",
-                        "Helvetica")[[1]], bg = "white", colormodel="rgb", 
+                                      "Helvetica")[[1]], bg = "white", colormodel="rgb", 
                         cairo = TRUE, fallback_resolution = 600, ...) {
   type = toupper(type)
   type = match.arg(type,c("SVG","PDF","EPS"))
@@ -73,8 +73,8 @@ graph2vector = function(x = NULL, file = "Rplot", fun = NULL, type = "SVG",
   h = plotsize[[2]]
   plotaspectr = plotsize[[1]]/plotsize[[2]]
   if ((!is.null(aspectr))&is.null(height)&is.null(width)) { plotaspectr = aspectr
-                                                            if (plotaspectr >= 1) { 
-                                                              h = w/plotaspectr } else { w = h*plotaspectr } 
+  if (plotaspectr >= 1) { 
+    h = w/plotaspectr } else { w = h*plotaspectr } 
   }
   if ((is.null(height))&(!is.null(width))) { w = width; h = w / plotaspectr }
   if ((is.null(width))&(!is.null(height))) { h = height; w = h / plotaspectr } 
@@ -84,70 +84,81 @@ graph2vector = function(x = NULL, file = "Rplot", fun = NULL, type = "SVG",
   
   if (type == "SVG") {
     svg(filename = file, 
-             height = h, 
-             width = w,
-             family = font,
-             onefile = FALSE,
-             bg = bg,
-             ... )
+        height = h, 
+        width = w,
+        family = font,
+        onefile = FALSE,
+        bg = bg,
+        ... )
     myplot()
     dev.off()
   }
   
   if (type == "PDF") {
     #cairo_surface_set_fallback_resolution() # check cairoSurfaceSetFallbackResolution in library(RGtk2)
-    if (!cairo) { pdf(file = file,  # also check cairo_pdf
-        height = h, 
-        width = w,
-        family = font,
-        onefile = FALSE,
-        bg = bg,
-        colormodel = colormodel, 
-        useDingbats = FALSE,
-        ... ) } else { 
-          if ("fallback_resolution" %in% names(formals(fun=cairo_ps))) cairo_pdf(filename = file,  
-              height = h, 
-              width = w,
-              family = font, 
-              onefile = FALSE,
-              bg = bg,
-              fallback_resolution = fallback_resolution,
-              ... ) else cairo_pdf(filename = file,  # also check cairo_pdf
-                                   height = h, 
-                                   width = w,
-                                   family = font, 
-                                   onefile = FALSE,
-                                   bg = bg,
-                                   ... )
-        }
+    if (!cairo) { 
+      pdf(file = file,  # also check cairo_pdf
+          height = h, 
+          width = w,
+          family = font,
+          onefile = FALSE,
+          bg = bg,
+          colormodel = colormodel, 
+          useDingbats = FALSE,
+          ... ) 
+    } else { 
+      if ("fallback_resolution" %in% names(formals(fun=cairo_ps))) {
+        cairo_pdf(filename = file,  
+                  height = h, 
+                  width = w,
+                  family = font, 
+                  onefile = FALSE,
+                  bg = bg,
+                  fallback_resolution = fallback_resolution,
+                  ... ) 
+      } else {
+        cairo_pdf(filename = file,  # also check cairo_pdf
+                  height = h, 
+                  width = w,
+                  family = font, 
+                  onefile = FALSE,
+                  bg = bg,
+                  ... )
+      }
+    }
     myplot()
     dev.off()
   }
   
   if (type == "EPS") { 
     if (!cairo) { postscript(file = file, 
-               height = h, 
-               width = w,
-               family = font,
-               onefile = FALSE,
-               bg = bg,
-               colormodel = colormodel, 
-               ... ) } else { 
-                 if ("fallback_resolution" %in% names(formals(fun=cairo_ps)))  cairo_ps(filename = file, 
-                           height = h, 
-                           width = w,
-                           family = font,
-                           onefile = FALSE,
-                           bg = bg,
-                           fallback_resolution = fallback_resolution,
-                           ... ) else cairo_ps(filename = file, 
-                                               height = h, 
-                                               width = w,
-                                               family = font,
-                                               onefile = FALSE,
-                                               bg = bg,
-                                               ... )
-               }
+                             height = h, 
+                             width = w,
+                             family = font,
+                             onefile = FALSE,
+                             bg = bg,
+                             colormodel = colormodel, 
+                             ... ) 
+    } else { 
+      if ("fallback_resolution" %in% names(formals(fun=cairo_ps)))  {
+        cairo_ps(filename = file, 
+                 height = h, 
+                 width = w,
+                 family = font,
+                 onefile = FALSE,
+                 bg = bg,
+                 fallback_resolution = fallback_resolution,
+                 ... )
+      } else {
+        cairo_ps(filename = file, 
+                 height = h, 
+                 width = w,
+                 family = font,
+                 onefile = FALSE,
+                 bg = bg,
+                 ... )
+      }
+    }
     myplot()
     dev.off()
   }
@@ -159,14 +170,17 @@ graph2vector = function(x = NULL, file = "Rplot", fun = NULL, type = "SVG",
 
 
 #' @describeIn graph2vector
+#' Save currently active R graph to SVG format
 #' @export
 graph2svg = function(...) graph2vector(type = "SVG", ...)
 
 #' @describeIn graph2vector
+#' Save currently active R graph to PDF format
 #' @export
 graph2pdf = function(...) graph2vector(type = "PDF", ...)
 
 #' @describeIn graph2vector
+#' Save currently active R graph to EPS format
 #' @export
 graph2eps = function(...) graph2vector(type = "EPS", ...)
 

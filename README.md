@@ -1,7 +1,7 @@
 export version 0.2.1 Beta
 =========================
 export is an R package to easily export active R graphs and statistical output 
-in publication quality to Microsoft Office, HTML and Latex.
+in publication quality to Microsoft Office (Word, PowerPoint and Excel), HTML and Latex.
 
 Useful links: 
 
@@ -15,10 +15,10 @@ If you report a bug, try to send a reproducible example and don't forget to send
 Features
 --------
 * Save active R graphs or ggplot2, lattice or base R plots in publication 
-  quality to Microsoft Word, Powerpoint, HTML, Latex or various other bitmap or 
+  quality to Microsoft Word, Powerpoint, or various other bitmap or 
   vector formats using a single command with sensible defaults.
 * Fully editable Powerpoint vector format output, enabling manual tidy-up of plot layout.
-* Save the output of statistical analysis in R as tables in Word, PowerPoint, Latex or HTML documents.
+* Save the output of statistical analysis in R as tables in Excel, Word, PowerPoint, Latex or HTML documents.
 * Customize formatting of R outputs.
 * This is the first beta release, and some functionality may still change in
   the final release.
@@ -28,20 +28,20 @@ Installation
 
 ### Dependencies
 
-Java (it has been tested with java version >= 1.6).
-
 export needs some R packages ; run the following script to install them if needed.
 
-    install.packages("rJava")
-    install.packages("ReporteRs")
-    install.packages("ReporteRsjars")
+    install.packages("officer")
+    install.packages("rvg")
+    install.packages("openxlsx")
     install.packages("ggplot2")
-    install.packages("rtable")
+    install.packages("flextable")
     install.packages("xtable")
-    install.packages("taRifx")
+    install.packages("rgl")
     install.packages("stargazer")
     install.packages("tikzDevice")
-
+    install.packages("xml2")
+    install.packages("broom")
+    
 
 ### Github
 

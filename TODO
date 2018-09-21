@@ -11,9 +11,6 @@ also see
 https://trinkerrstuff.wordpress.com/2012/10/08/splitting-and-combining-r-pdf-visuals/
 http://stackoverflow.com/questions/13273611/how-to-append-a-plot-to-an-existing-pdf-file
 
-- check fallbackresolution in eps output with semi-transparency
-see http://stackoverflow.com/questions/31371853/r-use-cairo-fallback-resolution-greater-than-72dpi-in-cairo-pdf-and-cairo-ps
-
 - in ggplot2 plots: maybe change font & point sizes together with size of figure:
   geom_point(size=1.5) +  # default is 2
   theme_grey(base_size=10)  # default is 12
@@ -23,4 +20,6 @@ http://stackoverflow.com/questions/31381066/r-function-to-make-plot-symbols-and-
 
 - also allow for 16:9 or 4:3 Powerpoint templates
 
-- add additional methods for xtable and/or stargazer to support greater variety of objects
+- ftable is not well implements and is exported in inconvenient way (long table...)
+
+- Currently,  rvg::dml_docx uses dml_docx() which is deprecated. Advised to use devEMF::emf instead, maybe implemented in the next update of "rvg"?

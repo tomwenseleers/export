@@ -25,16 +25,16 @@ graph2doc(paper="A3", orient="portrait", aspectr=1.7)
 
 # export of lattice plot
 library(lattice)
-library(effects)
-fit=lm(prestige ~ type + income*education, data=Prestige)
-plot(Effect(c("income", "education"), fit),multiline=TRUE, 
+#library(effects)
+fit <- lm(prestige ~ type + income*education, data=Prestige)
+plot(effects::Effect(c("income", "education"), fit),multiline=TRUE, 
      span=1, show.fitted=TRUE, ci.style="bands")
 graph2ppt(file="effect_plot.pptx")
 
 # pass plot as object
-x=plot(Effect(c("income", "education"), fit),multiline=TRUE, 
+x=plot(effects::Effect(c("income", "education"), fit),multiline=TRUE, 
      span=1, show.fitted=TRUE, ci.style="bands")
-graph2ppt(x=x,file="effect_plot.pptx")
+graph2ppt(x=x,file="effect_plot.pptx", append=TRUE)
 
 
 # example export of base R plot
@@ -43,15 +43,15 @@ graph2ppt(file="boxplot.pptx")
 
 # passing it as an object does not work
 # p=boxplot(mpg~cyl,data=mtcars,col="cyan2")
-# ylab="Miles Per Gallon",col="cyan2")
 # graph2ppt(obj=p,file="boxplot.pptx") # this does not work
 
 # passing it as a function does work
 f=function() boxplot(mpg~cyl,data=mtcars,col="cyan2")
-graph2ppt(fun=f, file="boxplot.pptx", aspectr=1.3)
+graph2ppt(fun=f, file="boxplot.pptx", aspectr=1.3, append=TRUE)
 
 
 # heatmap example
 heatmap(as.matrix(eurodist))
 graph2ppt(file="heatmap.pptx")
+
 }
