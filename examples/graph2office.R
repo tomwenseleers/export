@@ -36,7 +36,6 @@ x=plot(effects::Effect(c("income", "education"), fit),multiline=TRUE,
      span=1, show.fitted=TRUE, ci.style="bands")
 graph2ppt(x=x,file="effect_plot.pptx", append=TRUE)
 
-
 # example export of base R plot
 boxplot(mpg~cyl,data=mtcars,col="cyan2")
 graph2ppt(file="boxplot.pptx")
@@ -48,7 +47,6 @@ graph2ppt(file="boxplot.pptx")
 # passing it as a function does work
 f=function() boxplot(mpg~cyl,data=mtcars,col="cyan2")
 graph2ppt(fun=f, file="boxplot.pptx", aspectr=1.3, append=TRUE)
-
 
 # heatmap example
 heatmap(as.matrix(eurodist))

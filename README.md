@@ -59,11 +59,11 @@ Getting Started
        
     ?graph2ppt
     ?graph2doc
-    ?graph2tex
     ?graph2svg
     ?graph2png
     ?table2ppt
     ?table2tex
+    ?table2excel
     ?table2doc
     ?table2html
 
@@ -80,8 +80,6 @@ Getting Started
     graph2ppt(file="ggplot2_plot.pptx", width=6, height=5, append=TRUE) 
     # export to Word
     graph2doc()
-    # export to Latex
-    graph2tex()
     # export to bitmap or vector formats
     graph2svg()
     graph2png()
@@ -89,19 +87,21 @@ Getting Started
     graph2jpg()
 
     ## export of aov Anova output
-    # export to Powerpoint
     fit=aov(yield ~ block + N * P + K, npk)
     x=summary(fit)
+    # export to Powerpoint
     table2ppt(x=x)
-    table2ppt(x=x,file="table_aov.docx")
-    table2ppt(x=x,file="table_aov.docx",digits=4,append=TRUE)
-    table2ppt(x=x,file="table_aov.docx",digits=4,digitspvals=1,
+    table2ppt(x=x,file="table_aov.pptx")
+    table2ppt(x=x,file="table_aov.pptx",digits=4,append=TRUE)
+    table2ppt(x=x,file="table_aov.pptx",digits=4,digitspvals=1,
               font="Times New Roman",pointsize=16,append=TRUE)
-    # export to Latex
-    x=summary(fit)
-    table2tex(x=x)
     # export to Word
     table2doc(x=x)
+    # export to Excel
+    table2excel(x=x, file = "table_aov.xlsx",digits=4,digitspvals=1,
+                sheetName = "Anova_table", add.rownames = TRUE)
+    # export to Latex
+    table2tex(x=x)
     # export to HTML
     table2html(x=x)
 
