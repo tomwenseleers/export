@@ -20,8 +20,6 @@ Features
 * Fully editable Powerpoint vector format output, enabling manual tidy-up of plot layout.
 * Save the output of statistical analysis in R as tables in Excel, Word, PowerPoint, Latex or HTML documents.
 * Customize formatting of R outputs.
-* This is the first beta release, and some functionality may still change in
-  the final release.
 
 Installation
 ------------
