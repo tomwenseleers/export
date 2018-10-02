@@ -16,6 +16,23 @@ Platform: x86_64-pc-linux-gnu (64-bit)
 
 Running under: Ubuntu 17.10
 
+## Resubmission
+
+This is a resubmission. In this version I have:
+
+* Changed function names in the DESCRIPTION by adding  '()'.
+
+* Reorganized the examples and replaced every '\dontrun' 
+  satement by the '\donttest' statement. This is needed 
+  because some examples require screen devices to be 
+  opened which is not allowed for examples (R CMD CHECK 
+  gives following error when the example is executed 
+  without '\donttest': "screen devices should not be used 
+  in examples etc"").
+  
+* Files in the examples are now written in a temporary folder
+  (using tempdir()) instead of the package directory in order
+  to comply to CRAN policy.
 
 ## R CMD check results
 

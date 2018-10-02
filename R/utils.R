@@ -24,15 +24,15 @@ xtable2 = function(x, ndigits = 2, ndigitspvals = 2, ...) {
   whch = grep("\\QPr(\\E|\\Qp-value\\E|\\Qp value\\E|\\Qpadj\\E|^p$|^padj$", colnames(sm))
   if (length(whch) != 0) {
     digs[whch + 1] = ndigitspvals
-    disp[whch + 1] = "g"
+    disp[whch + 1] = "f"
   }
   whch = grep("^Df$|^df$", colnames(sm))
   if (length(whch) != 0){
     digs[whch + 1] = 0
     disp[whch + 1] = "d"
   }
-  digs[c(1,which(!sapply(x,is.numeric))+1)] <- 0
-  disp[c(1,which(!sapply(x,is.numeric))+1)] <- "s"
+  digs[c(1,which(!apply(sm,2,is.numeric))+1)] <- 0
+  disp[c(1,which(!apply(sm,2,is.numeric))+1)] <- "s"
   for(i in 2:length(digs)){
     if(!is.na(digs[i])) sm[,i-1] <- round(sm[,i-1], digits = digs[i])
   }

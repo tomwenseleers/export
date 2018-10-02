@@ -21,8 +21,10 @@
 #' for the column with p values.
 #' @param digitspvals number of significant digits to show for columns with p
 #' values.
-#' @param width desired width of table in inches.
-#' @param height desired height of table in inches.
+#' @param width desired width of table in inches. If the given width exceeds the page or slide 
+#' width, the table width becomes the page/slide width.
+#' @param height desired height of table in inches. If the given height exceeds the page or slide 
+#' height, the table height becomes the page/slide height.
 #' @param offx x offset in inches to specify horizontal location of table (only for \code{type=="PPT"}).
 #' @param offy y offset in inches to specify vertical location of table (only for \code{type=="PPT"}).
 #' @param font desired font to use for output table; defaults to \code{"Arial"} on Windows
@@ -206,6 +208,7 @@ table2office = function(x = NULL, file = "Rtable", type = c("PPT","DOC"), append
   } else if(type == "DOC"){
     if (append & file.exists(file)) { 
       doc = read_docx(path = file) 
+      doc = body_add_break(doc, pos = "after")
     } else { 
       doc = read_docx() 
     }

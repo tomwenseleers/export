@@ -1,15 +1,18 @@
-# export of aov Anova output
-fit=aov(yield ~ block + N * P + K, npk)
-x=summary(fit)
-# export to Latex in standAlone format
-table2tex(x=x,file="table_aov1.tex") 
-# export to Latex to paste in tex document
-table2tex(x=x,file="table_aov2.tex", standAlone = FALSE) 
-# export to HTML
-table2html(x=x,file="table_aov.html") 
+# Create a file name
+dir <- tempdir()
+filen <- paste0(dir,"\\table_aov")
 
-\dontrun{
-# export output of last evaluation
-summary(fit)
-table2html(file="table_aov.doc") # export to Word
-}
+# Generate ANOVA output
+fit=aov(yield ~ block + N * P + K, data = npk) # 'npk' dataset from base 'datasets'
+x=summary(fit)
+
+# Export to Latex in standAlone format
+table2tex(x=x,file=filen) 
+# Export to Latex to paste in tex document
+summary(fit) # get output from the console
+table2tex(file=filen, standAlone = FALSE) 
+
+# Export to HTML
+table2html(x=x,file=filen) # or 
+summary(fit) # get output from the console
+table2html(file=filen) 

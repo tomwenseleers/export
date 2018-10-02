@@ -7,7 +7,8 @@
 \title{Export statistical output to HTML or Latex table}
 \usage{
 table2tex(x = NULL, file = "Rtable", type = "TEX", digits = 2,
-  summary = FALSE, standAlone = TRUE, add.rownames = FALSE, ...)
+  digitspvals = 2, summary = FALSE, standAlone = TRUE,
+  add.rownames = FALSE, ...)
 
 table2html(...)
 }
@@ -19,8 +20,11 @@ the output of the previous R command will be exported.}
 
 \item{type}{desired output type - \code{"TEX"} for Latex and \code{"HTML"} for HTML.}
 
-\item{digits}{number of significant digits to show. A value of NA indicates that
-no rounding should be done.}
+\item{digits}{number of significant digits to show for all columns except
+for the column with p values.}
+
+\item{digitspvals}{number of significant digits to show for columns with p
+values.}
 
 \item{summary}{logical indicating whether or not to summarize data files.}
 
@@ -40,9 +44,11 @@ Export currently showing R stats object or stats object obj to a
 HTML or Latex table
 }
 \details{
-Objects that can be exported are all those supported by \code{\link[stargazer]{stargazer}}:
+Objects that can be exported are all those supported by \code{\link[xtable]{xtable}}, 
+\code{\link[broom]{tidy}} (see \code{\link{table2office}} for an extensive list of supported 
+methods), or \code{\link[stargazer]{stargazer}}. The models supported by 
+\code{\link[stargazer]{stargazer}} are:
 \itemize{
-
 \item \code{aftreg} (\code{eha})
 \item \code{anova} (\code{stats})
 \item \code{aov} (\code{stats})
@@ -121,24 +127,28 @@ Objects that can be exported are all those supported by \code{\link[stargazer]{s
 }}
 
 \examples{
-# export of aov Anova output
-fit=aov(yield ~ block + N * P + K, npk)
-x=summary(fit)
-# export to Latex in standAlone format
-table2tex(x=x,file="table_aov1.tex") 
-# export to Latex to paste in tex document
-table2tex(x=x,file="table_aov2.tex", standAlone = FALSE) 
-# export to HTML
-table2html(x=x,file="table_aov.html") 
+# Create a file name
+dir <- tempdir()
+filen <- paste0(dir,"\\\\table_aov")
 
-\dontrun{
-# export output of last evaluation
-summary(fit)
-table2html(file="table_aov.doc") # export to Word
-}
+# Generate ANOVA output
+fit=aov(yield ~ block + N * P + K, data = npk) # 'npk' dataset from base 'datasets'
+x=summary(fit)
+
+# Export to Latex in standAlone format
+table2tex(x=x,file=filen) 
+# Export to Latex to paste in tex document
+summary(fit) # get output from the console
+table2tex(file=filen, standAlone = FALSE) 
+
+# Export to HTML
+table2html(x=x,file=filen) # or 
+summary(fit) # get output from the console
+table2html(file=filen) 
 }
 \seealso{
-\code{\link{table2office}} ,\code{\link{table2ppt}}, \code{\link{table2doc}}
+\code{\link{table2office}} ,\code{\link{table2ppt}}, \code{\link{table2doc}}, 
+\code{\link[stargazer]{stargazer}}
 }
 \author{
 Tom Wenseleers, Christophe Vanderaa

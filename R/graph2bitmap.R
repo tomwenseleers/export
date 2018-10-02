@@ -50,7 +50,7 @@ graph2bitmap = function(x = NULL, file = "Rplot", fun = NULL, type = c("PNG","JP
                         "Arial","Helvetica")[[1]], bg = "white", cairo = TRUE, 
                         tiffcompression = c("lzw","rle","jpeg","zip","lzw+p","zip+p"), jpegquality = 99, ...) {
   type = toupper(type)
-  type = match.arg(type)
+  type = match.arg(type, c("PNG","JPG","TIF"))
   if (type=="JPG") type="JPEG"
   if (type=="TIFF") type="TIF"
   tiffcompression = match.arg(tiffcompression)
@@ -104,15 +104,13 @@ graph2bitmap = function(x = NULL, file = "Rplot", fun = NULL, type = c("PNG","JP
   }
   
   if (type == "JPEG") { 
-    jpeg( filename = file, 
-          #type = ifelse(cairo,"cairo","windows"),
-          quality = jpegquality,
-          units = "in", 
-          width = w, 
-          height = h, 
-          #family = font,
-          res = dpi,
-          bg = bg, ... )
+    jpeg(filename = file, 
+         quality = jpegquality,
+         units = "in", 
+         width = w, 
+         height = h, 
+         res = dpi,
+         bg = bg)#, ... )
     myplot()
     invisible(dev.off())
   }  

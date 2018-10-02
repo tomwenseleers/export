@@ -17,8 +17,8 @@
 #' @param append logical value - if \code{TRUE} and \code{type="XLS"} it will add a new woorksheet to the given 
 #' file, where file can also be a given corporate.
 #' \code{append=FALSE} any existing file will be overwritten. 
-#' @param sheetName a string giving the name of the new sheet that is created (only when \code{type=="XLS"} and
-#' \code{append==TRUE}). It must unique (case insensitive) from any existing sheet in the file.
+#' @param sheetName a string giving the name of the new sheet that is created (only for \code{type=="XLS"}). 
+#' It must be unique (case insensitive) from any existing sheet name in the file. 
 #' @param digits number of significant digits to show for all columns except
 #' for the column with p values.
 #' @param digitspvals number of significant digits to show for columns with p

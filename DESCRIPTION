@@ -8,23 +8,20 @@ Authors@R: c(person("Tom", "Wenseleers", role = c("aut", "cre"),
   	       person("Christophe", "Vanderaa", role = c("aut"),
   	       email = "christophe.vanderaa@kuleuven.be"))
 Depends: R (>= 3.0)
-Imports:  officer (>= 0.2.2), 
-          rvg (>= 0.1.8), 
-          stats, 
+Imports:  stats, 
           utils, 
           datasets, 
-          xtable (>= 1.8-2), 
           grDevices,
+          officer (>= 0.2.2), 
+          rvg (>= 0.1.8), 
+          xtable (>= 1.8-2), 
           flextable (>= 0.4.3), 
           rgl (>= 0.99.16), 
           xml2 (>= 1.2.0), 
-          stargazer, 
+          stargazer (>= 5.2.1), 
           openxlsx (>= 4.0.17), 
           broom (>= 0.4.4)
-Suggests: lattice, 
-          ggplot2 (>= 1.0), 
-          latticeExtra (>= 0.6-28), 
-          tikzDevice
+Suggests: ggplot2 (>= 1.0)
 Description: Easily export 'R' graphs and statistical output to 'Microsoft
     Office' / 'LibreOffice', 'Latex' and 'HTML' Documents, using sensible defaults
     that result in publication-quality output with simple, straightforward commands.
@@ -34,11 +31,11 @@ Description: Easily export 'R' graphs and statistical output to 'Microsoft
     of the layout of 'R' graphs in 'Powerpoint' before final publication. Export
     of graphs is flexible, and functions enable the currently showing R graph
     or the currently showing 'R' stats object to be exported, but also allow the
-    graphs or stats output to be passed as objects. The package relies on package
-    'officer' for export to 'Office',and output files are also fully compatible
+    graphical or tabular output to be passed as objects. The package relies on package
+    'officer' for export to 'Office' documents,and output files are also fully compatible
     with 'LibreOffice'. Base 'R', 'ggplot2' and 'lattice' plots are supported, as
-    well as a wide variety of 'R' stats objects, via wrappers to 'xtable', 'broom::tidy' 
-    and 'stargazer', including 'aov', 'lm', 'glm', 'lme', 'lmer', 'glmer' and 'coxph' as
+    well as a wide variety of 'R' stats objects, via wrappers to xtable(), broom::tidy() 
+    and stargazer(), including aov(), lm(), glm(), lme(), glmnet() and coxph() as
     well as matrices and data frames and many more...
 License: GPL-2
 BugReports: https://github.com/tomwenseleers/export/issues

@@ -10,8 +10,10 @@
 #' the output of the previous R command will be exported.
 #' @param file name of output file. The appropriate extension is added automatically.
 #' @param type desired output type - \code{"TEX"} for Latex and \code{"HTML"} for HTML.
-#' @param digits number of significant digits to show. A value of NA indicates that
-#' no rounding should be done.
+#' @param digits number of significant digits to show for all columns except
+#' for the column with p values.
+#' @param digitspvals number of significant digits to show for columns with p
+#' values.
 #' @param summary logical indicating whether or not to summarize data files.
 #' @param standAlone logical indicating whether exported Latex code should be
 #' standalone compilable, or whether it will be pasted into another document.
@@ -19,9 +21,11 @@
 #' to the table (inserting a column before first column).
 #' @param \dots extra options are passed on to stargazer.
 #' @return \code{NULL}
-#' @details Objects that can be exported are all those supported by \code{\link[stargazer]{stargazer}}:
+#' @details Objects that can be exported are all those supported by \code{\link[xtable]{xtable}}, 
+#' \code{\link[broom]{tidy}} (see \code{\link{table2office}} for an extensive list of supported 
+#' methods), or \code{\link[stargazer]{stargazer}}. The models supported by 
+#' \code{\link[stargazer]{stargazer}} are:
 #' \itemize{
-#' 
 #' \item \code{aftreg} (\code{eha})
 #' \item \code{anova} (\code{stats})
 #' \item \code{aov} (\code{stats})
@@ -95,12 +99,13 @@
 #' }
 #' @author Tom Wenseleers, Christophe Vanderaa
 #' @example examples/table2tex.R
-#' @seealso \code{\link{table2office}} ,\code{\link{table2ppt}}, \code{\link{table2doc}}
+#' @seealso \code{\link{table2office}} ,\code{\link{table2ppt}}, \code{\link{table2doc}}, 
+#' \code{\link[stargazer]{stargazer}}
 #' @export
 #' 
-
-table2tex = function(x = NULL, file = "Rtable", type="TEX", digits = 2, summary=FALSE, standAlone=TRUE,
-                     add.rownames = FALSE,...) {
+table2tex = function(x = NULL, file = "Rtable", type="TEX", digits = 2, digitspvals = 2, 
+                     summary=FALSE, standAlone=TRUE, add.rownames = FALSE,...) {
+  # Get the data that will be exported
   obj=x
   if (is.null(obj)) 
     outp = .Last.value else outp = obj  # capture previously shown output or use passed object
@@ -108,61 +113,36 @@ table2tex = function(x = NULL, file = "Rtable", type="TEX", digits = 2, summary=
     stop("no R stats object available to export")
   obj=outp
 
+  # Match the requested file type
   type=toupper(type)
   type=match.arg(type,c("TEX","HTML"))
-  
-  if (type=="DOC") { ext=".doc" }
   if (type=="HTML") { ext=".html" }
   if (type=="TEX") { ext=".tex" }
   file = sub("^(.*)[.].*", "\\1", file)  # remove extension if given
   file = paste0(file, ext)  # add extension
   
-  # define some additional methods for some objects
-  # not supported by default by stargazer
-  as.data.frame.summary.aov = function(x) {
-    if(length(x) == 1) {
-      as.data.frame(x[[1]])
-    } else {
-      lapply(unlist(x, FALSE), as.data.frame)
-    }
-  }
+  # Depending on the class of the data call the formating function
+  if (length(intersect(class(obj), as.character(gsub("xtable.", "", methods(xtable))))) >= 1) {
+    obj <- xtable2(x=obj, ndigits = digits, ndigitspvals = digitspvals)
+    obj <- as.data.frame(obj)
+  } else if (length(intersect(class(obj), as.character(gsub("tidy.", "", methods(tidy))))) >= 1) {
+    obj <- tidy2(x=obj, ndigits = digits, ndigitspvals = digitspvals)
+    obj <- as.data.frame(obj)
+  } 
+  # Else supported objects that should be supported by stargazer
   
   if ("aov" %in% class(obj)) {obj=as.data.frame(anova(obj));summary=FALSE}
   if ("summary.aov" %in% class(obj)) {obj=as.data.frame(obj);summary=FALSE}
-  
-  # CHECK support for xtabs, ftable and CrossTable - contacted original author on this
-  # if ("xtabs" %in% class(outp)) outp = ftable(outp)
-  # if ("ftable" %in% class(outp)) XXX
-  
   # object supported by stargazer?
   supported=!grepl("Unrecognized object type",paste(capture.output(stargazer(obj)),collapse=""))
   if (!supported) stop(paste0("Object of class ",class(obj)," is not supported by stargazer."))
   
-  # objects supported by stargazer
-  # aftreg (eha), anova (stats), aov (stats), aovlist (stats), arima (stats), 
-  # betareg (betareg), binaryChoice (sampleSelection), bj (rms), brglm (brglm), 
-  # censReg (censReg), coeftest (lmtest), coxph (survival), coxreg (eha), 
-  # clm (ordinal), clogit (survival), cph (rms), dynlm (dynlm), ergm (ergm), 
-  # errorsarlm (spdev), felm (lfe), gam (mgcv), garchFit (fGarch), gee (gee), 
-  # glm (stats), Glm (rms), glmer (lme4), glmrob(robustbase), gls (nlme), 
-  # Gls (rms), gmm (gmm), heckit (sampleSelection), hetglm (glmx), hurdle (pscl), 
-  # ivreg (AER), lagarlm (spdep), lm(stats), lme (nlme), lmer (lme4), lmrob (robustbase), 
-  # lrm (rms), maBina (erer), mclogit (mclogit), mlogit (mlogit), mnlogit (mnlogit), 
-  # mlreg (eha), multinom (nnet), nlme (nlme), nlmer (lme4), ols (rms), pgmm (plm), 
-  # phreg (eha), plm (plm), pmg (plm), polr (MASS), psm (rms), rem.dyad (relevent), 
-  # rlm (MASS), rq (quantreg), Rq (rms), selection (sampleSelection), svyglm (survey), 
-  # survreg (survival), tobit (AER), weibreg (eha), zeroin (pscl), relogit (zelig), 
-  # cloglog.net (zelig), gamma.net (zelig), probit.net (zelig) and logit.net (zelig).
-  # not prcomp, ts or zoo?
-  # not ftable, xtab, CrossTable?
-  
   # preview table in viewer or browser
-  htmlout = capture.output(stargazer(obj, type="html", summary=summary, rownames = add.rownames, ...)) 
-  texout = capture.output(stargazer(obj, type="latex", summary=summary, rownames = add.rownames, ...))
+  htmlout = capture.output(stargazer(obj, type="html", summary=summary, rownames = add.rownames, digits = digits,...)) 
+  texout = capture.output(stargazer(obj, type="latex", summary=summary, rownames = add.rownames, digits = digits,...))
   outp = preview(htmlout)
     
   # export to HTML/Latex
-  
   if (standAlone) {
     texheader=c("\\documentclass[10pt]{article}","\\begin{document}")
     texfooter=c("\\end{document}")

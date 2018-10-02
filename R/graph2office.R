@@ -89,7 +89,11 @@ graph2office = function(x = NULL, file = "Rplot", fun = NULL, type = c("PPT","DO
     p = obj 
   }
   if (inherits(p,"list")) { stop("base R plots cannot be passed as objects, use ggplot2 or lattice plots instead") }
-  myplot = if (is.null(fun)) function(pl = p) print(pl) else fun
+  myplot = if (is.null(fun)){
+    function(pl = p) print(pl) 
+  } else {
+    fun
+  } 
   
   ### 2. Prepare the plotting region and the plot apsect
   plotsize = dev.size()  # also works if no graphics device is open
@@ -128,20 +132,21 @@ graph2office = function(x = NULL, file = "Rplot", fun = NULL, type = c("PPT","DO
   ### 4. Initialize the slide (ppt) or page (doc) that will contain the plot
   if (type == "PPT") {
     if (append & file.exists(file)){
-      doc <- officer::read_pptx(path = file)
+      doc <- read_pptx(path = file)
     } else {
-      doc <- officer::read_pptx(path = templ)
+      doc <- read_pptx(path = templ)
     }
-    doc = officer::add_slide(doc, layout = "Blank", master = "Office Theme")
+    doc = add_slide(doc, layout = "Blank", master = "Office Theme")
     pagesize = get.slide.size(doc) 
     pagesize["width"]=pagesize["width"]-(margins["left"]+margins["right"])
     pagesize["height"]=pagesize["height"]-(margins["top"]+margins["bottom"])
   }
   if (type == "DOC") {
     if (append & file.exists(file)){
-      doc <- officer::read_docx(path = file)
+      doc <- read_docx(path = file)
+      doc <- body_add_break(doc, pos = "after")
     } else {
-      doc <- officer::read_docx(path = templ)
+      doc <- read_docx(path = templ)
     }
     pagesize <- (doc$sect_dim$page - doc$sect_dim$margins[c(3,2)])/1440 # 1440 is a factor to convert to inches
   }

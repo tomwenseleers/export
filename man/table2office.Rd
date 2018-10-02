@@ -36,9 +36,11 @@ for the column with p values.}
 \item{digitspvals}{number of significant digits to show for columns with p
 values.}
 
-\item{width}{desired width of table in inches.}
+\item{width}{desired width of table in inches. If the given width exceeds the page or slide 
+width, the table width becomes the page/slide width.}
 
-\item{height}{desired height of table in inches.}
+\item{height}{desired height of table in inches. If the given height exceeds the page or slide 
+height, the table height becomes the page/slide height.}
 
 \item{offx}{x offset in inches to specify horizontal location of table (only for \code{type=="PPT"}).}
 
@@ -200,22 +202,27 @@ The data classes suported by \code{\link[broom]{tidy}} are:
 }}
 
 \examples{
-# export of aov Anova output
-fit=aov(yield ~ block + N * P + K, npk)
+# Create a file name
+dir <- tempdir()
+filen <- paste0(dir,"\\\\table_aov")
+
+# Generate ANOVA output
+fit=aov(yield ~ block + N * P + K, data = npk) # 'npk' dataset from base 'datasets'
+
+# Save ANOVA table as a PPT
+### Option 1: pass output as object
 x=summary(fit)
-table2ppt(x=x,file="table_aov.pptx", digits = 1, digitspvals = 3)  
-table2ppt(x=x,file="table_aov.pptx", width=9, append=TRUE) # append table to previous slide
-
-table2doc(x=x,file="table_aov.docx")  
-table2doc(x=x,file="table_aov.docx", width=9, append=TRUE) # append table to previous slide
-
-
-\dontrun{
-# export output of last evaluation
+table2ppt(x=x,file=filen, digits = 1, digitspvals = 3)
+### Option 2: get output from console 
 summary(fit)
-table2ppt(file="table_aov.docx", font="Times New Roman", pointsize=14, 
-          digits=4, digitspvals=1, append=TRUE)
-}
+table2ppt(x=x,file=filen, width=5, font="Times New Roman", pointsize=14, 
+          digits=4, digitspvals=1, append=TRUE) # append table to previous slide
+
+# Save ANOVA table as a DOC file
+table2doc(x=x,file=filen, digits = 1, digitspvals = 3)
+summary(fit)
+table2doc(file=filen, width=3.5, font="Times New Roman", pointsize=14, 
+          digits=4, digitspvals=1, append=TRUE) # append table at end of document
 }
 \seealso{
 \code{\link{table2tex}}, \code{\link{table2html}}, \code{\link{table2spreadsheet}}
