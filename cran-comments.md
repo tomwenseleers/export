@@ -47,4 +47,4 @@ R CMD check succeeded
 
 ## Downstream dependencies
 
-* No issues found for Windows nor Ubuntu (see "./revdep/" folder produced with devtools)
+* No issues found for Windows nor Ubuntu (using devtools::revdep_check())
