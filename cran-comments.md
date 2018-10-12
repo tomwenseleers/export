@@ -18,7 +18,25 @@ Running under: Ubuntu 17.10
 
 ## Resubmission
 
-This is a resubmission. In this version I have:
+This is a second resubmission. 
+
+In this version I have:
+
+* Changed the way temporary file names are created in the 
+  examples. Previously I used the syntax:
+  """
+  dir <- tempdir()
+  filen <- paste0(dir,"\\\\ggplot")
+  """
+  For portable code, I replaced all instances of the above 
+  statement with:
+  """
+  dir <- tempdir()
+  filen <- paste0(dir,"ggplot")
+  """
+
+
+In the previous version (first resubmission) I had:
 
 * Changed function names in the DESCRIPTION by adding  '()'.
 
