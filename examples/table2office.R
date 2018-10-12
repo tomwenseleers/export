@@ -1,6 +1,6 @@
 # Create a file name
 dir <- tempdir()
-filen <- paste0(dir,"\\table_aov")
+filen <- paste0(dir,"table_aov")
 
 # Generate ANOVA output
 fit=aov(yield ~ block + N * P + K, data = npk) # 'npk' dataset from base 'datasets'

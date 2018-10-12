@@ -3,3 +3,5 @@ examples
 cran-comments.md
 ^revdep$
 ^.git$
+^export.Rproj$
+^.*\.Rproj$
