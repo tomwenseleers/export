@@ -23,6 +23,10 @@
 #' for the column with p values.
 #' @param digitspvals number of significant digits to show for columns with p
 #' values.
+#' @param trim.pval a logical indicating if the p-values for which the significant digit is lower 
+#' than the desired rounding digit (given by \code{digitspvals}) should be trimmed as 
+#' \code{paste0("<", 10^-ndigitspvals)} (eg \code{'<0.01'}) otherwise they are rounded at 
+#' \code{ndigitspvals} digits.
 #' @param add.rownames logical specifying whether or not to add row names.
 #' @param \dots extra options are passed on to \code{\link[openxlsx]{createStyle}} for the formatting of the woorksheet.
 #' This is only applicable for \code{type=="XLS"}.
@@ -164,7 +168,7 @@
 #' @export
 #' 
 table2spreadsheet = function(x = NULL, file = "Rtable", type = c("XLS","CSV","CSV2"), append = FALSE, sheetName="new sheet",
-                        digits = 2, digitspvals = 2, add.rownames = FALSE, ...) {
+                        digits = 2, digitspvals = 2, trim.pval = TRUE, add.rownames = FALSE, ...) {
  
   obj=x
   if (is.null(obj)) {
@@ -201,11 +205,11 @@ table2spreadsheet = function(x = NULL, file = "Rtable", type = c("XLS","CSV","CS
   
   # Depending on the data class, call xtable or tidy
   if (length(intersect(class(outp), as.character(gsub("xtable.", "", methods(xtable))))) >= 1) {
-    tab <- xtable2(x=outp, ndigits = digits, ndigitspvals = digitspvals)
+    tab <- xtable2(x=outp, ndigits = digits, ndigitspvals = digitspvals, trim.pval=trim.pval)
   } else if (length(intersect(class(outp), as.character(gsub("tidy.", "", methods(tidy))))) >= 1) {
-    tab <- tidy2(x=outp, ndigits = digits, ndigitspvals = digitspvals)
+    tab <- tidy2(x=outp, ndigits = digits, ndigitspvals = digitspvals, trim.pval=trim.pval)
   } else { # should not occur
-    tab <- data.frame2(x=outp, ndigits = digits, ndigitspvals = digitspvals)
+    tab <- data.frame2(x=outp, ndigits = digits, ndigitspvals = digitspvals, trim.pval=trim.pval)
   }
   
   if(type=="XLS"){

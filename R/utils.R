@@ -16,54 +16,73 @@ preview = function(x){
 
 # helper function to show p values right aligned with digitspvals sign digits and 
 # degrees of freedom columns as right aligned integers
-xtable2 = function(x, ndigits = 2, ndigitspvals = 2, ...) {
+xtable2 = function(x, ndigits = 2, ndigitspvals = 2, trim.pval = T, ...) {
   sm = xtable(x)
   ncol = ncol(sm)
   digs = rep(ndigits, ncol + 1)
   disp = rep("f", ncol + 1)
   whch = grep("\\QPr(\\E|\\Qp-value\\E|\\Qp value\\E|\\Qpadj\\E|^p$|^padj$", colnames(sm))
   if (length(whch) != 0) {
-    digs[whch + 1] = ndigitspvals
-    disp[whch + 1] = "f"
+    for(j in whch){ # Format the pvalues in scientific format
+      sm[,j] <- sapply(sm[,j],function(val){
+        ifelse(val < 10^-ndigitspvals && trim.pval,
+               paste0("<", 10^-ndigitspvals),
+               formatC(val, format = "f", digits = ndigitspvals))
+      })
+    }
   }
   whch = grep("^Df$|^df$", colnames(sm))
   if (length(whch) != 0){
     digs[whch + 1] = 0
     disp[whch + 1] = "d"
   }
-  digs[c(1,which(!apply(sm,2,is.numeric))+1)] <- 0
-  disp[c(1,which(!apply(sm,2,is.numeric))+1)] <- "s"
+  digs[c(1,which(!sapply(sm,is.numeric))+1)] <- NA
+  disp[c(1,which(!sapply(sm,is.numeric))+1)] <- "s"
   for(i in 2:length(digs)){
-    if(!is.na(digs[i])) sm[,i-1] <- round(sm[,i-1], digits = digs[i])
+    if(disp[i]=="f") sm[,i-1] <- round(sm[,i-1], digits = digs[i])
   }
   xtable(sm, digits = digs, display = disp,...)
 }
 
-tidy2 <- function(x, ndigits = 2, ndigitspvals = 2,...) {
+tidy2 <- function(x, ndigits = 2, ndigitspvals = 2, trim.pval = T, ...) {
   x <- tidy(x)
   ncol = ncol(x)
   digs = rep(ndigits, ncol)
   whch = grep("\\QPr(\\E|\\Qp-value\\E|\\Qp value\\E|\\Qpadj\\E|^p$|^padj$", colnames(x))
-  if (length(whch) != 0) { digs[whch] = ndigitspvals }
+  if (length(whch) != 0) { digs[whch] = "pval" }
   whch = grep("^Df$|^df$", colnames(x))
   if (length(whch) != 0){ digs[whch] = 0 }
   digs[!sapply(x,is.numeric)] <- NA
   for(i in 1:length(digs)){
-    if(!is.na(digs[i])) x[,i] <- round(x[,i], digits = digs[i])
+    if(is.numeric(digs[i])) x[,i] <- round(x[,i], digits = digs[i])
+    if(digs[i]=="pval"){ 
+      x[,i] <- sapply(x[,i],function(val){
+        ifelse(val < 10^-ndigitspvals & trim.pval,
+               paste0("<", 10^-ndigitspvals),
+               formatC(val, format = "f", digits = ndigitspvals))
+      })
+    }
   }
   return(x)
 }
 
-data.frame2<- function(x, ndigits = 2, ndigitspvals = 2) {
+data.frame2<- function(x, ndigits = 2, ndigitspvals = 2, trim.pval = T,...) {
   x <- data.frame(x, check.names = F)
   ncol = ncol(x)
   digs = rep(ndigits, ncol)
   whch = grep("\\QPr(\\E|\\Qp-value\\E|\\Qp value\\E|\\Qpadj\\E|^p$|^padj$", colnames(x))
-  if (length(whch) != 0) { digs[whch] = ndigitspvals }
+  if (length(whch) != 0) { digs[whch] = "pval" }
   whch = grep("^Df$|^df$", colnames(x))
   if (length(whch) != 0){ digs[whch] = 0 }
   for(i in 1:length(digs)){
-    if(!is.na(digs[i])) x[,i-1] <- round(x[,i-1], digits = digs[i])
+    if(is.numeric(digs[i])) x[,i-1] <- round(x[,i-1], digits = digs[i])
+    if(digs[i]=="pval"){ 
+      x[,i-1] <- sapply(x[,i-1],function(val){
+        ifelse(val < 10^-ndigitspvals & trim.pval,
+               paste0("<", 10^-ndigitspvals),
+               formatC(val, format = "f", digits = ndigitspvals))
+      })
+    }
   }
   return(x)
 }

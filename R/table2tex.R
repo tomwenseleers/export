@@ -14,6 +14,10 @@
 #' for the column with p values.
 #' @param digitspvals number of significant digits to show for columns with p
 #' values.
+#' @param trim.pval a logical indicating if the p-values for which the significant digit is lower 
+#' than the desired rounding digit (given by \code{digitspvals}) should be trimmed as 
+#' \code{paste0("<", 10^-ndigitspvals)} (eg \code{'<0.01'}) otherwise they are rounded at 
+#' \code{ndigitspvals} digits.
 #' @param summary logical indicating whether or not to summarize data files.
 #' @param standAlone logical indicating whether exported Latex code should be
 #' standalone compilable, or whether it will be pasted into another document.
@@ -104,7 +108,7 @@
 #' @export
 #' 
 table2tex = function(x = NULL, file = "Rtable", type="TEX", digits = 2, digitspvals = 2, 
-                     summary=FALSE, standAlone=TRUE, add.rownames = FALSE,...) {
+                     trim.pval = TRUE, summary=FALSE, standAlone=TRUE, add.rownames = FALSE,...) {
   # Get the data that will be exported
   obj=x
   if (is.null(obj)) 
@@ -123,10 +127,10 @@ table2tex = function(x = NULL, file = "Rtable", type="TEX", digits = 2, digitspv
   
   # Depending on the class of the data call the formating function
   if (length(intersect(class(obj), as.character(gsub("xtable.", "", methods(xtable))))) >= 1) {
-    obj <- xtable2(x=obj, ndigits = digits, ndigitspvals = digitspvals)
+    obj <- xtable2(x=obj, ndigits = digits, ndigitspvals = digitspvals, trim.pval=trim.pval)
     obj <- as.data.frame(obj)
   } else if (length(intersect(class(obj), as.character(gsub("tidy.", "", methods(tidy))))) >= 1) {
-    obj <- tidy2(x=obj, ndigits = digits, ndigitspvals = digitspvals)
+    obj <- tidy2(x=obj, ndigits = digits, ndigitspvals = digitspvals, trim.pval=trim.pval)
     obj <- as.data.frame(obj)
   } 
   # Else supported objects that should be supported by stargazer

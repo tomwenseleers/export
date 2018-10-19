@@ -21,6 +21,10 @@
 #' for the column with p values.
 #' @param digitspvals number of significant digits to show for columns with p
 #' values.
+#' @param trim.pval a logical indicating if the p-values for which the significant digit is lower 
+#' than the desired rounding digit (given by \code{digitspvals}) should be trimmed as 
+#' \code{paste0("<", 10^-ndigitspvals)} (eg \code{'<0.01'}) otherwise they are rounded at 
+#' \code{ndigitspvals} digits.
 #' @param width desired width of table in inches. If the given width exceeds the page or slide 
 #' width, the table width becomes the page/slide width.
 #' @param height desired height of table in inches. If the given height exceeds the page or slide 
@@ -31,7 +35,7 @@
 #' systems and to \code{"Helvetica"} on other systems.
 #' @param pointsize desired font point size.
 #' @param add.rownames logical specifying whether or not to add row names.
-#' @param \dots extra options are passed on to \code{\link[xtable]{xtable}} or \code{\link[broom]{tidy}}
+#' @param \dots Further arguments to be passed to \code{table2office}.
 #' @return \code{\link[flextable]{flextable}} object
 #' @details Columns corresponding to degrees of freedom (with header "Df" or "df")
 #' are always given as integers. Objects that can be exported with \code{\link{table2office}} are 
@@ -169,9 +173,9 @@
 #' @export
 #' 
 table2office = function(x = NULL, file = "Rtable", type = c("PPT","DOC"), append = FALSE, digits = 2, 
-                     digitspvals = 2, width = NULL, height = NULL, offx = 1, offy = 1, 
+                     digitspvals = 2, trim.pval = TRUE, width = NULL, height = NULL, offx = 1, offy = 1, 
                      font = ifelse(Sys.info()["sysname"]=="Windows","Arial","Helvetica")[[1]], pointsize = 12, 
-                     add.rownames = FALSE, ...) {
+                     add.rownames = FALSE) {
   
   obj=x
   if (is.null(obj)) {
@@ -227,11 +231,11 @@ table2office = function(x = NULL, file = "Rtable", type = c("PPT","DOC"), append
   
   # Depending on the data class, call xtable or tidy
   if (length(intersect(class(outp), as.character(gsub("xtable.", "", methods(xtable))))) >= 1) {
-    tab <- xtable2(x=outp, ndigits = digits, ndigitspvals = digitspvals,...)
+    tab <- xtable2(x=outp, ndigits = digits, ndigitspvals = digitspvals, trim.pval = trim.pval)
   } else if (length(intersect(class(outp), as.character(gsub("tidy.", "", methods(tidy))))) >= 1) {
-    tab <- tidy2(x=outp, ndigits = digits, ndigitspvals = digitspvals,...)
+    tab <- tidy2(x=outp, ndigits = digits, ndigitspvals = digitspvals, trim.pval = trim.pval)
   } else { # should not occur
-    tab <- data.frame2(x=outp, ndigits = digits, ndigitspvals = digitspvals)
+    tab <- data.frame2(x=outp, ndigits = digits, ndigitspvals = digitspvals, trim.pval = trim.pval)
   }
   
   nc <- ncol(tab)

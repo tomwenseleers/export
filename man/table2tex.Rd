@@ -7,7 +7,7 @@
 \title{Export statistical output to HTML or Latex table}
 \usage{
 table2tex(x = NULL, file = "Rtable", type = "TEX", digits = 2,
-  digitspvals = 2, summary = FALSE, standAlone = TRUE,
+  digitspvals = 2, trim.pval = TRUE, summary = FALSE, standAlone = TRUE,
   add.rownames = FALSE, ...)
 
 table2html(...)
@@ -25,6 +25,11 @@ for the column with p values.}
 
 \item{digitspvals}{number of significant digits to show for columns with p
 values.}
+
+\item{trim.pval}{a logical indicating if the p-values for which the significant digit is lower 
+than the desired rounding digit (given by \code{digitspvals}) should be trimmed as 
+\code{paste0("<", 10^-ndigitspvals)} (eg \code{'<0.01'}) otherwise they are rounded at 
+\code{ndigitspvals} digits.}
 
 \item{summary}{logical indicating whether or not to summarize data files.}
 
@@ -129,7 +134,7 @@ methods), or \code{\link[stargazer]{stargazer}}. The models supported by
 \examples{
 # Create a file name
 dir <- tempdir()
-filen <- paste0(dir,"\\\\table_aov")
+filen <- paste0(dir,"table_aov")
 
 # Generate ANOVA output
 fit=aov(yield ~ block + N * P + K, data = npk) # 'npk' dataset from base 'datasets'

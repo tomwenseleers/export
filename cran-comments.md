@@ -18,9 +18,21 @@ Running under: Ubuntu 17.10
 
 ## Resubmission
 
-This is a second resubmission. 
 
-In this version I have:
+This is the 4th submission.
+
+
+**Changes since 3rd submission :**
+
+* Changed the way temporary file names are created. We received exactly 
+  the same comment as last submission. We updated the example script, but 
+  forgot to update the '*.Rd' help file. Our sincere apologies for that.
+  
+* Meanwhile, a user asked us to add a minor feature when exporting tables. 
+  p-values in the exported tables can now be (optionally) trimmed (eg '<0.001').
+
+**Changes since 2nd submission :**
+
 
 * Changed the way temporary file names are created in the 
   examples. Previously I used the syntax:
@@ -36,7 +48,7 @@ In this version I have:
   """
 
 
-In the previous version (first resubmission) I had:
+**Changes since 1st submission :**
 
 * Changed function names in the DESCRIPTION by adding  '()'.
 

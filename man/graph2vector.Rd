@@ -87,7 +87,7 @@ to vector format with sensible defaults
 \examples{
 # Create a file name
 dir <- tempdir()
-filen <- paste0(dir,"\\\\ggplot")
+filen <- paste0(dir,"ggplot")
 
 # Generate graphical output
 library(ggplot2)

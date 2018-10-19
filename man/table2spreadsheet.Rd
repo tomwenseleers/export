@@ -12,7 +12,7 @@
 \usage{
 table2spreadsheet(x = NULL, file = "Rtable", type = c("XLS", "CSV",
   "CSV2"), append = FALSE, sheetName = "new sheet", digits = 2,
-  digitspvals = 2, add.rownames = FALSE, ...)
+  digitspvals = 2, trim.pval = TRUE, add.rownames = FALSE, ...)
 
 table2excel(...)
 
@@ -42,6 +42,11 @@ for the column with p values.}
 
 \item{digitspvals}{number of significant digits to show for columns with p
 values.}
+
+\item{trim.pval}{a logical indicating if the p-values for which the significant digit is lower 
+than the desired rounding digit (given by \code{digitspvals}) should be trimmed as 
+\code{paste0("<", 10^-ndigitspvals)} (eg \code{'<0.01'}) otherwise they are rounded at 
+\code{ndigitspvals} digits.}
 
 \item{add.rownames}{logical specifying whether or not to add row names.}
 
@@ -199,7 +204,7 @@ The data classes suported by \code{\link[broom]{tidy}} are:
 \examples{
 # Create a file name
 dir <- tempdir()
-filen <- paste0(dir,"\\\\table_aov")
+filen <- paste0(dir,"table_aov")
 
 # Generate ANOVA output
 fit=aov(yield ~ block + N * P + K, data = npk) # 'npk' dataset from base 'datasets'

@@ -9,10 +9,10 @@
 \title{Export statistical output to a table in Microsoft Office / LibreOffice format}
 \usage{
 table2office(x = NULL, file = "Rtable", type = c("PPT", "DOC"),
-  append = FALSE, digits = 2, digitspvals = 2, width = NULL,
-  height = NULL, offx = 1, offy = 1, font = ifelse(Sys.info()["sysname"]
-  == "Windows", "Arial", "Helvetica")[[1]], pointsize = 12,
-  add.rownames = FALSE, ...)
+  append = FALSE, digits = 2, digitspvals = 2, trim.pval = TRUE,
+  width = NULL, height = NULL, offx = 1, offy = 1,
+  font = ifelse(Sys.info()["sysname"] == "Windows", "Arial",
+  "Helvetica")[[1]], pointsize = 12, add.rownames = FALSE)
 
 table2ppt(...)
 
@@ -36,6 +36,11 @@ for the column with p values.}
 \item{digitspvals}{number of significant digits to show for columns with p
 values.}
 
+\item{trim.pval}{a logical indicating if the p-values for which the significant digit is lower 
+than the desired rounding digit (given by \code{digitspvals}) should be trimmed as 
+\code{paste0("<", 10^-ndigitspvals)} (eg \code{'<0.01'}) otherwise they are rounded at 
+\code{ndigitspvals} digits.}
+
 \item{width}{desired width of table in inches. If the given width exceeds the page or slide 
 width, the table width becomes the page/slide width.}
 
@@ -53,7 +58,7 @@ systems and to \code{"Helvetica"} on other systems.}
 
 \item{add.rownames}{logical specifying whether or not to add row names.}
 
-\item{\dots}{extra options are passed on to \code{\link[xtable]{xtable}} or \code{\link[broom]{tidy}}}
+\item{\dots}{Further arguments to be passed to \code{table2office}.}
 }
 \value{
 \code{\link[flextable]{flextable}} object
@@ -204,7 +209,7 @@ The data classes suported by \code{\link[broom]{tidy}} are:
 \examples{
 # Create a file name
 dir <- tempdir()
-filen <- paste0(dir,"\\\\table_aov")
+filen <- paste0(dir,"table_aov")
 
 # Generate ANOVA output
 fit=aov(yield ~ block + N * P + K, data = npk) # 'npk' dataset from base 'datasets'

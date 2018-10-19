@@ -98,7 +98,7 @@ to Microsoft Office / LibreOffice format with sensible defaults
 
 # Create a file name
 dir <- tempdir()
-filen <- paste0(dir,"\\\\ggplot")
+filen <- paste0(dir,"ggplot")
 
 # Generate graphical output
 library(ggplot2)
