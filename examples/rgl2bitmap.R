@@ -1,6 +1,6 @@
 # Create a file name
-dir <- tempdir()
-filen <- paste0(dir,"rgl")
+filen <- tempfile(pattern = "rgl") # or 
+# filen <- paste("YOUR_DIR/rgl")
 
 # Generate a 3D plot using 'rgl'
 x = y = seq(-10, 10, length = 20)

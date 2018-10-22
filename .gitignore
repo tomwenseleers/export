@@ -29,3 +29,4 @@ CMakeLists.txt.user
 *~
 .orig
 /revdep/.cache.rds
+^.*\.Rproj$

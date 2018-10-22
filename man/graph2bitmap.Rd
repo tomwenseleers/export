@@ -84,8 +84,8 @@ to bitmap format with sensible defaults
 
 \examples{
 # Create a file name
-dir <- tempdir()
-filen <- paste0(dir,"ggplot")
+filen <- tempfile(pattern = "ggplot") # or 
+# filen <- paste("YOUR_DIR/ggplot")
 
 # Generate graphical output
 library(ggplot2)

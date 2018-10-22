@@ -133,8 +133,8 @@ methods), or \code{\link[stargazer]{stargazer}}. The models supported by
 
 \examples{
 # Create a file name
-dir <- tempdir()
-filen <- paste0(dir,"table_aov")
+filen <- tempfile(pattern = "table_aov") # or 
+# filen <- paste("YOUR_DIR/table_aov")
 
 # Generate ANOVA output
 fit=aov(yield ~ block + N * P + K, data = npk) # 'npk' dataset from base 'datasets'
