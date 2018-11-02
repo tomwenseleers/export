@@ -41,7 +41,7 @@ export needs some R packages ; run the following script to install them if neede
     install.packages("broom")
     
 
-### Github
+### Official CRAN release
 
 **Get the latest official release from CRAN:**  
 
@@ -49,7 +49,7 @@ export needs some R packages ; run the following script to install them if neede
     library(export)
 
 
-### Github
+### Github development version
 
 **Get the latest development version:**  
 
