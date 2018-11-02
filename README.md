@@ -29,7 +29,6 @@ Installation
 **Get the latest official release from CRAN:**  
 
     install.packages("export")
-    library(export)
 
 
 ### Github development version
