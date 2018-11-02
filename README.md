@@ -24,23 +24,6 @@ Features
 Installation
 ------------
 
-### Dependencies
-
-export needs some R packages ; run the following script to install them if needed.
-
-    install.packages("officer")
-    install.packages("rvg")
-    install.packages("openxlsx")
-    install.packages("ggplot2")
-    install.packages("flextable")
-    install.packages("xtable")
-    install.packages("rgl")
-    install.packages("stargazer")
-    install.packages("tikzDevice")
-    install.packages("xml2")
-    install.packages("broom")
-    
-
 ### Official CRAN release
 
 **Get the latest official release from CRAN:**  
@@ -53,6 +36,17 @@ export needs some R packages ; run the following script to install them if neede
 
 **Get the latest development version:**  
 
+    install.packages("officer")
+    install.packages("rvg")
+    install.packages("openxlsx")
+    install.packages("ggplot2")
+    install.packages("flextable")
+    install.packages("xtable")
+    install.packages("rgl")
+    install.packages("stargazer")
+    install.packages("tikzDevice")
+    install.packages("xml2")
+    install.packages("broom")
     install.packages("devtools")
     library(devtools)
     devtools::install_github("tomwenseleers/export")
