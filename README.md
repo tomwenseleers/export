@@ -43,7 +43,15 @@ export needs some R packages ; run the following script to install them if neede
 
 ### Github
 
-**Get the latest release:**  
+**Get the latest official release from CRAN:**  
+
+    install.packages("export")
+    library(export)
+
+
+### Github
+
+**Get the latest development version:**  
 
     install.packages("devtools")
     library(devtools)
