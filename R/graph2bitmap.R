@@ -63,7 +63,12 @@ graph2bitmap = function(x = NULL, file = "Rplot", fun = NULL, type = c("PNG","JP
     stop("base R plots cannot be passed as objects, use ggplot2 or lattice plots instead")
   myplot = if (is.null(fun)) function(pl = p) print(pl) else fun
   
-  plotsize = dev.size()  # also works if no graphics device is open
+  if(options()$device){
+    plotsize = dev.size()
+  } else {
+    plotsize = c(10,10) # default device size: 10 inch x 10 inch
+  }
+  
   w = plotsize[[1]]
   h = plotsize[[2]]
   plotaspectr = plotsize[[1]]/plotsize[[2]]
