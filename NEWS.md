@@ -1,6 +1,6 @@
 # export 0.2.2.9000
 
-(no change yet)
+* Fixed bug when no graphical devices are available fro exporting graphs (as pointed out by guokai8 on GitHub)
 
 # export 0.2.2 Beta
 
