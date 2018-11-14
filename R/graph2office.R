@@ -99,7 +99,7 @@ graph2office = function(x = NULL, file = "Rplot", fun = NULL, type = c("PPT","DO
   if(options()$device){
     plotsize = dev.size()
   } else {
-    plotsize = c(10,10) # default device size: 10 inch x 10 inch
+    plotsize = c(7,5) # default device size: 10 inch x 10 inch
   }
   
   w = plotsize[[1]]

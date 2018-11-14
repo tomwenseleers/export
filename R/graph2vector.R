@@ -71,7 +71,7 @@ graph2vector = function(x = NULL, file = "Rplot", fun = NULL, type = "SVG",
   if(options()$device){
     plotsize = dev.size()
   } else {
-    plotsize = c(10,10) # default device size: 10 inch x 10 inch
+    plotsize = c(7,5) # default device size: 10 inch x 10 inch
   }
   
   w = plotsize[[1]]
