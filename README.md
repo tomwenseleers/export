@@ -5,9 +5,7 @@ in publication quality to Microsoft Office (Word, PowerPoint and Excel), HTML an
 
 Useful links: 
 
-* Report a bug: 
-[**Bug report**]
-(http://github.com/tomwenseleers/export/issues "please provide a reproducible example"). 
+* You can report bugs at http://github.com/tomwenseleers/export/issues. 
 If you report a bug, try to send a reproducible example and don't forget to send the result of 
     
         sessionInfo()
