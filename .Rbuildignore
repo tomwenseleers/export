@@ -5,3 +5,5 @@ cran-comments.md
 ^.git$
 ^export.Rproj$
 ^.*\.Rproj$
+.Rhistory
+.RData
