@@ -96,7 +96,7 @@ graph2office = function(x = NULL, file = "Rplot", fun = NULL, type = c("PPT","DO
   } 
   
   ### 2. Prepare the plotting region and the plot apsect
-  if(options()$device == FALSE){
+  if(options()$device != FALSE){
     plotsize = dev.size()
   } else {
     plotsize = c(7,5) # default device size: 10 inch x 10 inch

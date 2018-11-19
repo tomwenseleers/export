@@ -68,7 +68,7 @@ graph2vector = function(x = NULL, file = "Rplot", fun = NULL, type = "SVG",
     stop("base R plots cannot be passed as objects, use ggplot2 or lattice plots instead")
   myplot = if (is.null(fun)) function(pl = p) print(pl) else fun
   
-  if(options()$device == FALSE){
+  if(options()$device != FALSE){
     plotsize = dev.size()
   } else {
     plotsize = c(7,5) # default device size: 10 inch x 10 inch
