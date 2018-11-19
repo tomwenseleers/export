@@ -2,14 +2,7 @@ export version 0.2.2 Beta
 =========================
 export is an R package to easily export active R graphs and statistical output 
 in publication quality to Microsoft Office (Word, PowerPoint and Excel), HTML and Latex.
-
-Useful links: 
-
-* You can report bugs at http://github.com/tomwenseleers/export/issues. 
-If you report a bug, try to send a reproducible example and don't forget to send the result of 
-    
-        sessionInfo()
-        
+      
 Features
 --------
 * Save active R graphs or ggplot2, lattice or base R plots in publication 
@@ -24,13 +17,16 @@ Installation
 
 * The export package works cross-platform on Windows, Ubuntu & Mac. Some Mac distributions though do not have the cairo device installed by default, and this is required by the export package. This problem is solved if Mac users first install XQuartz, which is available for free from https://www.xquartz.org/.
 
+* You can report bugs at http://github.com/tomwenseleers/export/issues. 
+If you report a bug, try to send a reproducible example and don't forget to send the result of 
+    
+        sessionInfo()
 
 ### Official CRAN release
 
 **Get the latest official release from CRAN:**  
 
     install.packages("export")
-
 
 ### Github development version
 
@@ -50,7 +46,6 @@ Installation
     install.packages("devtools")
     library(devtools)
     devtools::install_github("tomwenseleers/export")
-
   
 Getting Started
 ---------------
