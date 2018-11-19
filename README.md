@@ -24,6 +24,9 @@ Features
 Installation
 ------------
 
+* The export package works cross-platform on Windows, Ubuntu & Mac. Some Mac distributions though do not have the cairo device installed by default, and this is required by the export package. This problem is solved if Mac users first install XQuartz, which is available for free from https://www.xquartz.org/.
+
+
 ### Official CRAN release
 
 **Get the latest official release from CRAN:**  
