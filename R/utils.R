@@ -16,31 +16,33 @@ preview = function(x){
 
 # helper function to show p values right aligned with digitspvals sign digits and 
 # degrees of freedom columns as right aligned integers
-xtable2 = function(x, ndigits = 2, ndigitspvals = 2, trim.pval = T, ...) {
+xtable2 = function(x, ndigits = 2, ndigitspvals = 2, trim.pval = 1E-16, ...) {
   sm = xtable(x)
   ncol = ncol(sm)
   digs = rep(ndigits, ncol + 1)
   disp = rep("f", ncol + 1)
-  whch = grep("\\QPr(\\E|\\Qp-value\\E|\\Qp value\\E|\\Qpadj\\E|^p$|^padj$", colnames(sm))
+  whch = grep("\\QPr(\\E|\\Qp-value\\E|\\Qp value\\E|\\Qpadj\\E|^p$|^padj$|p[.]value", colnames(sm))
+  
   if (length(whch) != 0) {
     for(j in whch){ # Format the pvalues in scientific format
       sm[,j] <- sapply(sm[,j],function(val){
-        ifelse(val < 10^-ndigitspvals && trim.pval,
-               paste0("<", 10^-ndigitspvals),
-               formatC(val, format = "f", digits = ndigitspvals))
+        val <- ifelse(val < trim.pval, 
+                      paste0("< ", formatC(trim.pval, format = "e", digits = 0)), 
+                      formatC(val, format = "e", digits = ndigitspvals))
+        return(val)
       })
     }
   }
-  whch = grep("^Df$|^df$", colnames(sm))
-  if (length(whch) != 0){
-    digs[whch + 1] = 0
-    disp[whch + 1] = "d"
-  }
-  digs[c(1,which(!sapply(sm,is.numeric))+1)] <- NA
-  disp[c(1,which(!sapply(sm,is.numeric))+1)] <- "s"
-  for(i in 2:length(digs)){
-    if(disp[i]=="f") sm[,i-1] <- round(sm[,i-1], digits = digs[i])
-  }
+  # whch = grep("^Df$|^df$", colnames(sm))
+  # if (length(whch) != 0){
+  #   digs[whch + 1] = 0
+  #   disp[whch + 1] = "d"
+  # }
+  # digs[c(1,which(!sapply(sm,is.numeric))+1)] <- NA
+  # disp[c(1,which(!sapply(sm,is.numeric))+1)] <- "s"
+  # for(i in 2:length(digs)){
+  #   if(disp[i]=="f") sm[,i-1] <- round(sm[,i-1], digits = digs[i])
+  # }
   xtable(sm, digits = digs, display = disp,...)
 }
 
@@ -48,7 +50,7 @@ tidy2 <- function(x, ndigits = 2, ndigitspvals = 2, trim.pval = T, ...) {
   x <- tidy(x)
   ncol = ncol(x)
   digs = rep(ndigits, ncol)
-  whch = grep("\\QPr(\\E|\\Qp-value\\E|\\Qp value\\E|\\Qpadj\\E|^p$|^padj$", colnames(x))
+  whch = grep("\\QPr(\\E|\\Qp-value\\E|\\Qp value\\E|\\Qpadj\\E|^p$|^padj$|p[.]value", colnames(x))
   if (length(whch) != 0) { digs[whch] = "pval" }
   whch = grep("^Df$|^df$", colnames(x))
   if (length(whch) != 0){ digs[whch] = 0 }

@@ -17,14 +17,12 @@
 #' @param append logical value - if \code{TRUE} and \code{type="PPT"} or \code{"DOC"} it will
 #' append the table to the given file, where file can also be a given corporate.  If 
 #' \code{append=FALSE} any existing file will be overwritten. 
-#' @param digits number of significant digits to show for all columns except
+#' @param digits number of digits after the comma. to show for all columns except
 #' for the column with p values.
-#' @param digitspvals number of significant digits to show for columns with p
-#' values.
-#' @param trim.pval a logical indicating if the p-values for which the significant digit is lower 
-#' than the desired rounding digit (given by \code{digitspvals}) should be trimmed as 
-#' \code{paste0("<", 10^-ndigitspvals)} (eg \code{'<0.01'}) otherwise they are rounded at 
-#' \code{ndigitspvals} digits.
+#' @param digitspvals number of digits after the comma printed for p-values. The
+#' dfault is equal to \code{digits}.
+#' @param trim.pval a threshold below which the p-values are trimmed as 
+#' "< \code{trim.pval}".
 #' @param width desired width of table in inches. If the given width exceeds the page or slide 
 #' width, the table width becomes the page/slide width.
 #' @param height desired height of table in inches. If the given height exceeds the page or slide 
@@ -173,10 +171,11 @@
 #' @export
 #' 
 table2office = function(x = NULL, file = "Rtable", type = c("PPT","DOC"), append = FALSE, digits = 2, 
-                     digitspvals = 2, trim.pval = TRUE, width = NULL, height = NULL, offx = 1, offy = 1, 
+                     digitspvals = NULL, trim.pval = 1E-16, width = NULL, height = NULL, offx = 1, offy = 1, 
                      font = ifelse(Sys.info()["sysname"]=="Windows","Arial","Helvetica")[[1]], pointsize = 12, 
                      add.rownames = FALSE) {
   
+  if(is.null(digitspvals)) digitspvals <- digits
   obj=x
   if (is.null(obj)) {
     outp = .Last.value # capture previously shown output or use passed object
@@ -265,6 +264,7 @@ table2office = function(x = NULL, file = "Rtable", type = c("PPT","DOC"), append
   # - use margins ?
   cell.height <- min(h, pagesize["height"] - offy)/(nr+1)
   cell.width <- min(w, pagesize["width"] - offx)/(nc+1)
+  
   if(inherits(tab,"xtable")){
     tab <- xtable_to_flextable(tab, include.rownames = add.rownames, rowname_col = ".")
     tab <- width(tab, width=cell.width)
@@ -273,6 +273,15 @@ table2office = function(x = NULL, file = "Rtable", type = c("PPT","DOC"), append
     if(add.rownames) x <- cbind(" " = rownames(x), x)
     tab <- flextable(tab, cheight = cell.height, cwidth = cell.width)
   }
+  
+  # Format the digits 
+  col.pval <- grep("\\QPr(\\E|\\Qp-value\\E|\\Qp value\\E|\\Qpadj\\E|^p$|^padj$|p[.]value", tab$col_keys, value = TRUE)
+  col.df <- grep("^df$", tab$col_keys, value = TRUE, ignore.case = TRUE) 
+  col.other <- tab$col_keys[! tab$col_keys %in% c(col.pval, col.df)]
+  tab <- colformat_num(x = tab, col_keys = col.other, digits = digits)
+  tab <- colformat_int(x = tab, col_keys = col.df)
+  tab <- colformat_num(x = tab, col_keys = col.pval, digits = )
+  
   tab <- bold(tab, part = "header") # bold header
   tab <- fontsize(tab, part = "all", size = pointsize) 
   tab <- font(tab, part = "all", fontname = font)
