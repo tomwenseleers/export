@@ -1,3 +1,6 @@
+[![version](http://www.r-pkg.org/badges/version/export)](https://cran.r-project.org/package=export)
+[![downloads](http://cranlogs.r-pkg.org/badges/export)](https://cran.r-project.org/package=export)
+
 export version 0.2.2 Beta
 =========================
 export is an R package to easily export active R graphs and statistical output 
