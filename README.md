@@ -1,5 +1,5 @@
 [![version](http://www.r-pkg.org/badges/version/export)](https://cran.r-project.org/package=export)
-[![downloads](http://cranlogs.r-pkg.org/badges/export)](https://cran.r-project.org/package=export)
+[![downloads](http://cranlogs.r-pkg.org/badges/grand-total/export)](https://cran.r-project.org/package=export)
 
 export version 0.2.2 Beta
 =========================
