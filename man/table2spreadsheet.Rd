@@ -5,9 +5,6 @@
 \alias{table2excel}
 \alias{table2csv}
 \alias{table2csv2}
-\alias{table2excel}
-\alias{table2csv}
-\alias{table2csv2}
 \title{Export statistical output to a table in spreadsheet compatible format (.xlsx or .csv)}
 \usage{
 table2spreadsheet(x = NULL, file = "Rtable", type = c("XLS", "CSV",

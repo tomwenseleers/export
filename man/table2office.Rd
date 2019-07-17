@@ -4,14 +4,12 @@
 \alias{table2office}
 \alias{table2doc}
 \alias{table2ppt}
-\alias{table2ppt}
-\alias{table2doc}
 \title{Export statistical output to a table in Microsoft Office / LibreOffice format}
 \usage{
 table2office(x = NULL, file = "Rtable", type = c("PPT", "DOC"),
-  append = FALSE, digits = 2, digitspvals = 2, trim.pval = TRUE,
-  width = NULL, height = NULL, offx = 1, offy = 1,
-  font = ifelse(Sys.info()["sysname"] == "Windows", "Arial",
+  append = FALSE, digits = 2, digitspvals = NULL,
+  trim.pval = 1e-16, width = NULL, height = NULL, offx = 1,
+  offy = 1, font = ifelse(Sys.info()["sysname"] == "Windows", "Arial",
   "Helvetica")[[1]], pointsize = 12, add.rownames = FALSE)
 
 table2ppt(...)
@@ -30,16 +28,14 @@ previous R command will be exported.}
 append the table to the given file, where file can also be a given corporate.  If 
 \code{append=FALSE} any existing file will be overwritten.}
 
-\item{digits}{number of significant digits to show for all columns except
-for the column with p values.}
+\item{digits}{number of digits after the comma (for all numeric columns 
+except p-values or degrees of freedom)}
 
-\item{digitspvals}{number of significant digits to show for columns with p
-values.}
+\item{digitspvals}{number of digits after the comma (for p-values only). The
+default is equal to \code{digits}.}
 
-\item{trim.pval}{a logical indicating if the p-values for which the significant digit is lower 
-than the desired rounding digit (given by \code{digitspvals}) should be trimmed as 
-\code{paste0("<", 10^-ndigitspvals)} (eg \code{'<0.01'}) otherwise they are rounded at 
-\code{ndigitspvals} digits.}
+\item{trim.pval}{a threshold below which the p-values are trimmed as 
+"< \code{trim.pval}".}
 
 \item{width}{desired width of table in inches. If the given width exceeds the page or slide 
 width, the table width becomes the page/slide width.}

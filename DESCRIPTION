@@ -8,7 +8,7 @@ Authors@R: c(person("Tom", "Wenseleers", role = c("aut", "cre"),
   	       person("Christophe", "Vanderaa", role = c("aut"),
   	       email = "christophe.vanderaa@kuleuven.be"))
 Depends: R (>= 3.0)
-Imports:  stats, 
+Imports: stats, 
           utils, 
           datasets, 
           grDevices,
@@ -39,6 +39,6 @@ Description: Easily export 'R' graphs and statistical output to 'Microsoft
     well as matrices and data frames and many more...
 License: GPL-2
 BugReports: https://github.com/tomwenseleers/export/issues
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.0
 NeedsCompilation: no
 Packaged: 2018-09-17 15:51:05 UTC; Ento

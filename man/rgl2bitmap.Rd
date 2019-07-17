@@ -3,7 +3,6 @@
 \name{rgl2bitmap}
 \alias{rgl2bitmap}
 \alias{rgl2png}
-\alias{rgl2png}
 \title{Save currently active rgl 3D graph to bitmap format}
 \usage{
 rgl2bitmap(file = "Rplot", type = c("PNG"))

@@ -3,12 +3,11 @@
 \name{table2tex}
 \alias{table2tex}
 \alias{table2html}
-\alias{table2html}
 \title{Export statistical output to HTML or Latex table}
 \usage{
 table2tex(x = NULL, file = "Rtable", type = "TEX", digits = 2,
-  digitspvals = 2, trim.pval = TRUE, summary = FALSE, standAlone = TRUE,
-  add.rownames = FALSE, ...)
+  digitspvals = 2, trim.pval = TRUE, summary = FALSE,
+  standAlone = TRUE, add.rownames = FALSE, ...)
 
 table2html(...)
 }

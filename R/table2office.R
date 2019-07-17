@@ -17,10 +17,10 @@
 #' @param append logical value - if \code{TRUE} and \code{type="PPT"} or \code{"DOC"} it will
 #' append the table to the given file, where file can also be a given corporate.  If 
 #' \code{append=FALSE} any existing file will be overwritten. 
-#' @param digits number of digits after the comma. to show for all columns except
-#' for the column with p values.
-#' @param digitspvals number of digits after the comma printed for p-values. The
-#' dfault is equal to \code{digits}.
+#' @param digits number of digits after the comma (for all numeric columns 
+#' except p-values or degrees of freedom)
+#' @param digitspvals number of digits after the comma (for p-values only). The
+#' default is equal to \code{digits}.
 #' @param trim.pval a threshold below which the p-values are trimmed as 
 #' "< \code{trim.pval}".
 #' @param width desired width of table in inches. If the given width exceeds the page or slide 

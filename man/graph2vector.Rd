@@ -5,9 +5,6 @@
 \alias{graph2svg}
 \alias{graph2pdf}
 \alias{graph2eps}
-\alias{graph2svg}
-\alias{graph2pdf}
-\alias{graph2eps}
 \title{Save currently active R graph to vector format}
 \usage{
 graph2vector(x = NULL, file = "Rplot", fun = NULL, type = "SVG",

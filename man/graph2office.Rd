@@ -4,15 +4,14 @@
 \alias{graph2office}
 \alias{graph2doc}
 \alias{graph2ppt}
-\alias{graph2ppt}
-\alias{graph2doc}
 \title{Save currently active R graph to Microsoft Office / LibreOffice format}
 \usage{
 graph2office(x = NULL, file = "Rplot", fun = NULL, type = c("PPT",
-  "DOC"), append = FALSE, aspectr = NULL, width = NULL, height = NULL,
-  scaling = 100, paper = "auto", orient = ifelse(type[1] == "PPT",
-  "landscape", "auto"), margins = c(top = 0.5, right = 0.5, bottom = 0.5, left
-  = 0.5), center = TRUE, offx = 1, offy = 1, upscale = FALSE,
+  "DOC"), append = FALSE, aspectr = NULL, width = NULL,
+  height = NULL, scaling = 100, paper = "auto",
+  orient = ifelse(type[1] == "PPT", "landscape", "auto"),
+  margins = c(top = 0.5, right = 0.5, bottom = 0.5, left = 0.5),
+  center = TRUE, offx = 1, offy = 1, upscale = FALSE,
   vector.graphic = TRUE, ...)
 
 graph2ppt(...)
