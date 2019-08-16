@@ -9,7 +9,7 @@
 \usage{
 table2spreadsheet(x = NULL, file = "Rtable", type = c("XLS", "CSV",
   "CSV2"), append = FALSE, sheetName = "new sheet", digits = 2,
-  digitspvals = 2, trim.pval = TRUE, add.rownames = FALSE, ...)
+  digitspvals = 2, trim.pval = 1e-16, add.rownames = FALSE, ...)
 
 table2excel(...)
 
@@ -40,10 +40,8 @@ for the column with p values.}
 \item{digitspvals}{number of significant digits to show for columns with p
 values.}
 
-\item{trim.pval}{a logical indicating if the p-values for which the significant digit is lower 
-than the desired rounding digit (given by \code{digitspvals}) should be trimmed as 
-\code{paste0("<", 10^-ndigitspvals)} (eg \code{'<0.01'}) otherwise they are rounded at 
-\code{ndigitspvals} digits.}
+\item{trim.pval}{a threshold below which the p-values are trimmed as 
+"< \code{trim.pval}".}
 
 \item{add.rownames}{logical specifying whether or not to add row names.}
 
