@@ -179,13 +179,28 @@ graph2office = function(x = NULL, file = "Rplot", fun = NULL, type = c("PPT","DO
       offy = (pagesize["height"] + margins["top"]+margins["bottom"] - h)/2
     }
     if(vector.graphic){
-      doc = ph_with(doc, value = myplot(), left = offx, top = offy, width = w, height = h, ...)
+      doc = ph_with(doc, 
+					rvg::dml(code = myplot()),
+					location = officer::ph_location(
+													left = offx,
+													top = offy,
+													width =w,
+													height=h),
+					...
+					)
+
     } else {
       temp.file <- paste0(tempfile(), ".png")
       grDevices::png(filename = temp.file, height = h, width = w, units = "in", res = 300)
       myplot()
       dev.off()
-      doc <- ph_with_img_at(doc, src = temp.file, left = offx, top = offy, width = w, height = h)
+      doc <- ph_with(doc, officer::external_img(temp.file),
+					 location = officer::ph_location(
+													 left = offx,
+													 top = offy,
+													 width = w, 
+													 height = h)
+					 )
       unlink(temp.file)
     }
   } else {
