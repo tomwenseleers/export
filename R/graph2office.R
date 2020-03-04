@@ -179,7 +179,8 @@ graph2office = function(x = NULL, file = "Rplot", fun = NULL, type = c("PPT","DO
       offy = (pagesize["height"] + margins["top"]+margins["bottom"] - h)/2
     }
     if(vector.graphic){
-      doc = ph_with_vg_at(doc, code = myplot(), left = offx, top = offy, width = w, height = h, ...)
+      # doc = ph_with_vg_at(doc, code = myplot(), left = offx, top = offy, width = w, height = h, ...)
+      doc = ph_with(doc, value = dml(ggobj = temp.file, location = ph_location(left = offx, top = offy, width = w, height = h), ...)
     } else {
       temp.file <- paste0(tempfile(), ".png")
       grDevices::png(filename = temp.file, height = h, width = w, units = "in", res = 300)
