@@ -288,7 +288,7 @@ table2office = function(x = NULL, file = "Rtable", type = c("PPT","DOC"), append
   
   
   if(type=="PPT"){
-    doc <- ph_with_flextable_at(doc, value = tab , left=offx, top=offy)
+    doc <- ph_with(doc, value = tab , location = ph_location(left = offx, top = offy))
   } else if(type == "DOC"){
     doc <- body_add_flextable(doc, value = tab)
   } 
