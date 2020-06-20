@@ -21,5 +21,3 @@ http://stackoverflow.com/questions/31381066/r-function-to-make-plot-symbols-and-
 - also allow for 16:9 or 4:3 Powerpoint templates
 
 - ftable is not well implements and is exported in inconvenient way (long table...)
-
-- Currently,  rvg::dml_docx uses dml_docx() which is deprecated. Advised to use devEMF::emf instead, maybe implemented in the next update of "rvg"?
