@@ -7,9 +7,18 @@
 \alias{table2csv2}
 \title{Export statistical output to a table in spreadsheet compatible format (.xlsx or .csv)}
 \usage{
-table2spreadsheet(x = NULL, file = "Rtable", type = c("XLS", "CSV",
-  "CSV2"), append = FALSE, sheetName = "new sheet", digits = 2,
-  digitspvals = 2, trim.pval = 1e-16, add.rownames = FALSE, ...)
+table2spreadsheet(
+  x = NULL,
+  file = "Rtable",
+  type = c("XLS", "CSV", "CSV2"),
+  append = FALSE,
+  sheetName = "new sheet",
+  digits = 2,
+  digitspvals = 2,
+  trim.pval = 1e-16,
+  add.rownames = FALSE,
+  ...
+)
 
 table2excel(...)
 

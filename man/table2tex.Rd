@@ -5,9 +5,18 @@
 \alias{table2html}
 \title{Export statistical output to HTML or Latex table}
 \usage{
-table2tex(x = NULL, file = "Rtable", type = "TEX", digits = 2,
-  digitspvals = 2, trim.pval = TRUE, summary = FALSE,
-  standAlone = TRUE, add.rownames = FALSE, ...)
+table2tex(
+  x = NULL,
+  file = "Rtable",
+  type = "TEX",
+  digits = 2,
+  digitspvals = 2,
+  trim.pval = 1e-16,
+  summary = FALSE,
+  standAlone = TRUE,
+  add.rownames = FALSE,
+  ...
+)
 
 table2html(...)
 }
@@ -25,10 +34,8 @@ for the column with p values.}
 \item{digitspvals}{number of significant digits to show for columns with p
 values.}
 
-\item{trim.pval}{a logical indicating if the p-values for which the significant digit is lower 
-than the desired rounding digit (given by \code{digitspvals}) should be trimmed as 
-\code{paste0("<", 10^-ndigitspvals)} (eg \code{'<0.01'}) otherwise they are rounded at 
-\code{ndigitspvals} digits.}
+\item{trim.pval}{a threshold below which the p-values are trimmed as 
+"< \code{trim.pval}".}
 
 \item{summary}{logical indicating whether or not to summarize data files.}
 
@@ -149,6 +156,7 @@ table2tex(file=filen, standAlone = FALSE)
 table2html(x=x,file=filen) # or 
 summary(fit) # get output from the console
 table2html(file=filen) 
+  
 }
 \seealso{
 \code{\link{table2office}} ,\code{\link{table2ppt}}, \code{\link{table2doc}}, 

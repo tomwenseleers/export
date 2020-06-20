@@ -14,10 +14,8 @@
 #' for the column with p values.
 #' @param digitspvals number of significant digits to show for columns with p
 #' values.
-#' @param trim.pval a logical indicating if the p-values for which the significant digit is lower 
-#' than the desired rounding digit (given by \code{digitspvals}) should be trimmed as 
-#' \code{paste0("<", 10^-ndigitspvals)} (eg \code{'<0.01'}) otherwise they are rounded at 
-#' \code{ndigitspvals} digits.
+#' @param trim.pval a threshold below which the p-values are trimmed as 
+#' "< \code{trim.pval}".
 #' @param summary logical indicating whether or not to summarize data files.
 #' @param standAlone logical indicating whether exported Latex code should be
 #' standalone compilable, or whether it will be pasted into another document.
@@ -108,7 +106,7 @@
 #' @export
 #' 
 table2tex = function(x = NULL, file = "Rtable", type="TEX", digits = 2, digitspvals = 2, 
-                     trim.pval = TRUE, summary=FALSE, standAlone=TRUE, add.rownames = FALSE,...) {
+                     trim.pval = 1e-16, summary=FALSE, standAlone=TRUE, add.rownames = FALSE,...) {
   # Get the data that will be exported
   obj=x
   if (is.null(obj)) 

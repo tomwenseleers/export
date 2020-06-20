@@ -7,11 +7,22 @@
 \alias{graph2eps}
 \title{Save currently active R graph to vector format}
 \usage{
-graph2vector(x = NULL, file = "Rplot", fun = NULL, type = "SVG",
-  aspectr = NULL, width = NULL, height = NULL, scaling = 100,
-  font = ifelse(Sys.info()["sysname"] == "Windows", "Arial",
-  "Helvetica")[[1]], bg = "white", colormodel = "rgb", cairo = TRUE,
-  fallback_resolution = 600, ...)
+graph2vector(
+  x = NULL,
+  file = "Rplot",
+  fun = NULL,
+  type = "SVG",
+  aspectr = NULL,
+  width = NULL,
+  height = NULL,
+  scaling = 100,
+  font = ifelse(Sys.info()["sysname"] == "Windows", "Arial", "Helvetica")[[1]],
+  bg = "white",
+  colormodel = "rgb",
+  cairo = TRUE,
+  fallback_resolution = 600,
+  ...
+)
 
 graph2svg(...)
 

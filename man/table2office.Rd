@@ -6,11 +6,22 @@
 \alias{table2ppt}
 \title{Export statistical output to a table in Microsoft Office / LibreOffice format}
 \usage{
-table2office(x = NULL, file = "Rtable", type = c("PPT", "DOC"),
-  append = FALSE, digits = 2, digitspvals = NULL,
-  trim.pval = 1e-16, width = NULL, height = NULL, offx = 1,
-  offy = 1, font = ifelse(Sys.info()["sysname"] == "Windows", "Arial",
-  "Helvetica")[[1]], pointsize = 12, add.rownames = FALSE)
+table2office(
+  x = NULL,
+  file = "Rtable",
+  type = c("PPT", "DOC"),
+  append = FALSE,
+  digits = 2,
+  digitspvals = NULL,
+  trim.pval = 1e-16,
+  width = NULL,
+  height = NULL,
+  offx = 1,
+  offy = 1,
+  font = ifelse(Sys.info()["sysname"] == "Windows", "Arial", "Helvetica")[[1]],
+  pointsize = 12,
+  add.rownames = FALSE
+)
 
 table2ppt(...)
 

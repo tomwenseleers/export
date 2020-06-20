@@ -16,3 +16,4 @@ table2tex(file=filen, standAlone = FALSE)
 table2html(x=x,file=filen) # or 
 summary(fit) # get output from the console
 table2html(file=filen) 
+  

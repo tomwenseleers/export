@@ -7,12 +7,23 @@
 \alias{graph2jpg}
 \title{Save currently active R graph to bitmap format}
 \usage{
-graph2bitmap(x = NULL, file = "Rplot", fun = NULL, type = c("PNG",
-  "JPG", "TIF"), aspectr = NULL, width = NULL, height = NULL,
-  dpi = 300, scaling = 100, font = ifelse(Sys.info()["sysname"] ==
-  "Windows", "Arial", "Helvetica")[[1]], bg = "white", cairo = TRUE,
+graph2bitmap(
+  x = NULL,
+  file = "Rplot",
+  fun = NULL,
+  type = c("PNG", "JPG", "TIF"),
+  aspectr = NULL,
+  width = NULL,
+  height = NULL,
+  dpi = 300,
+  scaling = 100,
+  font = ifelse(Sys.info()["sysname"] == "Windows", "Arial", "Helvetica")[[1]],
+  bg = "white",
+  cairo = TRUE,
   tiffcompression = c("lzw", "rle", "jpeg", "zip", "lzw+p", "zip+p"),
-  jpegquality = 99, ...)
+  jpegquality = 99,
+  ...
+)
 
 graph2png(...)
 
