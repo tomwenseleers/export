@@ -169,3 +169,12 @@ besttemplate = function(w,h,margins = c(top=1,right=1,bottom=1,left=1),orient="a
   if (is.na(bestpagesize)) bestpagesize=min(sizes)
   return(paste0("A",bestpagesize,"_",orient)) 
 }
+
+
+# Function that shuts down the newly opened devices to match a previous setup
+# if dev.old is NULL, all devices are clsed
+dev.reset <- function(dev.old = NULL) {
+  i <- dev.list()[!dev.list() %in% dev.init]
+  for (ii in i ) dev.off(ii)
+  return(NULL)
+}
