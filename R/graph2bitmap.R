@@ -6,7 +6,6 @@
 #' 
 #' @importFrom grDevices dev.size
 #' @importFrom grDevices png
-#' @importFrom grDevices dev.off
 #' @importFrom grDevices tiff
 #' @importFrom grDevices jpeg
 #' @aliases graph2bitmap graph2png graph2tif graph2jpg

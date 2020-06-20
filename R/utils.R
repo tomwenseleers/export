@@ -1,5 +1,4 @@
-#' @importFrom grDevices recordPlot
-#' @importFrom grDevices dev.cur hcl
+#' @importFrom grDevices recordPlot dev.cur hcl dev.list dev.off
 #' @importFrom utils browseURL
 #' @import xml2
 
@@ -173,7 +172,7 @@ besttemplate = function(w,h,margins = c(top=1,right=1,bottom=1,left=1),orient="a
 
 # Function that shuts down the newly opened devices to match a previous setup
 # if dev.old is NULL, all devices are clsed
-dev.reset <- function(dev.old = NULL) {
+dev.reset <- function(dev.init = NULL) {
   i <- dev.list()[!dev.list() %in% dev.init]
   for (ii in i ) dev.off(ii)
   return(NULL)
