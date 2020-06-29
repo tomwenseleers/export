@@ -113,7 +113,7 @@ The data classes suported by \code{\link[xtable]{xtable}} are:
    \item \code{ts} 
    \item \code{zoo}
    } 
-The data classes suported by \code{\link[broom]{tidy}} are: 
+The data classes suported by \code{\link{tidy}} are: 
 \itemize{
    \item \code{aareg} 
    \item \code{acf} 
