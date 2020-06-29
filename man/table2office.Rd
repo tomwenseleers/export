@@ -77,9 +77,9 @@ Office / LibreOffice table
 \details{
 Columns corresponding to degrees of freedom (with header "Df" or "df")
 are always given as integers. Objects that can be exported with \code{\link{table2office}} are 
-all those supported by \code{\link[xtable]{xtable}} and \code{\link[broom]{tidy}}. The function will
+all those supported by \code{\link[xtable]{xtable}} and \code{\link{tidy}}. The function will
 first use \code{\link[xtable]{xtable}} to format the data. If the data class is not supported by 
-\code{\link[xtable]{xtable}} the function will then use \code{\link[broom]{tidy}}. 
+\code{\link[xtable]{xtable}} the function will then use \code{\link{tidy}}. 
 The data classes suported by \code{\link[xtable]{xtable}} are: 
 \itemize{
    \item \code{anova} 

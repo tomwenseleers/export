@@ -44,7 +44,7 @@
 #' @param colormodel desired colormodel in \code{pdf} or \code{eps} output when \code{cairo=FALSE};
 #' currently allowed values are \code{"rgb"} (default), \code{"cmyk"}, \code{"srgb"}, \code{"srgb+gray"}, \code{"rgb-nogray"}, 
 #' and \code{"gray"} (or \code{"grey"}). 
-#' @param \dots any other options are passed on to \code{\link[grDevices]{svg}}, \code{\link[grDevices]{cairo_pdf}}, \code{\link[grDevices]{cairo_ps}}, \code{\link[grDevices]{pdf}} or
+#' @param \dots any other options are passed on to \code{\link{svg}}, \code{\link{cairo_pdf}}, \code{\link{cairo_ps}}, \code{\link{pdf}} or
 #' postscript.
 #' @return NULL
 #' @author Tom Wenseleers

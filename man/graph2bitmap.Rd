@@ -71,8 +71,8 @@ aspect ratio aspectr.}
 
 \item{jpegquality}{quality of \code{JPEG} compression.}
 
-\item{\dots}{any other options are passed on to \code{grDevices}' \code{\link[grDevices]{png}}, 
-\code{\link[grDevices]{tiff}}, or \code{\link[grDevices]{jpeg}} function (according to the supplied \code{type}).}
+\item{\dots}{any other options are passed on to \code{grDevices}' \code{\link{png}}, 
+\code{\link{tiff}}, or \code{\link{jpeg}} function (according to the supplied \code{type}).}
 }
 \value{
 \code{NULL}

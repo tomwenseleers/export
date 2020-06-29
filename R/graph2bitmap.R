@@ -34,8 +34,8 @@
 #' @param cairo logical, specifying whether or not to use \code{Cairographics} for export.
 #' @param tiffcompression compression to use for \code{TIF} files.
 #' @param jpegquality quality of \code{JPEG} compression.
-#' @param \dots any other options are passed on to \code{grDevices}' \code{\link[grDevices]{png}}, 
-#' \code{\link[grDevices]{tiff}}, or \code{\link[grDevices]{jpeg}} function (according to the supplied \code{type}).
+#' @param \dots any other options are passed on to \code{grDevices}' \code{\link{png}}, 
+#' \code{\link{tiff}}, or \code{\link{jpeg}} function (according to the supplied \code{type}).
 #' @return \code{NULL}
 #' @author Tom Wenseleers
 #' @example examples/graph2bitmap.R
