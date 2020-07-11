@@ -5,10 +5,13 @@
 #' 
 #' @import datasets
 #' @importFrom grDevices dev.size png
+#' @importFrom devEMF emf
 #' @importFrom utils head tail
 #' @import officer 
 #' @import rvg
+#' 
 #' @aliases graph2office graph2doc graph2ppt
+#' 
 #' @param x given \code{ggplot2} plot or \code{lattice} plot object to export; if
 #' set to \code{NULL} the currently active R graph will be exported; not
 #' supported for base R plots.
@@ -46,16 +49,24 @@
 #' in a different look of one's graph relative to how it looks on the screen
 #' due to the change in size.
 #' @param vector.graphic logical specifying whether or not to output in
-#' editable, vector \code{DrawingML} format. Defaults to \code{TRUE}, in which case editing
-#' the plot in Powerpoint or Word is then possible after first ungrouping the
-#' plot elements. If set to \code{FALSE}, the plot is rasterized to \code{PNG} bitmap
+#' vectorized format. This avoids pixelated images in the document. Note that 
+#' for PowerPoint, the image can be edited after first ungrouping the plot 
+#' elements. If set to \code{FALSE}, the plot is rasterized to \code{PNG} bitmap
 #' format at a resolution of 300 dpi.
-#' @param \dots any other options are passed on to \code{rvg}'s \code{\link[rvg]{dml_pptx}} function.
+#' @param \dots any other options are passed on to \code{rvg}'s 
+#' \code{\link[rvg]{dml_pptx}} function if \code{type == "DOC"} or to 
+#' \code{devEMF}'s \code{\link{emf}} function if \code{type == "PPT"} (only 
+#' when \code{vector.graphics == TRUE}).
+#' 
 #' @return \code{NULL}
+#' 
 #' @author Tom Wenseleers, Christophe Vanderaa
+#' 
 #' @example examples/graph2office.R
+#' 
 #' @seealso \code{\link{graph2vector}}, \code{\link{graph2svg}}, \code{\link{graph2pdf}}, \code{\link{graph2eps}},
 #' \code{\link{graph2bitmap}}, \code{\link{graph2png}}, \code{\link{graph2tif}}, \code{\link{graph2jpg}}
+#' 
 #' @export
 #' 
 graph2office = function(x = NULL, file = "Rplot", fun = NULL, type = c("PPT","DOC"), 
@@ -70,7 +81,7 @@ graph2office = function(x = NULL, file = "Rplot", fun = NULL, type = c("PPT","DO
   margins=rep_len(margins,4)
   names(margins)=c("top","right","bottom","left")
   type = toupper(type)
-  type = match.arg(type,c("PPT","DOC"))
+  type = match.arg(type, c("PPT", "DOC"))
   if (type == "PPT" | type == "PPTX") {
     ext = ".pptx"
     type = "PPT"
@@ -82,7 +93,7 @@ graph2office = function(x = NULL, file = "Rplot", fun = NULL, type = c("PPT","DO
   file = sub("^(.*)[.].*", "\\1", file)  # remove extension if given
   file = paste0(file, ext)  # add extension
   # Format the function call for plotting the graph
-  obj=x
+  obj = x
   if (is.null(obj) & is.null(fun)) { 
     p = captureplot() 
   } else { 
@@ -179,7 +190,9 @@ graph2office = function(x = NULL, file = "Rplot", fun = NULL, type = c("PPT","DO
       offy = (pagesize["height"] + margins["top"]+margins["bottom"] - h)/2
     }
     if(vector.graphic){
-      doc = ph_with(doc, dml(code = myplot()), location = ph_location(left = offx, top = offy, width = w, height = h), ...)
+      doc = ph_with(doc, dml(code = myplot()), 
+                    location = ph_location(left = offx, top = offy, width = w, 
+                                           height = h), ...)
     } else {
       temp.file <- paste0(tempfile(), ".png")
       grDevices::png(filename = temp.file, height = h, width = w, units = "in", res = 300)
@@ -189,16 +202,19 @@ graph2office = function(x = NULL, file = "Rplot", fun = NULL, type = c("PPT","DO
       unlink(temp.file)
     }
   } else {
+    temp.file <- tempfile()
     if(vector.graphic){
-      doc <- suppressWarnings(body_add_vg(doc, code = myplot(), width = w, height = h, ...))
+      temp.file <- paste0(temp.file, ".emf")
+      emf(file = temp.file, height = h, width = w, emfPlus = TRUE, ...)
+      myplot()
     } else {
-      temp.file <- tempfile()
+      temp.file <- paste0(temp.file, ".png")
       grDevices::png(filename = temp.file, height = h, width = w, units = "in", res = 300)
       myplot()
-      dev.off()
-      doc <- suppressWarnings(body_add_img(doc, src = temp.file, width = w, height = h))
-      unlink(temp.file)
     }
+    dev.off()
+    doc <- body_add_img(doc, src = temp.file, width = w, height = h)
+    unlink(temp.file)
   }
   
   ### 7. End of function, save the file and print message

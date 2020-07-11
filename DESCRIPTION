@@ -1,7 +1,7 @@
 Package: export
 Type: Package
 Title: Streamlined Export of Graphs and Data Tables
-Version: 0.2.2.9001
+Version: 0.2.3
 Date: 2018-09-18
 Authors@R: c(person("Tom", "Wenseleers", role = c("aut", "cre"),
     	     email = "tom.wenseleers@kuleuven.be"),
@@ -20,7 +20,8 @@ Imports: stats,
           xml2 (>= 1.2.0), 
           stargazer (>= 5.2.1), 
           openxlsx (>= 4.0.17), 
-          broom (>= 0.4.4)
+          broom (>= 0.4.4),
+          devEMF (>= 3.8)
 Suggests: ggplot2 (>= 1.0)
 Description: Easily export 'R' graphs and statistical output to 'Microsoft
     Office' / 'LibreOffice', 'Latex' and 'HTML' Documents, using sensible defaults
@@ -39,6 +40,6 @@ Description: Easily export 'R' graphs and statistical output to 'Microsoft
     well as matrices and data frames and many more...
 License: GPL-2
 BugReports: https://github.com/tomwenseleers/export/issues
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 NeedsCompilation: no
 Packaged: 2018-09-17 15:51:05 UTC; Ento
