@@ -85,12 +85,15 @@ in a different look of one's graph relative to how it looks on the screen
 due to the change in size.}
 
 \item{vector.graphic}{logical specifying whether or not to output in
-editable, vector \code{DrawingML} format. Defaults to \code{TRUE}, in which case editing
-the plot in Powerpoint or Word is then possible after first ungrouping the
-plot elements. If set to \code{FALSE}, the plot is rasterized to \code{PNG} bitmap
+vectorized format. This avoids pixelated images in the document. Note that 
+for PowerPoint, the image can be edited after first ungrouping the plot 
+elements. If set to \code{FALSE}, the plot is rasterized to \code{PNG} bitmap
 format at a resolution of 300 dpi.}
 
-\item{\dots}{any other options are passed on to \code{rvg}'s \code{\link[rvg]{dml_pptx}} function.}
+\item{\dots}{any other options are passed on to \code{rvg}'s 
+\code{\link[rvg]{dml_pptx}} function if \code{type == "DOC"} or to 
+\code{devEMF}'s \code{\link{emf}} function if \code{type == "PPT"} (only 
+when \code{vector.graphics == TRUE}).}
 }
 \value{
 \code{NULL}
