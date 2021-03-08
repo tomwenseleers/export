@@ -278,10 +278,9 @@ table2office = function(x = NULL, file = "Rtable", type = c("PPT","DOC"), append
   col.pval <- grep("\\QPr(\\E|\\Qp-value\\E|\\Qp value\\E|\\Qpadj\\E|^p$|^padj$|p[.]value", tab$col_keys, value = TRUE)
   col.df <- grep("^df$", tab$col_keys, value = TRUE, ignore.case = TRUE) 
   col.other <- tab$col_keys[! tab$col_keys %in% c(col.pval, col.df)]
-  tab <- colformat_num(x = tab, j = col.other, digits = digits)
+  tab <- colformat_double(x = tab, j = col.other, digits = digits)
   tab <- colformat_int(x = tab, j = col.df)
-  tab <- colformat_num(x = tab, j = col.pval, digits = )
-  
+  tab <- colformat_double(x = tab, j = col.pval)
   tab <- bold(tab, part = "header") # bold header
   tab <- fontsize(tab, part = "all", size = pointsize) 
   tab <- font(tab, part = "all", fontname = font)
