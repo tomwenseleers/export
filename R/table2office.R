@@ -266,7 +266,7 @@ table2office = function(x = NULL, file = "Rtable", type = c("PPT","DOC"), append
   cell.width <- min(w, pagesize["width"] - offx)/(nc+1)
   
   if(inherits(tab,"xtable")){
-    tab <- xtable_to_flextable(tab, include.rownames = add.rownames, rowname_col = ".")
+    tab <- as_flextable(tab, include.rownames = add.rownames, rowname_col = ".")
     tab <- width(tab, width=cell.width)
     tab <- height(tab, height=cell.height)
   } else {
