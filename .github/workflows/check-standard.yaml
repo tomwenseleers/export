@@ -33,9 +33,9 @@ jobs:
       
     steps:
       # Install X11 dependencies on macOS, otherwise an error is thrown:
-      #   Warning: Loading rgl's DLL failed. 
-	    #     This build of rgl depends on XQuartz, which failed to load.
-      #      See the discussion in https://stackoverflow.com/a/66127391/2554330
+      # Warning: Loading rgl's DLL failed. 
+      # This build of rgl depends on XQuartz, which failed to load.
+      # See the discussion in https://stackoverflow.com/a/66127391/2554330
       - name: Install X11 dependencies on MacOS
         if: runner.os == 'macOS'
         run: |
