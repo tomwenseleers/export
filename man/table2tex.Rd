@@ -134,9 +134,9 @@ methods), or \code{\link[stargazer]{stargazer}}. The models supported by
 }
 \section{Functions}{
 \itemize{
-\item \code{table2html}: Export statistical output to HTML table
-}}
+\item \code{table2html()}: Export statistical output to HTML table
 
+}}
 \examples{
 # Create a file name
 filen <- tempfile(pattern = "table_aov") # or 
@@ -147,16 +147,15 @@ fit=aov(yield ~ block + N * P + K, data = npk) # 'npk' dataset from base 'datase
 x=summary(fit)
 
 # Export to Latex in standAlone format
-table2tex(x=x,file=filen) 
+if (interactive()) table2tex(x=x,file=filen) 
 # Export to Latex to paste in tex document
 summary(fit) # get output from the console
-table2tex(file=filen, standAlone = FALSE) 
+if (interactive()) table2tex(file=filen, standAlone = FALSE) 
 
 # Export to HTML
-table2html(x=x,file=filen) # or 
+if (interactive()) table2html(x=x,file=filen) # or 
 summary(fit) # get output from the console
-table2html(file=filen) 
-  
+if (interactive()) table2html(file=filen) 
 }
 \seealso{
 \code{\link{table2office}} ,\code{\link{table2ppt}}, \code{\link{table2doc}}, 

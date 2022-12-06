@@ -41,6 +41,7 @@ Description: Easily export 'R' graphs and statistical output to 'Microsoft
     well as matrices and data frames and many more...
 License: GPL-2
 BugReports: https://github.com/tomwenseleers/export/issues
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.2
+Encoding: UTF-8
 NeedsCompilation: no
 Packaged: 2018-09-17 15:51:05 UTC; Ento

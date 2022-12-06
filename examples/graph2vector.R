@@ -21,7 +21,7 @@ graph2pdf(x=x, file=filen, aspectr=2, font = "Arial",
 graph2eps(x=x, file=filen, aspectr=2, font = "Arial",   
           height = 5, bg = "transparent")
 ### 2. Get the plot from current screen device
-\donttest{ # Because the example uses screen devices 
+if (interactive()) { # Because the example uses screen devices 
   x
   graph2svg(file=filen, aspectr=2, font = "Arial",  
             height = 5, bg = "transparent")
@@ -31,7 +31,7 @@ graph2eps(x=x, file=filen, aspectr=2, font = "Arial",
             height = 5, bg = "white")
 }
 ### 3. Pass the plot as a function
-\donttest{ # Because the example uses screen devices 
+if (interactive()) { # Because the example uses screen devices 
   graph2svg(file=filen, fun = plot.fun, aspectr=2, font = "Arial",  
             height = 5, bg = "transparent")
   graph2pdf(file=filen, fun=plot.fun, aspectr=2, font = "Arial",   

@@ -25,9 +25,9 @@ Save currently active rgl 3D graph to bitmap format in current orientation
 }
 \section{Functions}{
 \itemize{
-\item \code{rgl2png}: Save currently active rgl 3D graph to PNG format
-}}
+\item \code{rgl2png()}: Save currently active rgl 3D graph to PNG format
 
+}}
 \examples{
 # Create a file name
 filen <- tempfile(pattern = "rgl") # or 

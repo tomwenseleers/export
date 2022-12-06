@@ -17,14 +17,14 @@ plot.fun = function(){
 graph2ppt(x=x, file=filen) 
 graph2doc(x=x, file=filen, aspectr=0.5) 
 ### 2. Get the plot from current screen device
-\dontrun{ 
+if (interactive()) { 
   x
   graph2ppt(file=filen, width=9, aspectr=2, append = TRUE)
   graph2doc(file=filen, aspectr=1.7, append =TRUE) 
   # Note this requires a graphical device
 }
 ### 3. Pass the plot as a function
-\dontrun{ 
+if (interactive()) { 
   graph2ppt(fun=plot.fun, file=filen, aspectr=0.5, append = TRUE)
   graph2doc(fun=plot.fun, file=filen, aspectr=0.5, append = TRUE)
   # Note this requires a graphical device

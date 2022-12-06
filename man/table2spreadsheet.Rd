@@ -198,13 +198,13 @@ The data classes suported by \code{\link{tidy}} are:
 }
 \section{Functions}{
 \itemize{
-\item \code{table2excel}: Export statistical output to a table in a Microsoft Office Excel/ LibreOffice Calc spreadsheet
+\item \code{table2excel()}: Export statistical output to a table in a Microsoft Office Excel/ LibreOffice Calc spreadsheet
 
-\item \code{table2csv}: Export statistical output to a table in a CSV format ("," for value separation and "." for decimal)
+\item \code{table2csv()}: Export statistical output to a table in a CSV format ("," for value separation and "." for decimal)
 
-\item \code{table2csv2}: Export statistical output to a table in a CSV format (";" for value separation and "," for decimal)
+\item \code{table2csv2()}: Export statistical output to a table in a CSV format (";" for value separation and "," for decimal)
+
 }}
-
 \examples{
 # Create a file name
 filen <- tempfile(pattern = "table_aov") # or 

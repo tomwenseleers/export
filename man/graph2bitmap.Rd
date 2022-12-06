@@ -83,13 +83,13 @@ to bitmap format with sensible defaults
 }
 \section{Functions}{
 \itemize{
-\item \code{graph2png}: Save currently active R graph to png file
+\item \code{graph2png()}: Save currently active R graph to png file
 
-\item \code{graph2tif}: Save currently active R graph to TIF file
+\item \code{graph2tif()}: Save currently active R graph to TIF file
 
-\item \code{graph2jpg}: Save currently active R graph to JPEG file
+\item \code{graph2jpg()}: Save currently active R graph to JPEG file
+
 }}
-
 \examples{
 # Create a file name
 filen <- tempfile(pattern = "ggplot") 
