@@ -1,7 +1,7 @@
 [![version](http://www.r-pkg.org/badges/version/export)](https://cran.r-project.org/package=export)
 [![downloads](http://cranlogs.r-pkg.org/badges/grand-total/export)](https://cran.r-project.org/package=export)
 
-export version 0.2.2 Beta
+export version 0.3.0
 =========================
 export is an R package to easily export active R graphs and statistical output 
 in publication quality to Microsoft Office (Word, PowerPoint and Excel), HTML and Latex.
