@@ -75,7 +75,7 @@ aspect ratio aspectr.}
 \code{\link{tiff}}, or \code{\link{jpeg}} function (according to the supplied \code{type}).}
 }
 \value{
-\code{NULL}
+No return value
 }
 \description{
 Save the currently active R graph or a graph passed as an object or function 

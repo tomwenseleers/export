@@ -10,7 +10,7 @@
 #' according to the requested output type. If file already exists it is overwritten.
 #' @param type desired output type - currently only \code{PNG} is supported.
 #' @param \dots passing the \code{rgl2png} arguments to \code{rgl2bitmap}
-#' @return \code{NULL}
+#' @return No return value
 #' @author Tom Wenseleers
 #' @example examples/rgl2bitmap.R
 #' @export

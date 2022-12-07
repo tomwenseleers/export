@@ -22,7 +22,7 @@
 #' @param add.rownames logical indicating whether the names of the rows should be added
 #' to the table (inserting a column before first column).
 #' @param \dots extra options are passed on to stargazer.
-#' @return \code{NULL}
+#' @return No return value
 #' @details Objects that can be exported are all those supported by \code{\link[xtable]{xtable}}, 
 #' \code{\link{tidy}} (see \code{\link{table2office}} for an extensive list of supported 
 #' methods), or \code{\link[stargazer]{stargazer}}. The models supported by 

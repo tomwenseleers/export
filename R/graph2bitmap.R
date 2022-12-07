@@ -36,7 +36,7 @@
 #' @param jpegquality quality of \code{JPEG} compression.
 #' @param \dots any other options are passed on to \code{grDevices}' \code{\link{png}}, 
 #' \code{\link{tiff}}, or \code{\link{jpeg}} function (according to the supplied \code{type}).
-#' @return \code{NULL}
+#' @return No return value
 #' @author Tom Wenseleers
 #' @example examples/graph2bitmap.R
 #' @seealso \code{\link{graph2office}}, \code{\link{graph2vector}}, \code{\link{graph2svg}}, \code{\link{graph2pdf}},

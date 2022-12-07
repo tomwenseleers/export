@@ -79,6 +79,9 @@ vector graphics (e.g. semi-transparent vector elements in \code{EPS}) output).}
 \item{\dots}{any other options are passed on to \code{\link{svg}}, \code{\link{cairo_pdf}}, \code{\link{cairo_ps}}, \code{\link{pdf}} or
 postscript.}
 }
+\value{
+No return value
+}
 \description{
 Save the currently active R graph or a graph passed as an object or function 
 to vector format with sensible defaults

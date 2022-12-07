@@ -58,7 +58,7 @@
 #' \code{devEMF}'s \code{\link{emf}} function if \code{type == "PPT"} (only 
 #' when \code{vector.graphics == TRUE}).
 #' 
-#' @return \code{NULL}
+#' @return No return value
 #' 
 #' @author Tom Wenseleers, Christophe Vanderaa
 #' 

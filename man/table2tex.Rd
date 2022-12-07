@@ -48,7 +48,7 @@ to the table (inserting a column before first column).}
 \item{\dots}{extra options are passed on to stargazer.}
 }
 \value{
-\code{NULL}
+No return value
 }
 \description{
 Export currently showing R stats object or stats object obj to a

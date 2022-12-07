@@ -46,7 +46,7 @@
 #' and \code{"gray"} (or \code{"grey"}). 
 #' @param \dots any other options are passed on to \code{\link{svg}}, \code{\link{cairo_pdf}}, \code{\link{cairo_ps}}, \code{\link{pdf}} or
 #' postscript.
-#' @return NULL
+#' @return No return value
 #' @author Tom Wenseleers
 #' @example examples/graph2vector.R
 #' @seealso \code{\link{graph2office}}, \code{\link{graph2bitmap}}, \code{\link{graph2png}}, \code{\link{graph2tif}}, \code{\link{graph2jpg}} 

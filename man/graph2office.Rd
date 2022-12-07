@@ -96,7 +96,7 @@ format at a resolution of 300 dpi.}
 when \code{vector.graphics == TRUE}).}
 }
 \value{
-\code{NULL}
+No return value
 }
 \description{
 Save the currently active R graph or a graph passed as an object or function 

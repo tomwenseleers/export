@@ -18,7 +18,7 @@ according to the requested output type. If file already exists it is overwritten
 \item{\dots}{passing the \code{rgl2png} arguments to \code{rgl2bitmap}}
 }
 \value{
-\code{NULL}
+No return value
 }
 \description{
 Save currently active rgl 3D graph to bitmap format in current orientation
