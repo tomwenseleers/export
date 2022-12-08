@@ -1,4 +1,13 @@
+# export 0.3
+
+### New features
+
+* Fixed NOTE that resulted in some temporary files being left on non-interactive
+Debian systems.
+
 # export 0.2.2.9000
+
+### New features
 
 * Fixed bug when no graphical devices are available fro exporting graphs (as pointed out by guokai8 on GitHub)
 
@@ -6,7 +15,7 @@
 
 ### New features
 
-* Made export use officer and flextable rather than ReporteRs and rtable, as the two latter were removed from CRAN.
+* Made export use officer and flextable rather than ReporteRs and rtable, as the latter wtwo ere removed from CRAN.
 * Created table2spreadsheet() to generate table in a Microsoft Excel / LibreOffice Calc file or in a CSV (using either comma or semicolon as separation)
 * table2spreadsheet() and table2office() use the "broom" package additionaly to the "xtable" package which allows for more data classes to be exported as tables
 
