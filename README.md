@@ -27,7 +27,7 @@ If you report a bug, try to send a reproducible example and don't forget to send
 sessionInfo()
 ```
 
-### Official CRAN release (deprecated)
+### Official CRAN release
 
 **Get the latest official release from CRAN:**  
 
