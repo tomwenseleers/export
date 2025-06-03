@@ -14,6 +14,9 @@
 #' @export
 #' 
 rgl2bitmap = function(file = "Rplot", type = c("PNG")) {
+  if ( ! requireNamespace("rgl", quietly = TRUE)) {
+    stop("Package 'rgl' is required for this function. Please install it.")
+  }
   type = toupper(type)
   type = match.arg(type)
   ext = paste0(".", tolower(type))

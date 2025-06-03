@@ -17,13 +17,13 @@ Imports: stats,
           rvg (>= 0.1.8), 
           xtable (>= 1.8-2), 
           flextable (>= 0.4.3), 
-          rgl (>= 0.99.16), 
           xml2 (>= 1.2.0), 
           stargazer (>= 5.2.1), 
           openxlsx (>= 4.0.17), 
           broom (>= 0.4.4),
           devEMF (>= 3.8)
-Suggests: ggplot2 (>= 1.0)
+Suggests: rgl (>= 0.99.16),
+          ggplot2 (>= 1.0)
 Description: Easily export 'R' graphs and statistical output to 'Microsoft
     Office' / 'LibreOffice', 'Latex' and 'HTML' Documents, using sensible defaults
     that result in publication-quality output with simple, straightforward commands.
