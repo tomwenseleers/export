@@ -1,7 +1,7 @@
 Package: export
 Type: Package
 Title: Streamlined Export of Graphs and Data Tables
-Version: 0.3.0
+Version: 0.3.1
 Date: 2022-12-05
 Authors@R: c(person("Tom", "Wenseleers", role = c("aut", "cre"),
     	     email = "tom.wenseleers@kuleuven.be"),
