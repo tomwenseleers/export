@@ -94,7 +94,7 @@ graph2office = function(x = NULL, file = "Rplot", fun = NULL, type = c("PPT","DO
   file = paste0(file, ext)  # add extension
   # Format the function call for plotting the graph
   obj = x
-  if (is.null(obj) & is.null(fun)) { 
+  if (is.null(obj) && is.null(fun)) { 
     p = captureplot() 
   } else { 
     p = obj 
@@ -107,27 +107,36 @@ graph2office = function(x = NULL, file = "Rplot", fun = NULL, type = c("PPT","DO
   } 
   
   ### 2. Prepare the plotting region and the plot apsect
-  if(!identical(options()$device, FALSE)){
-    plotsize = dev.size()
+  
+  if ((!is.null(width))&&(!is.null(height))) {
+    # if width and height is given
+    w = width;
+    h = height;
+    plotaspectr = w/h
   } else {
-    plotsize = c(7,5) # default device size: 10 inch x 10 inch
+    # infer width and height
+  
+    if(!identical(options()$device, FALSE)){
+      plotsize = dev.size()
+    } else {
+      plotsize = c(7,5) # default device size: 10 inch x 10 inch
+    }
+    
+    w = plotsize[[1]]
+    h = plotsize[[2]]
+    plotaspectr = plotsize[[1]]/plotsize[[2]]
+    if ((!is.null(aspectr))&is.null(height)&is.null(width)) { 
+      plotaspectr = aspectr
+      if (plotaspectr >= 1) { 
+        h = w/plotaspectr 
+      } else { 
+        w = h*plotaspectr 
+      } 
+    }
+    if ((is.null(height))&(!is.null(width))) { plotaspectr = aspectr; w = width; h = w / plotaspectr }
+    if ((is.null(width))&(!is.null(height))) { plotaspectr = aspectr; h = height; w = h / plotaspectr } 
   }
   
-  w = plotsize[[1]]
-  h = plotsize[[2]]
-  plotaspectr = plotsize[[1]]/plotsize[[2]]
-  if ((!is.null(aspectr))&is.null(height)&is.null(width)) { 
-    plotaspectr = aspectr
-    if (plotaspectr >= 1) { 
-      h = w/plotaspectr 
-    } else { 
-      w = h*plotaspectr 
-    } 
-  }
-  if ((is.null(height))&(!is.null(width))) { plotaspectr = aspectr; w = width; h = w / plotaspectr }
-  if ((is.null(width))&(!is.null(height))) { plotaspectr = aspectr; h = height; w = h / plotaspectr } 
-  # if width and height is given override other scaling params
-  if ((!is.null(width))&(!is.null(height))) { w = width; h = height; plotaspectr = w/h }  
   w = w*scaling/100; h = h*scaling/100;
   
   ### 3. Find the best template (docx or pptx) to contain the plot
@@ -184,41 +193,46 @@ graph2office = function(x = NULL, file = "Rplot", fun = NULL, type = c("PPT","DO
   }
   
   ### 6. Print the plot on the slide or page
-  if(type=="PPT"){
-    if (center) { 
-      offx = (pagesize["width"] + margins["left"]+margins["right"] - w)/2
-      offy = (pagesize["height"] + margins["top"]+margins["bottom"] - h)/2
-    }
-    if(vector.graphic){
-      doc = ph_with(doc, dml(code = myplot()), 
-                    location = ph_location(left = offx, top = offy, width = w, 
-                                           height = h), ...)
-    } else {
-      temp.file <- paste0(tempfile(), ".png")
-      grDevices::png(filename = temp.file, height = h, width = w, units = "in", res = 300)
-      myplot()
-      dev.off()
-      doc <- ph_with(doc, external_img(src = temp.file), location = ph_location(left = offx, top = offy, width = w, height = h))
-      unlink(temp.file)
-    }
-  } else {
-    temp.file <- tempfile()
-    if(vector.graphic){
-      temp.file <- paste0(temp.file, ".emf")
-      emf(file = temp.file, height = h, width = w, emfPlus = TRUE, ...)
-      myplot()
-    } else {
-      temp.file <- paste0(temp.file, ".png")
-      grDevices::png(filename = temp.file, height = h, width = w, units = "in", res = 300)
-      myplot()
-    }
-    dev.off()
-    doc <- body_add_img(doc, src = temp.file, width = w, height = h)
-    unlink(temp.file)
-  }
-  
-  ### 7. End of function, save the file and print message
-  print(doc, target = file)
+  # if(type=="PPT"){
+  #   if (center) { 
+  #     offx = (pagesize["width"] + margins["left"]+margins["right"] - w)/2
+  #     offy = (pagesize["height"] + margins["top"]+margins["bottom"] - h)/2
+  #   }
+  #   if(vector.graphic){
+  #     if (inherits(obj, 'ggplot')) {
+  #       dml_obj = dml(ggobj = obj)
+  #     } else {
+  #       dml_obj = dml(code = myplot())
+  #     }
+  #     doc = ph_with(doc, dml_obj, 
+  #                   location = ph_location(left = offx, top = offy, width = w, 
+  #                                          height = h), ...)
+  #   } else {
+  #     temp.file <- paste0(tempfile(), ".png")
+  #     grDevices::png(filename = temp.file, height = h, width = w, units = "in", res = 300)
+  #     myplot()
+  #     dev.off()
+  #     doc <- ph_with(doc, external_img(src = temp.file), location = ph_location(left = offx, top = offy, width = w, height = h))
+  #     unlink(temp.file)
+  #   }
+  # } else {
+  #   temp.file <- tempfile()
+  #   if(vector.graphic){
+  #     temp.file <- paste0(temp.file, ".emf")
+  #     emf(file = temp.file, height = h, width = w, emfPlus = TRUE, ...)
+  #     myplot()
+  #   } else {
+  #     temp.file <- paste0(temp.file, ".png")
+  #     grDevices::png(filename = temp.file, height = h, width = w, units = "in", res = 300)
+  #     myplot()
+  #   }
+  #   dev.off()
+  #   doc <- body_add_img(doc, src = temp.file, width = w, height = h)
+  #   unlink(temp.file)
+  # }
+  # 
+  # ### 7. End of function, save the file and print message
+  # print(doc, target = file)
   message(paste0("Exported graph as ",file))
 }
 
