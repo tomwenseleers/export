@@ -1,7 +1,7 @@
 [![version](http://www.r-pkg.org/badges/version/export)](https://cran.r-project.org/package=export)
 [![downloads](http://cranlogs.r-pkg.org/badges/grand-total/export)](https://cran.r-project.org/package=export)
 
-export version 0.3.0
+export version 0.3.1
 ====================
 export is an R package to easily export active R graphs and statistical output 
 in publication quality to Microsoft Office (Word, PowerPoint and Excel), HTML and Latex.
@@ -46,13 +46,13 @@ install.packages("openxlsx")
 install.packages("ggplot2")
 install.packages("flextable")
 install.packages("xtable")
-install.packages("rgl")
+install.packages("rgl")  # optional
 install.packages("stargazer")
 install.packages("tikzDevice")
 install.packages("xml2")
 install.packages("broom")
-install.packages("devtools")
-devtools::install_github("tomwenseleers/export")
+install.packages("remotes")
+remotes::install_github("tomwenseleers/export")
   ```
 Getting Started
 ---------------
