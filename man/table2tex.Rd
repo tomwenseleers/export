@@ -56,7 +56,7 @@ HTML or Latex table
 }
 \details{
 Objects that can be exported are all those supported by \code{\link[xtable]{xtable}}, 
-\code{\link{tidy}} (see \code{\link{table2office}} for an extensive list of supported 
+\code{\link[broom]{tidy}} (see \code{\link{table2office}} for an extensive list of supported 
 methods), or \code{\link[stargazer]{stargazer}}. The models supported by 
 \code{\link[stargazer]{stargazer}} are:
 \itemize{
