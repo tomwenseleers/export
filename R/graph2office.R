@@ -55,7 +55,7 @@
 #' format at a resolution of 300 dpi.
 #' @param \dots any other options are passed on to \code{rvg}'s 
 #' \code{\link[rvg]{dml_pptx}} function if \code{type == "DOC"} or to 
-#' \code{devEMF}'s \code{\link{emf}} function if \code{type == "PPT"} (only 
+#' \code{devEMF}'s \code{\link[devEMF]{emf}} function if \code{type == "PPT"} (only 
 #' when \code{vector.graphics == TRUE}).
 #' 
 #' @return No return value
