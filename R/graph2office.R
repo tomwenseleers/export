@@ -193,46 +193,41 @@ graph2office = function(x = NULL, file = "Rplot", fun = NULL, type = c("PPT","DO
   }
   
   ### 6. Print the plot on the slide or page
-  # if(type=="PPT"){
-  #   if (center) { 
-  #     offx = (pagesize["width"] + margins["left"]+margins["right"] - w)/2
-  #     offy = (pagesize["height"] + margins["top"]+margins["bottom"] - h)/2
-  #   }
-  #   if(vector.graphic){
-  #     if (inherits(obj, 'ggplot')) {
-  #       dml_obj = dml(ggobj = obj)
-  #     } else {
-  #       dml_obj = dml(code = myplot())
-  #     }
-  #     doc = ph_with(doc, dml_obj, 
-  #                   location = ph_location(left = offx, top = offy, width = w, 
-  #                                          height = h), ...)
-  #   } else {
-  #     temp.file <- paste0(tempfile(), ".png")
-  #     grDevices::png(filename = temp.file, height = h, width = w, units = "in", res = 300)
-  #     myplot()
-  #     dev.off()
-  #     doc <- ph_with(doc, external_img(src = temp.file), location = ph_location(left = offx, top = offy, width = w, height = h))
-  #     unlink(temp.file)
-  #   }
-  # } else {
-  #   temp.file <- tempfile()
-  #   if(vector.graphic){
-  #     temp.file <- paste0(temp.file, ".emf")
-  #     emf(file = temp.file, height = h, width = w, emfPlus = TRUE, ...)
-  #     myplot()
-  #   } else {
-  #     temp.file <- paste0(temp.file, ".png")
-  #     grDevices::png(filename = temp.file, height = h, width = w, units = "in", res = 300)
-  #     myplot()
-  #   }
-  #   dev.off()
-  #   doc <- body_add_img(doc, src = temp.file, width = w, height = h)
-  #   unlink(temp.file)
-  # }
-  # 
-  # ### 7. End of function, save the file and print message
-  # print(doc, target = file)
+  if(type=="PPT"){
+      if (center) {
+          offx = (pagesize["width"] + margins["left"]+margins["right"] - w)/2
+          offy = (pagesize["height"] + margins["top"]+margins["bottom"] - h)/2
+      }
+      if(vector.graphic){
+          doc = ph_with(doc, dml(code = myplot()),
+                        location = ph_location(left = offx, top = offy, width = w,
+                                               height = h), ...)
+      } else {
+          temp.file <- paste0(tempfile(), ".png")
+          grDevices::png(filename = temp.file, height = h, width = w, units = "in", res = 300)
+          myplot()
+          dev.off()
+          doc <- ph_with(doc, external_img(src = temp.file), location = ph_location(left = offx, top = offy, width = w, height = h))
+          unlink(temp.file)
+      }
+  } else {
+      temp.file <- tempfile()
+      if(vector.graphic){
+          temp.file <- paste0(temp.file, ".emf")
+          emf(file = temp.file, height = h, width = w, emfPlus = TRUE, ...)
+          myplot()
+      } else {
+          temp.file <- paste0(temp.file, ".png")
+          grDevices::png(filename = temp.file, height = h, width = w, units = "in", res = 300)
+          myplot()
+      }
+      dev.off()
+      doc <- body_add_img(doc, src = temp.file, width = w, height = h)
+      unlink(temp.file)
+  }
+
+  ### 7. End of function, save the file and print message
+  print(doc, target = file)
   message(paste0("Exported graph as ",file))
 }
 
