@@ -183,6 +183,9 @@ table2office = function(x = NULL, file = "Rtable", type = c("PPT","DOC"), append
     outp = obj
   }
   if (is.null(outp)) stop("no R stats object available to export")
+  if (inherits(outp, c("splm", "summary.splm"))) {
+    outp <- splm_to_data_frame(outp)
+  }
   supobjects = unique(c(as.character(gsub("xtable.", "", methods(xtable))), 
                         as.character(gsub("tidy.", "", methods(tidy))),
                         "xtabs"))

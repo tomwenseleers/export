@@ -23,6 +23,8 @@ graph2office(
   offx = 1,
   offy = 1,
   upscale = FALSE,
+  font = NULL,
+  fonts = NULL,
   vector.graphic = TRUE,
   ...
 )
@@ -84,6 +86,16 @@ make it page-filling (excluding the margins). Note that scaling may result
 in a different look of one's graph relative to how it looks on the screen
 due to the change in size.}
 
+\item{font}{desired default Office font family to use for vectorized
+PowerPoint output and rasterized PowerPoint output. If \code{NULL}, the font
+is inferred from the plot when possible and otherwise defaults to
+\code{"Arial"} on Windows systems and to \code{"Helvetica"} on other systems.}
+
+\item{fonts}{named list of font aliases passed to \code{\link[rvg]{dml}} for
+vectorized PowerPoint output. If \code{NULL}, \code{font} is used for the
+\code{sans}, \code{serif}, \code{mono}, and \code{symbol} aliases. Use
+\code{fonts = list()} to keep \code{rvg}'s automatic font aliases.}
+
 \item{vector.graphic}{logical specifying whether or not to output in
 vectorized format. This avoids pixelated images in the document. Note that 
 for PowerPoint, the image can be edited after first ungrouping the plot 
@@ -91,8 +103,8 @@ elements. If set to \code{FALSE}, the plot is rasterized to \code{PNG} bitmap
 format at a resolution of 300 dpi.}
 
 \item{\dots}{any other options are passed on to \code{rvg}'s 
-\code{\link[rvg]{dml_pptx}} function if \code{type == "DOC"} or to 
-\code{devEMF}'s \code{\link[devEMF]{emf}} function if \code{type == "PPT"} (only 
+\code{\link[rvg]{dml_pptx}} function if \code{type == "PPT"} or to 
+\code{devEMF}'s \code{\link[devEMF]{emf}} function if \code{type == "DOC"} (only 
 when \code{vector.graphics == TRUE}).}
 }
 \value{

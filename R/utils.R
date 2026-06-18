@@ -2,6 +2,175 @@
 #' @importFrom utils browseURL
 #' @import xml2
 
+is_plot_object <- function(x) {
+  inherits(x, c("ggplot", "ggplot2::ggplot", "trellis", "patchwork"))
+}
+
+resolve_plot <- function(x = NULL, fun = NULL) {
+  if (!is.null(x) || !is.null(fun)) {
+    return(x)
+  }
+  if (exists(".Last.value", envir = .GlobalEnv, inherits = FALSE)) {
+    last.value <- get(".Last.value", envir = .GlobalEnv)
+    if (is_plot_object(last.value)) {
+      return(last.value)
+    }
+  }
+  captureplot()
+}
+
+plot_dimensions <- function(width = NULL, height = NULL, aspectr = NULL,
+                            scaling = 100, default = c(7, 5)) {
+  if (!is.null(aspectr) && (!is.numeric(aspectr) || length(aspectr) != 1 || aspectr <= 0)) {
+    stop("aspectr must be a single positive number")
+  }
+  if (!is.null(width) && (!is.numeric(width) || length(width) != 1 || width <= 0)) {
+    stop("width must be a single positive number")
+  }
+  if (!is.null(height) && (!is.numeric(height) || length(height) != 1 || height <= 0)) {
+    stop("height must be a single positive number")
+  }
+  if (!is.numeric(scaling) || length(scaling) != 1 || scaling <= 0) {
+    stop("scaling must be a single positive number")
+  }
+
+  plotsize <- default
+  if (!identical(getOption("device"), FALSE) && dev.cur() != 1) {
+    plotsize <- dev.size()
+  }
+  plotaspectr <- if (is.null(aspectr)) plotsize[[1]] / plotsize[[2]] else aspectr
+
+  if (is.null(width) && is.null(height)) {
+    if (is.null(aspectr)) {
+      w <- plotsize[[1]]
+      h <- plotsize[[2]]
+    } else if (plotaspectr >= 1) {
+      w <- plotsize[[1]]
+      h <- w / plotaspectr
+    } else {
+      h <- plotsize[[2]]
+      w <- h * plotaspectr
+    }
+  } else if (is.null(height)) {
+    w <- width
+    h <- w / plotaspectr
+  } else if (is.null(width)) {
+    h <- height
+    w <- h * plotaspectr
+  } else {
+    w <- width
+    h <- height
+    plotaspectr <- w / h
+  }
+
+  c(width = w * scaling / 100, height = h * scaling / 100, aspectr = plotaspectr)
+}
+
+showtext_auto_enabled <- function() {
+  hooks <- c(getHook("plot.new"), getHook("grid.newpage"))
+  any(vapply(hooks, inherits, logical(1), "showtext_hook"))
+}
+
+default_office_font <- function() {
+  ifelse(Sys.info()["sysname"] == "Windows", "Arial", "Helvetica")[[1]]
+}
+
+element_text_family <- function(x) {
+  if (is.null(x)) {
+    return(NULL)
+  }
+  family <- tryCatch(x@family, error = function(e) NULL)
+  if (is.null(family)) {
+    family <- tryCatch(x$family, error = function(e) NULL)
+  }
+  if (is.character(family) && length(family) == 1 && !is.na(family) && nzchar(family)) {
+    family
+  } else {
+    NULL
+  }
+}
+
+infer_plot_font <- function(x) {
+  if (!is_plot_object(x)) {
+    return(NULL)
+  }
+
+  theme_family <- tryCatch(element_text_family(x[["theme"]][["text"]]),
+                           error = function(e) NULL)
+  if (!is.null(theme_family)) {
+    return(theme_family)
+  }
+
+  layers <- tryCatch(x[["layers"]], error = function(e) NULL)
+  layer_families <- unlist(lapply(layers, function(layer) {
+    tryCatch(layer[["aes_params"]][["family"]], error = function(e) NULL)
+  }), use.names = FALSE)
+  layer_families <- layer_families[!is.na(layer_families) & nzchar(layer_families)]
+  if (length(layer_families) > 0) {
+    return(layer_families[[1]])
+  }
+
+  NULL
+}
+
+resolve_office_font <- function(font = NULL, fonts = NULL, plot = NULL) {
+  if (is.null(font)) {
+    font <- infer_plot_font(plot)
+  }
+  if (is.null(font)) {
+    font <- default_office_font()
+  }
+  if (is.null(fonts)) {
+    fonts <- list(sans = font, serif = font, mono = font, symbol = font)
+  }
+  list(font = font, fonts = fonts)
+}
+
+splm_to_data_frame <- function(x) {
+  sx <- if (inherits(x, "summary.splm")) {
+    x
+  } else {
+    tryCatch(summary(x), error = function(e) x)
+  }
+
+  as_table <- function(component, mat) {
+    mat <- as.matrix(mat)
+    data.frame(component = component,
+               term = rownames(mat),
+               as.data.frame(mat, check.names = FALSE),
+               row.names = NULL,
+               check.names = FALSE)
+  }
+
+  tables <- list()
+  if (!is.null(sx$ErrCompTable)) {
+    tables[[length(tables) + 1]] <- as_table("error variance parameters", sx$ErrCompTable)
+  }
+  if (!is.null(sx$ARCoefTable)) {
+    tables[[length(tables) + 1]] <- as_table("spatial autoregressive coefficient", sx$ARCoefTable)
+  }
+  if (!is.null(sx$CoefTable)) {
+    tables[[length(tables) + 1]] <- as_table("coefficients", sx$CoefTable)
+  }
+
+  if (length(tables) > 0) {
+    return(do.call(rbind, tables))
+  }
+
+  coefs <- tryCatch(stats::coef(x), error = function(e) NULL)
+  if (is.null(coefs) && !is.null(x$coefficients)) {
+    coefs <- x$coefficients
+  }
+  if (is.null(coefs)) {
+    stop("could not extract coefficients from splm object")
+  }
+  data.frame(component = "coefficients",
+             term = names(coefs),
+             Estimate = unname(coefs),
+             row.names = NULL,
+             check.names = FALSE)
+}
+
 # function to preview HTML in RStudio viewer or web browser
 preview = function(x){
   htmlFile = tempfile(fileext=".html")

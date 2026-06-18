@@ -113,6 +113,9 @@ table2tex = function(x = NULL, file = "Rtable", type="TEX", digits = 2, digitspv
     outp = .Last.value else outp = obj  # capture previously shown output or use passed object
   if (is.null(outp)) 
     stop("no R stats object available to export")
+  if (inherits(outp, c("splm", "summary.splm"))) {
+    outp <- splm_to_data_frame(outp)
+  }
   obj=outp
 
   # Match the requested file type

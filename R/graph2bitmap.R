@@ -62,31 +62,16 @@ graph2bitmap = function(x = NULL, file = "Rplot", fun = NULL,
   ext <- paste0(".", tolower(type))
   file <- sub("^(.*)[.].*", "\\1", file)  # remove extension if given
   file <- paste0(file, ext)  # add extension
-  obj <- x
-  if (is.null(obj) & is.null(fun)) p = captureplot() else p = obj
+  p <- resolve_plot(x = x, fun = fun)
   if (inherits(p,"list")) 
     stop("base R plots cannot be passed as objects, use ggplot2 or lattice plots instead")
   myplot = if (is.null(fun)) function(pl = p) print(pl) else fun
   
   # Get graphical device information 
-  if(!identical(options()$device, FALSE)){
-    plotsize = dev.size()
-  } else {
-    plotsize = c(7,5) # default device size: 10 inch x 10 inch
-  }
-  
-  w <- plotsize[[1]]
-  h <- plotsize[[2]]
-  plotaspectr <- plotsize[[1]] / plotsize[[2]]
-  if ( !is.null(aspectr) & is.null(height) & is.null(width)) { 
-    plotaspectr <- aspectr
-    if (plotaspectr >= 1) { h <- w / plotaspectr } else { w <- h * plotaspectr } 
-  }
-  if ((is.null(height))&(!is.null(width))) { w = width; h = w / plotaspectr }
-  if ((is.null(width))&(!is.null(height))) { h = height; w = h / plotaspectr } 
-  # if width and height is given override other scaling params
-  if ((!is.null(width))&(!is.null(height))) { w = width; h = height }  
-  w = w*scaling/100; h = h*scaling/100;
+  plotdim <- plot_dimensions(width = width, height = height, aspectr = aspectr,
+                             scaling = scaling)
+  w <- plotdim[["width"]]
+  h <- plotdim[["height"]]
  
   if (type == "PNG") {
     png( filename = file, 

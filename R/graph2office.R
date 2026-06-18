@@ -48,14 +48,22 @@
 #' make it page-filling (excluding the margins). Note that scaling may result
 #' in a different look of one's graph relative to how it looks on the screen
 #' due to the change in size.
+#' @param font desired default Office font family to use for vectorized
+#' PowerPoint output and rasterized PowerPoint output. If \code{NULL}, the font
+#' is inferred from the plot when possible and otherwise defaults to
+#' \code{"Arial"} on Windows systems and to \code{"Helvetica"} on other systems.
+#' @param fonts named list of font aliases passed to \code{\link[rvg]{dml}} for
+#' vectorized PowerPoint output. If \code{NULL}, \code{font} is used for the
+#' \code{sans}, \code{serif}, \code{mono}, and \code{symbol} aliases. Use
+#' \code{fonts = list()} to keep \code{rvg}'s automatic font aliases.
 #' @param vector.graphic logical specifying whether or not to output in
 #' vectorized format. This avoids pixelated images in the document. Note that 
 #' for PowerPoint, the image can be edited after first ungrouping the plot 
 #' elements. If set to \code{FALSE}, the plot is rasterized to \code{PNG} bitmap
 #' format at a resolution of 300 dpi.
 #' @param \dots any other options are passed on to \code{rvg}'s 
-#' \code{\link[rvg]{dml_pptx}} function if \code{type == "DOC"} or to 
-#' \code{devEMF}'s \code{\link[devEMF]{emf}} function if \code{type == "PPT"} (only 
+#' \code{\link[rvg]{dml_pptx}} function if \code{type == "PPT"} or to 
+#' \code{devEMF}'s \code{\link[devEMF]{emf}} function if \code{type == "DOC"} (only 
 #' when \code{vector.graphics == TRUE}).
 #' 
 #' @return No return value
@@ -74,6 +82,8 @@ graph2office = function(x = NULL, file = "Rplot", fun = NULL, type = c("PPT","DO
                         paper = "auto", orient = ifelse(type[1]=="PPT","landscape","auto"),
                         margins = c(top=0.5,right=0.5,bottom=0.5,left=0.5), 
                         center = TRUE, offx = 1, offy = 1, upscale = FALSE, 
+                        font = NULL,
+                        fonts = NULL,
                         vector.graphic = TRUE, 
                         ...) {
   
@@ -93,12 +103,7 @@ graph2office = function(x = NULL, file = "Rplot", fun = NULL, type = c("PPT","DO
   file = sub("^(.*)[.].*", "\\1", file)  # remove extension if given
   file = paste0(file, ext)  # add extension
   # Format the function call for plotting the graph
-  obj = x
-  if (is.null(obj) && is.null(fun)) { 
-    p = captureplot() 
-  } else { 
-    p = obj 
-  }
+  p = resolve_plot(x = x, fun = fun)
   if (inherits(p,"list")) { stop("base R plots cannot be passed as objects, use ggplot2 or lattice plots instead") }
   myplot = if (is.null(fun)){
     function(pl = p) print(pl) 
@@ -108,36 +113,11 @@ graph2office = function(x = NULL, file = "Rplot", fun = NULL, type = c("PPT","DO
   
   ### 2. Prepare the plotting region and the plot apsect
   
-  if ((!is.null(width))&&(!is.null(height))) {
-    # if width and height is given
-    w = width;
-    h = height;
-    plotaspectr = w/h
-  } else {
-    # infer width and height
-  
-    if(!identical(options()$device, FALSE)){
-      plotsize = dev.size()
-    } else {
-      plotsize = c(7,5) # default device size: 10 inch x 10 inch
-    }
-    
-    w = plotsize[[1]]
-    h = plotsize[[2]]
-    plotaspectr = plotsize[[1]]/plotsize[[2]]
-    if ((!is.null(aspectr))&is.null(height)&is.null(width)) { 
-      plotaspectr = aspectr
-      if (plotaspectr >= 1) { 
-        h = w/plotaspectr 
-      } else { 
-        w = h*plotaspectr 
-      } 
-    }
-    if ((is.null(height))&(!is.null(width))) { plotaspectr = aspectr; w = width; h = w / plotaspectr }
-    if ((is.null(width))&(!is.null(height))) { plotaspectr = aspectr; h = height; w = h / plotaspectr } 
-  }
-  
-  w = w*scaling/100; h = h*scaling/100;
+  plotdim = plot_dimensions(width = width, height = height, aspectr = aspectr,
+                            scaling = scaling)
+  w = plotdim[["width"]]
+  h = plotdim[["height"]]
+  plotaspectr = plotdim[["aspectr"]]
   
   ### 3. Find the best template (docx or pptx) to contain the plot
   # if paper="auto" choose template with best fitting size
@@ -193,18 +173,30 @@ graph2office = function(x = NULL, file = "Rplot", fun = NULL, type = c("PPT","DO
   }
   
   ### 6. Print the plot on the slide or page
+  if (vector.graphic && showtext_auto_enabled()) {
+      warning("showtext_auto() is enabled; exporting a raster image because showtext glyph rendering is not compatible with editable Office DrawingML")
+      vector.graphic <- FALSE
+  }
+  office.fonts <- resolve_office_font(font = font, fonts = fonts, plot = p)
+  font <- office.fonts$font
+  fonts <- office.fonts$fonts
   if(type=="PPT"){
       if (center) {
           offx = (pagesize["width"] + margins["left"]+margins["right"] - w)/2
           offy = (pagesize["height"] + margins["top"]+margins["bottom"] - h)/2
       }
       if(vector.graphic){
-          doc = ph_with(doc, dml(code = myplot()),
+          plot.dml <- if (is_plot_object(p)) {
+              dml(ggobj = p, fonts = fonts, ...)
+          } else {
+              dml(code = myplot(), fonts = fonts, ...)
+          }
+          doc = ph_with(doc, plot.dml,
                         location = ph_location(left = offx, top = offy, width = w,
                                                height = h), ...)
       } else {
           temp.file <- paste0(tempfile(), ".png")
-          grDevices::png(filename = temp.file, height = h, width = w, units = "in", res = 300)
+          grDevices::png(filename = temp.file, height = h, width = w, units = "in", res = 300, family = font)
           myplot()
           dev.off()
           doc <- ph_with(doc, external_img(src = temp.file), location = ph_location(left = offx, top = offy, width = w, height = h))

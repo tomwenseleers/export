@@ -1,3 +1,15 @@
+# export 0.3.3
+
+### Bug fixes
+
+* Improved `graph2ppt()` font handling for plotmath/Greek symbols by forwarding
+  font aliases to `rvg::dml()` and inferring ggplot text families when possible.
+* Added a raster fallback for `graph2office()` when `showtext_auto()` is enabled.
+* Made graph export size inference work without an active graphics device when a
+  plot object or plotting function is supplied.
+* Added direct coefficient-table export support for `splm` and `summary.splm`
+  objects.
+
 # export 0.3
 
 ### New features
